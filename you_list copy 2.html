@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -1866,7 +1864,31 @@
 
 
 
-        // 검색 범위 이벤트들은 initializeApp에서 등록됨
+        // 검색 범위 드롭다운 기능
+        document.getElementById('searchScopeDisplay').addEventListener('click', () => {
+            const dropdown = document.getElementById('searchScopeDropdown');
+            dropdown.classList.toggle('show');
+        });
+
+        // 모든 검색 범위 선택/해제
+        document.getElementById('selectAllSearchScope').addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]');
+            
+            searchScopeCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            updateSearchScopeDisplay();
+        });
+
+        // 개별 검색 범위 체크박스 이벤트
+        document.querySelectorAll('input[name="searchScope"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateSelectAllSearchScope();
+                updateSearchScopeDisplay();
+            });
+        });
 
         // 검색 범위 디스플레이 업데이트 함수
         function updateSearchScopeDisplay() {
@@ -1945,7 +1967,25 @@
             }
         });
 
-        // 카테고리 이벤트들은 initializeApp에서 등록됨
+        // 모든 카테고리 선택/해제
+        document.getElementById('selectAllCategories').addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
+            
+            categoryCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            updateCategoryDisplay();
+        });
+
+        // 개별 카테고리 체크박스 이벤트
+        document.querySelectorAll('input[name="categories"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateSelectAllCategories();
+                updateCategoryDisplay();
+            });
+        });
 
         // 카테고리 디스플레이 업데이트 함수
         function updateCategoryDisplay() {
@@ -2678,47 +2718,12 @@
                 });
             }
             
-            // 모든 카테고리 선택/해제 이벤트 추가
-            const selectAllCategoriesCheckbox = document.getElementById('selectAllCategories');
-            if (selectAllCategoriesCheckbox) {
-                selectAllCategoriesCheckbox.addEventListener('change', (e) => {
-                    const isChecked = e.target.checked;
-                    const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
-                    
-                    categoryCheckboxes.forEach(checkbox => {
-                        checkbox.checked = isChecked;
-                    });
-                    
-                    updateCategoryDisplay();
-                });
-            }
-            
-            // 카테고리 체크박스 이벤트 리스너 추가
-            document.querySelectorAll('input[name="categories"]').forEach(checkbox => {
-                checkbox.addEventListener('change', () => {
-                    updateCategoryDisplay();
-                    updateSelectAllCategories();
-                });
-            });
-            
             // 초기 상태 설정
             updateSelectAllVideoLength();
             updateGroupCheckboxes();
             updateSearchScopeDisplay();
             updateCategoryDisplay();
             updateCountryDisplay();
-            
-            // 검색 범위 드롭다운 초기화
-            const searchScopeDisplay = document.getElementById('searchScopeDisplay');
-            if (searchScopeDisplay) {
-                searchScopeDisplay.addEventListener('click', () => {
-                    const dropdown = document.getElementById('searchScopeDropdown');
-                    dropdown.classList.toggle('show');
-                });
-            }
-            
-            // 시간대 필터 초기화
-            initializeTimezoneFilter();
             
         }
         
@@ -2824,7 +2829,9 @@
 
 
 
-        // 전역 변수는 이미 위에서 선언됨 (2505-2506라인)
+        // 전역 변수 - 검색 시나리오 추적
+        let currentSearchScenario = 'unknown'; // 'korea_only' 또는 'foreign_korea_multi'
+        let primarySearchCountry = 'korea'; // 분석 기준 국가
         
         // 검색 시나리오 판별 함수
         function determineSearchScenario(selectedCountries) {
@@ -3011,86 +3018,24 @@
             return countryTimezones[countryCode] || 'Asia/Seoul';
         }
         
-        // 한국 영상 식별 함수 (개선된 버전)
+        // 한국 영상 식별 함수
         function isVideoFromKorea(result) {
+            // YouTube API에서 제공하는 데이터로 한국 영상 식별
+            // 예시: 채널명, 제목, 설명 등에서 한글 패턴 감지
+            const koreanRegex = /[ㄱ-힝]/; // 한글 유니코드 범위
+            
             const channelName = result.youtube_channel_name || '';
             const title = result.title || '';
             const description = result.description || '';
             
-            // 한글 패턴 (자음, 모음, 완성형 한글)
-            const koreanRegex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
-            
-            // 1단계: 채널명에 한글이 많이 포함된 경우 (우선순위 높음)
-            const channelKoreanCount = (channelName.match(/[가-힣]/g) || []).length;
-            const channelTotalLength = channelName.length;
-            
-            if (channelTotalLength > 0) {
-                const channelKoreanRatio = channelKoreanCount / channelTotalLength;
-                // 채널명의 30% 이상이 한글이면 한국 채널로 판별
-                if (channelKoreanRatio >= 0.3) {
-                    return true;
-                }
-            }
-            
-            // 2단계: 제목에 한글이 많이 포함된 경우
-            const titleKoreanCount = (title.match(/[가-힣]/g) || []).length;
-            const titleTotalLength = title.replace(/\s+/g, '').length; // 공백 제외한 길이
-            
-            if (titleTotalLength > 0) {
-                const titleKoreanRatio = titleKoreanCount / titleTotalLength;
-                // 제목의 50% 이상이 한글이면 한국 영상으로 판별 (채널명보다 높은 기준)
-                if (titleKoreanRatio >= 0.5) {
-                    return true;
-                }
-            }
-            
-            // 3단계: 외국 채널인지 우선 확인 (영어권 채널명 패턴)
-            const foreignChannelPatterns = [
-                /\b(news|media|tv|channel|network|broadcasting|press)\b/i,
-                /\b(gaming|game|play|stream|live)\b/i,
-                /\b(military|defense|aviation|air force|navy)\b/i,
-                /\b(official|productions|studios|entertainment)\b/i
-            ];
-            
-            const isLikelyForeignChannel = foreignChannelPatterns.some(pattern => 
-                pattern.test(channelName)
-            );
-            
-            // 4단계: 외국 채널로 추정되면서 한글 비율이 낮으면 외국 영상으로 판별
-            if (isLikelyForeignChannel) {
-                const combinedText = channelName + ' ' + title;
-                const combinedKoreanCount = (combinedText.match(/[가-힣]/g) || []).length;
-                const combinedTotalLength = combinedText.replace(/\s+/g, '').length;
-                
-                if (combinedTotalLength > 0) {
-                    const combinedKoreanRatio = combinedKoreanCount / combinedTotalLength;
-                    // 전체 텍스트에서 한글 비율이 20% 미만이면 외국 영상
-                    if (combinedKoreanRatio < 0.2) {
-                        return false;
-                    }
-                }
-            }
-            
-            // 5단계: 기본 fallback - 한글이 있으면 한국 영상 (기존 로직)
+            // 채널명 또는 제목에 한글이 포함되어 있으면 한국 영상으로 간주
             return koreanRegex.test(channelName) || koreanRegex.test(title);
         }
         
         // 영상의 국가 정보 감지 함수
         function detectVideoCountry(result) {
             // 1. 한글 패턴으로 한국 영상 우선 판별
-            const isKorean = isVideoFromKorea(result);
-            
-            // 디버깅을 위한 로그 (개발용)
-            if (result.title && (result.title.toLowerCase().includes('kf') || result.title.toLowerCase().includes('미국'))) {
-                console.log('🔍 국가 감지 디버그:', {
-                    title: result.title.substring(0, 50) + '...',
-                    channel: result.youtube_channel_name,
-                    isKorean: isKorean,
-                    detected: isKorean ? '한국' : '외국'
-                });
-            }
-            
-            if (isKorean) {
+            if (isVideoFromKorea(result)) {
                 return '한국';
             }
             
@@ -4372,23 +4317,230 @@
             }, 3000);
         }
 
-        // 검색 범위 이벤트들은 initializeApp에서 등록됨
+        // 검색 범위 드롭다운 기능
+        document.getElementById('searchScopeDisplay').addEventListener('click', () => {
+            const dropdown = document.getElementById('searchScopeDropdown');
+            dropdown.classList.toggle('show');
+        });
 
-        // 중복된 함수 정의 제거됨 (이미 위에서 정의됨)
+        // 모든 검색 범위 선택/해제
+        document.getElementById('selectAllSearchScope').addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]');
+            
+            searchScopeCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            updateSearchScopeDisplay();
+        });
 
-        // 중복된 검색 범위 이벤트 제거됨 (initializeApp에서 등록)
+        // 개별 검색 범위 체크박스 이벤트
+        document.querySelectorAll('input[name="searchScope"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateSelectAllSearchScope();
+                updateSearchScopeDisplay();
+            });
+        });
 
-        // 중복된 함수 정의 제거됨 (이미 위에서 정의됨)
+        // 검색 범위 디스플레이 업데이트 함수
+        function updateSearchScopeDisplay() {
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]:checked');
+            const display = document.getElementById('searchScopeDisplay');
+            
+            if (searchScopeCheckboxes.length === 0) {
+                display.textContent = '검색 범위를 선택해주세요';
+            } else if (searchScopeCheckboxes.length === document.querySelectorAll('input[name="searchScope"]').length) {
+                display.textContent = '모든 범위 선택됨';
+            } else {
+                const selectedNames = Array.from(searchScopeCheckboxes).map(cb => {
+                    const label = cb.parentElement.querySelector('label');
+                    return label.textContent;
+                });
+                display.textContent = selectedNames.join(', ') + ' 선택됨';
+            }
+        }
+
+        // 모든 검색 범위 체크박스 상태 업데이트
+        function updateSelectAllSearchScope() {
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]');
+            const checkedSearchScope = document.querySelectorAll('input[name="searchScope"]:checked');
+            const selectAllCheckbox = document.getElementById('selectAllSearchScope');
+            
+            if (checkedSearchScope.length === 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            } else if (checkedSearchScope.length === searchScopeCheckboxes.length) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = true;
+            }
+        }
+
+        // 검색 범위 드롭다운 기능
+        document.getElementById('searchScopeDisplay').addEventListener('click', () => {
+            const dropdown = document.getElementById('searchScopeDropdown');
+            dropdown.classList.toggle('show');
+        });
+
+        // 모든 검색 범위 선택/해제
+        document.getElementById('selectAllSearchScope').addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]');
+            
+            searchScopeCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            updateSearchScopeDisplay();
+        });
+
+        // 개별 검색 범위 체크박스 이벤트
+        document.querySelectorAll('input[name="searchScope"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateSelectAllSearchScope();
+                updateSearchScopeDisplay();
+            });
+        });
+
+        // 검색 범위 디스플레이 업데이트 함수
+        function updateSearchScopeDisplay() {
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]:checked');
+            const display = document.getElementById('searchScopeDisplay');
+            
+            if (searchScopeCheckboxes.length === 0) {
+                display.textContent = '검색 범위를 선택해주세요';
+            } else if (searchScopeCheckboxes.length === document.querySelectorAll('input[name="searchScope"]').length) {
+                display.textContent = '모든 범위 선택됨';
+            } else {
+                const selectedNames = Array.from(searchScopeCheckboxes).map(cb => {
+                    const label = cb.parentElement.querySelector('label');
+                    return label.textContent;
+                });
+                display.textContent = selectedNames.join(', ') + ' 선택됨';
+            }
+        }
+
+        // 모든 검색 범위 체크박스 상태 업데이트
+        function updateSelectAllSearchScope() {
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]');
+            const checkedSearchScope = document.querySelectorAll('input[name="searchScope"]:checked');
+            const selectAllCheckbox = document.getElementById('selectAllSearchScope');
+            
+            if (checkedSearchScope.length === 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            } else if (checkedSearchScope.length === searchScopeCheckboxes.length) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = true;
+            }
+        }
 
         // 카테고리 드롭다운 기능 (DOMContentLoaded에서 설정됨)
         
-        // 중복된 document 클릭 이벤트 제거됨 (1913라인에 이미 정의됨)
+        // 문서 클릭 시 드롭다운 닫기
+        document.addEventListener('click', (e) => {
+            // 검색 범위 드롭다운 처리
+            const searchScopeDisplay = document.getElementById('searchScopeDisplay');
+            const searchScopeDropdown = document.getElementById('searchScopeDropdown');
+            
+            if (searchScopeDisplay && searchScopeDropdown) {
+                const searchScopeSelector = searchScopeDisplay.closest('.category-selector');
+                if (searchScopeSelector && !searchScopeSelector.contains(e.target)) {
+                    searchScopeDropdown.classList.remove('show');
+                }
+            }
+            
+            // 카테고리 드롭다운 처리
+            const categoryDisplay = document.getElementById('categoryDisplay');
+            const categoryDropdown = document.getElementById('categoryDropdown');
+            
+            if (categoryDisplay && categoryDropdown) {
+                const categorySelector = categoryDisplay.closest('.category-selector');
+                if (categorySelector && !categorySelector.contains(e.target)) {
+                    categoryDropdown.classList.remove('show');
+                }
+            }
+        });
 
-        // 모든 카테고리 선택/해제 이벤트는 initializeApp에서 등록됨
+        // 모든 카테고리 선택/해제
+        document.getElementById('selectAllCategories').addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
+            
+            categoryCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            updateCategoryDisplay();
+        });
 
-        // 개별 카테고리 체크박스 이벤트는 initializeApp에서 등록됨
+        // 개별 카테고리 체크박스 이벤트
+        document.querySelectorAll('input[name="categories"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateSelectAllCategories();
+                updateCategoryDisplay();
+            });
+        });
 
-        // 중복된 함수 정의 제거됨 (2744라인에 이미 정의되어 있음)
+        // 카테고리 디스플레이 업데이트 함수
+        function updateCategoryDisplay() {
+            const categoryCheckboxes = document.querySelectorAll('input[name="categories"]:checked');
+            const display = document.getElementById('categoryDisplay');
+            
+            if (categoryCheckboxes.length === 0) {
+                display.textContent = '카테고리를 선택해주세요';
+            } else if (categoryCheckboxes.length === document.querySelectorAll('input[name="categories"]').length) {
+                display.textContent = '모든 카테고리 선택됨';
+            } else if (categoryCheckboxes.length <= 3) {
+                const selectedNames = Array.from(categoryCheckboxes).map(cb => {
+                    const label = cb.parentElement.querySelector('label');
+                    return label.textContent;
+                });
+                display.textContent = selectedNames.join(', ');
+            } else {
+                display.textContent = `${categoryCheckboxes.length}개 카테고리 선택됨`;
+            }
+        }
+
+        // 모든 카테고리 체크박스 상태 업데이트
+        function updateSelectAllCategories() {
+            const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
+            const checkedCategories = document.querySelectorAll('input[name="categories"]:checked');
+            const selectAllCheckbox = document.getElementById('selectAllCategories');
+            
+            if (checkedCategories.length === 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            } else if (checkedCategories.length === categoryCheckboxes.length) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = true;
+            }
+        }
+
+        // 카테고리 드롭다운 클릭 핸들러 함수 (간소화)
+        function categoryDisplayClickHandler() {
+            const dropdown = document.getElementById('categoryDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+        
+        // 카테고리 키보드 이벤트 핸들러
+        function categoryDisplayKeyHandler(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                categoryDisplayClickHandler();
+            }
+        }
         
         // 국가 드롭다운 클릭 핸들러 함수
         function countryDisplayClickHandler() {
@@ -4583,7 +4735,64 @@
         
         // 중복된 DOMContentLoaded 이벤트 제거됨 (통합된 initializeApp 함수로 대체)
         
-        // 중복된 DOMContentLoaded 제거됨 (initializeApp에서 모든 초기화 처리)
+        // 애플리케이션 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('애플리케이션 초기화 시작');
+            
+            // 국가 드롭다운 초기화
+            const countryDisplay = document.getElementById('countryDisplay');
+            if (countryDisplay) {
+                countryDisplay.addEventListener('click', countryDisplayClickHandler);
+                countryDisplay.addEventListener('keydown', countryDisplayKeyHandler);
+            }
+            
+            // 국가 체크박스 이벤트 설정
+            const countryDropdown = document.getElementById('countryDropdown');
+            if (countryDropdown) {
+                // 모든 국가 선택/해제 이벤트
+                const selectAllCountries = document.getElementById('selectAllCountries');
+                if (selectAllCountries) {
+                    selectAllCountries.addEventListener('change', (e) => {
+                        const isChecked = e.target.checked;
+                        const countryCheckboxes = document.querySelectorAll('input[name="countries"]');
+                        
+                        countryCheckboxes.forEach(checkbox => {
+                            checkbox.checked = isChecked;
+                        });
+                        
+                        updateCountryDisplay();
+                    });
+                }
+                
+                // 개별 국가 체크박스 이벤트
+                const countryCheckboxes = document.querySelectorAll('input[name="countries"]');
+                countryCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', () => {
+                        updateSelectAllCountries();
+                        updateCountryDisplay();
+                    });
+                });
+                
+                // 초기 디스플레이 업데이트
+                updateCountryDisplay();
+                updateSelectAllCountries();
+            }
+            
+            // 국가 드롭다운 외부 클릭 시 닫기
+            document.addEventListener('click', (e) => {
+                const countryDisplay = document.getElementById('countryDisplay');
+                const countryDropdown = document.getElementById('countryDropdown');
+                
+                if (countryDisplay && countryDropdown) {
+                    const countrySelector = countryDisplay.closest('.category-selector');
+                    if (countrySelector && !countrySelector.contains(e.target)) {
+                        countryDropdown.classList.remove('show');
+                    }
+                }
+            });
+            
+            console.log('국가 드롭다운 초기화 완료');
+        });
 
         // 전역 변수들
         let allSearchResults = []; // 원본 검색 결과 저장
@@ -5045,7 +5254,10 @@
             }
         }
 
-        // 초기화는 initializeApp에서 처리됨
+        // 초기화
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeTimezoneFilter();
+        });
     </script>
     
 

@@ -124,7 +124,13 @@ class ApiKeyManager {
       this.saveKeyStatus();
     }
     
-    return google.youtube({ version: 'v3', auth: currentKey.key });
+    const youtube = google.youtube({ version: 'v3', auth: currentKey.key });
+    
+    // YouTube 인스턴스와 키 정보를 함께 반환
+    return {
+      youtube: youtube,
+      currentKey: currentKey
+    };
   }
   
   // 할당량 초과 처리 - 개선된 로직
@@ -330,7 +336,7 @@ class ElasticsearchHelper {
     if (!this.client || !(await checkESConnection())) return { hit: false, reason: 'ES client not available' };
     
     try {
-      const { country, keyword, minViews, maxViews, maxResults } = searchParams;
+      const { country, keyword, minViews, maxViews, maxResults, publishedAfter, publishedBefore } = searchParams;
       
       // 검색 조건 구성
       const mustQueries = [];
@@ -352,6 +358,16 @@ class ElasticsearchHelper {
         filterQueries.push({ range: { daily_view_count: { lte: parseInt(maxViews) } } });
       }
       
+      // 업로드 날짜 범위 필터링 추가
+      if (publishedAfter || publishedBefore) {
+        const dateRange = {};
+        if (publishedAfter) dateRange.gte = publishedAfter;
+        if (publishedBefore) dateRange.lte = publishedBefore;
+        filterQueries.push({ range: { status_date: dateRange } });
+        console.log('ES 날짜 범위 필터 적용:', dateRange);
+        console.log('ES 캐시 체크 날짜 범위 필터 적용:', dateRange);
+      }
+      
       // 캐시된 데이터 수량 확인
       const countQuery = {
         query: {
@@ -367,7 +383,7 @@ class ElasticsearchHelper {
         body: countQuery
       });
       
-      const availableCount = countResponse.body.count;
+      const availableCount = countResponse.body?.count || countResponse.count || 0;
       const requestedCount = parseInt(maxResults) || 60;
       
       // 신선도 확인
@@ -383,7 +399,7 @@ class ElasticsearchHelper {
         body: freshnessQuery
       });
       
-      const hits = freshnessResponse.body.hits.hits;
+      const hits = freshnessResponse.body?.hits?.hits || freshnessResponse.hits?.hits || [];
       let isFresh = false;
       
       if (hits.length > 0) {
@@ -413,7 +429,7 @@ class ElasticsearchHelper {
     if (!this.client || !(await checkESConnection())) return null;
     
     try {
-      const { country, keyword, minViews, maxViews, maxResults } = searchParams;
+      const { country, keyword, minViews, maxViews, maxResults, publishedAfter, publishedBefore } = searchParams;
       
       // 검색 조건 구성
       const mustQueries = [];
@@ -433,6 +449,15 @@ class ElasticsearchHelper {
       
       if (maxViews) {
         filterQueries.push({ range: { daily_view_count: { lte: parseInt(maxViews) } } });
+      }
+      
+      // 업로드 날짜 범위 필터링 추가
+      if (publishedAfter || publishedBefore) {
+        const dateRange = {};
+        if (publishedAfter) dateRange.gte = publishedAfter;
+        if (publishedBefore) dateRange.lte = publishedBefore;
+        filterQueries.push({ range: { status_date: dateRange } });
+        console.log('ES 날짜 범위 필터 적용:', dateRange);
       }
       
       const searchQuery = {
@@ -608,6 +633,7 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
   try {
     const {
       country = 'worldwide',  // 기본값을 전세계로 변경
+      countries = '',         // 다중 국가 선택 파라미터 추가
       keyword = '',
       searchScope = 'title',  // 검색 범위: title, channel, 또는 분리된 문자열
       maxViews,
@@ -626,7 +652,33 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
     const finalMaxResults = allowedResults.includes(parsedMaxResults) ? parsedMaxResults : 60;
 
     console.log('검색 파라미터:', req.query);
-    console.log('선택된 국가:', country);
+    console.log('선택된 국가(단수):', country);
+    console.log('선택된 국가들(복수):', countries);
+    
+    // 다중 국가 처리 로직 개선
+    let selectedCountries;
+    if (countries && countries.length > 0) {
+      // countries 파라미터가 있으면 우선 사용
+      if (Array.isArray(countries)) {
+        selectedCountries = countries.filter(c => c && c.trim());
+      } else if (typeof countries === 'string') {
+        selectedCountries = countries.split(',').filter(c => c.trim());
+      } else {
+        selectedCountries = [country];
+      }
+    } else {
+      // countries가 없으면 country 사용
+      selectedCountries = [country];
+    }
+    
+    // 중복 제거 및 유효성 검사
+    selectedCountries = [...new Set(selectedCountries.filter(c => c && c.trim()))];
+    if (selectedCountries.length === 0) {
+      selectedCountries = ['worldwide'];
+    }
+    
+    console.log('최종 처리할 국가 목록:', selectedCountries);
+    
     console.log('검색 범위:', searchScope);
     console.log('선택된 카테고리:', categories);
     console.log(`검색 결과 수: ${finalMaxResults}건 (요청: ${maxResults})`);
@@ -635,9 +687,14 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
     const selectedVideoLengths = videoLength && videoLength.trim() ? videoLength.split(',').filter(v => v.trim()) : [];
     console.log('선택된 동영상 길이:', selectedVideoLengths.length > 0 ? selectedVideoLengths : '모든 길이 허용 (필터 없음)');
 
+    // 다중 국가 처리: 첫 번째 국가를 기준으로 설정 (향후 확장 가능)
+    const primaryCountry = selectedCountries[0];
+    console.log(`🎯 주 검색 국가: ${primaryCountry} (총 ${selectedCountries.length}개국 선택됨)`);
+
     // ========== Elasticsearch 캐시 우선 로직 시작 ==========
     const searchParameters = {
-      country,
+      country: primaryCountry,        // 주 검색 국가
+      countries: selectedCountries.join(','), // 선택된 모든 국가 목록
       keyword,
       searchScope,
       categories,
@@ -647,8 +704,35 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
       startDate,
       endDate,
       videoLength,
-      maxResults: finalMaxResults
+      maxResults: finalMaxResults,
+      // 날짜 범위 정보 추가
+      publishedAfter: null,
+      publishedBefore: null
     };
+    
+    // 날짜 범위 정보 추가 (Elasticsearch 캐시 비교용)
+    if (uploadPeriod) {
+      const dateRange = getDateRange(uploadPeriod);
+      searchParameters.publishedAfter = dateRange.publishedAfter;
+      searchParameters.publishedBefore = dateRange.publishedBefore;
+    } else if (startDate || endDate) {
+      if (startDate) {
+        try {
+          const startDateTime = new Date(startDate + 'T00:00:00.000Z');
+          searchParameters.publishedAfter = startDateTime.toISOString();
+        } catch (e) {
+          console.warn('시작일 파싱 오류:', e.message);
+        }
+      }
+      if (endDate) {
+        try {
+          const endDateTime = new Date(endDate + 'T23:59:59.999Z');
+          searchParameters.publishedBefore = endDateTime.toISOString();
+        } catch (e) {
+          console.warn('종료일 파싱 오류:', e.message);
+        }
+      }
+    }
     
     // 1단계: 캐시 히트 확인
     console.log('🔍 Elasticsearch 캐시 확인 중...');
@@ -701,28 +785,26 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
       order: 'viewCount'
     };
 
+    // primaryCountry는 이미 위에서 선언되었으므로 사용만 하기
+    
     // 국가별 지역 코드 설정 (전세계가 아닌 경우에만)
-    if (country !== 'worldwide') {
-      const regionCode = getCountryCode(country);
+    if (primaryCountry !== 'worldwide') {
+      const regionCode = getCountryCode(primaryCountry);
       if (regionCode) {
         searchParams.regionCode = regionCode;
-        console.log(`✅ 지역 코드 설정: ${country} → ${regionCode}`);
+        console.log(`✅ 지역 코드 설정: ${primaryCountry} → ${regionCode}`);
       } else {
-        console.log(`⚠️ 경고: '${country}' 국가의 regionCode를 찾을 수 없어 전세계 검색으로 진행합니다.`);
-        // regionCode가 null인 경우 명시적으로 제거
-        delete searchParams.regionCode;
+        console.log(`⚠️ 경고: '${primaryCountry}' 국가의 regionCode를 찾을 수 없어 전세계 검색으로 진행합니다.`);
       }
     } else {
       console.log('🌍 전세계 검색: regionCode 없이 진행');
-      // 전세계 검색 시 regionCode 명시적으로 제거
-      delete searchParams.regionCode;
     }
 
-    // 언어 설정 (국가별 기본 언어)
-    const languageCode = getLanguageCode(country);
+    // 언어 설정 (주 검색 국가의 기본 언어)
+    const languageCode = getLanguageCode(primaryCountry);
     if (languageCode) {
       searchParams.relevanceLanguage = languageCode;
-      console.log(`🌐 언어 설정: ${country} → ${languageCode}`);
+      console.log(`🌐 언어 설정: ${primaryCountry} → ${languageCode}`);
     }
 
     // 키워드 설정
@@ -863,17 +945,13 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
        const maxRetries = apiKeyManager.apiKeys.length;
        
        while (retryCount < maxRetries) {
-         try {
-           currentApiKey = apiKeyManager.getCurrentKey();
-           const youtube = google.youtube({ 
-             version: 'v3', 
-             auth: currentApiKey.key,
-             timeout: 30000 // 30초 타임아웃
-           });
-           response = await youtube.search.list(searchParams);
-           break; // 성공하면 루프 종료
-         } catch (apiError) {
-           console.error(`YouTube API 오류 (${currentApiKey.name}):`, apiError.message);
+                 try {
+          const youtubeInstance = apiKeyManager.getYouTubeInstance();
+          currentApiKey = youtubeInstance.currentKey;
+          response = await youtubeInstance.youtube.search.list(searchParams);
+          break; // 성공하면 루프 종료
+        } catch (apiError) {
+          console.error(`YouTube API 오류 (${currentApiKey.name}):`, apiError.message);
            
            // 할당량 초과 오류인 경우 다음 키로 전환
            if (apiError.message.includes('quota') || apiError.message.includes('quotaExceeded')) {
@@ -976,13 +1054,9 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
       
       while (detailRetryCount < detailMaxRetries) {
         try {
-          const currentDetailKey = apiKeyManager.getCurrentKey();
-          const youtube = google.youtube({ 
-            version: 'v3', 
-            auth: currentDetailKey.key,
-            timeout: 30000 // 30초 타임아웃
-          });
-          videoDetails = await youtube.videos.list({
+          const youtubeInstance = apiKeyManager.getYouTubeInstance();
+          const currentDetailKey = youtubeInstance.currentKey;
+          videoDetails = await youtubeInstance.youtube.videos.list({
             part: 'snippet,statistics,contentDetails',
             id: videoIds.join(',')
           });
@@ -1263,6 +1337,7 @@ app.post('/api/download-excel', async (req, res) => {
         '채널 ID': result.youtube_channel_id || '',
         '동영상 제목': result.title || '',
         '카테고리': result.primary_category || '',
+        '국가': result.country || '',
         '업로드일': result.status_date ? new Date(result.status_date).toLocaleDateString('ko-KR') : '',
         '조회수': parseInt(result.daily_view_count || 0).toLocaleString(),
         '구독자': formatSubscriberCountForExcel(result.subscriber_count || 0),
@@ -1286,6 +1361,7 @@ app.post('/api/download-excel', async (req, res) => {
       { wch: 20 }, // 채널 ID
       { wch: 40 }, // 동영상 제목
       { wch: 15 }, // 카테고리
+      { wch: 12 }, // 국가
       { wch: 12 }, // 업로드일
       { wch: 12 }, // 조회수
       { wch: 12 }, // 구독자
@@ -1405,13 +1481,13 @@ function formatVideoLengthForExcel(category) {
 
 // 헬퍼 함수들
 function getCountryCode(country) {
-  // YouTube API가 공식 지원하는 regionCode 목록 (안전성 검증된 국가만)
+  // YouTube API가 공식 지원하는 regionCode 목록 (25개국 완전 지원)
   const countryMap = {
     'worldwide': null, // 전세계 검색 시 regionCode 없음
     'korea': 'KR',     // ✅ 한국 - 안정적
     'usa': 'US',       // ✅ 미국 - 안정적
     'japan': 'JP',     // ✅ 일본 - 안정적
-    'china': null,     // ❌ 중국 - YouTube 접근 제한으로 null 처리
+    'china': 'CN',     // ✅ 중국 - 지원 추가
     'uk': 'GB',        // ✅ 영국 - 안정적
     'germany': 'DE',   // ✅ 독일 - 안정적
     'france': 'FR',    // ✅ 프랑스 - 안정적
@@ -1420,9 +1496,22 @@ function getCountryCode(country) {
     'india': 'IN',     // ✅ 인도 - 안정적
     'brazil': 'BR',    // ✅ 브라질 - 안정적
     'mexico': 'MX',    // ✅ 멕시코 - 안정적
-    'russia': null,    // ❌ 러시아 - YouTube 서비스 제한으로 null 처리
+    'russia': 'RU',    // ✅ 러시아 - 지원 추가
     'italy': 'IT',     // ✅ 이탈리아 - 안정적
-    'spain': 'ES'      // ✅ 스페인 - 안정적
+    'spain': 'ES',     // ✅ 스페인 - 안정적
+    // 아시아-태평양 추가 국가들
+    'thailand': 'TH',  // ✅ 태국 - 지원 추가
+    'vietnam': 'VN',   // ✅ 베트남 - 지원 추가
+    'indonesia': 'ID', // ✅ 인도네시아 - 지원 추가
+    // 남미 추가 국가들
+    'argentina': 'AR', // ✅ 아르헨티나 - 지원 추가
+    'colombia': 'CO',  // ✅ 콜롬비아 - 지원 추가
+    // 중동 & 아프리카 추가 국가들
+    'saudi': 'SA',     // ✅ 사우디아라비아 - 지원 추가
+    'uae': 'AE',       // ✅ UAE - 지원 추가
+    'southafrica': 'ZA', // ✅ 남아프리카공화국 - 지원 추가
+    'nigeria': 'NG',   // ✅ 나이지리아 - 지원 추가
+    'egypt': 'EG'      // ✅ 이집트 - 지원 추가
   };
   
   const code = countryMap[country.toLowerCase()];
@@ -1483,12 +1572,26 @@ function getDateRange(period) {
   const now = new Date();
   let publishedAfter = null;
   
+  console.log(`업로드 기간 설정: ${period}`);
+  
   switch (period) {
     case '1day':
       publishedAfter = new Date(now.getTime() - 24 * 60 * 60 * 1000);
       break;
+    case '2days':
+      publishedAfter = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000);
+      break;
+    case '3days':
+      publishedAfter = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
+      break;
     case '1week':
       publishedAfter = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      break;
+    case '2weeks':
+      publishedAfter = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+      break;
+    case '3weeks':
+      publishedAfter = new Date(now.getTime() - 21 * 24 * 60 * 60 * 1000);
       break;
     case '1month':
       publishedAfter = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
@@ -1531,10 +1634,16 @@ function getDateRange(period) {
       break;
   }
   
-  return {
+  const result = {
     publishedAfter: publishedAfter ? publishedAfter.toISOString() : null,
     publishedBefore: null
   };
+  
+  if (publishedAfter) {
+    console.log(`업로드 기간 필터링 적용됨: ${publishedAfter.toISOString()} 이후`);
+  }
+  
+  return result;
 }
 
 // YouTube duration (ISO 8601)을 초로 변환하는 함수
@@ -1574,13 +1683,9 @@ function matchesVideoLength(videoLengthCategory, selectedLengths) {
 // 채널 구독자 수 가져오기
 async function getChannelSubscriberCount(channelId) {
   try {
-    const currentKey = apiKeyManager.getCurrentKey();
-    const youtube = google.youtube({ 
-      version: 'v3', 
-      auth: currentKey.key,
-      timeout: 30000 // 30초 타임아웃
-    });
-    const channelResponse = await youtube.channels.list({
+    const youtubeInstance = apiKeyManager.getYouTubeInstance();
+    const currentKey = youtubeInstance.currentKey;
+    const channelResponse = await youtubeInstance.youtube.channels.list({
       part: 'statistics',
       id: channelId
     });

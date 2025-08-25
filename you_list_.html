@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -482,20 +480,20 @@
             table-layout: fixed; /* 컬럼 width 고정 */
         }
 
-        /* 각 컬럼의 고정 width 설정 (12개 컬럼) */
+        /* 각 컬럼의 고정 width 설정 */
         .results-table th:nth-child(1),
         .results-table td:nth-child(1) {
-            width: 70px; /* 썸네일 */
+            width: 90px; /* 썸네일 */
         }
         
         .results-table th:nth-child(2),
         .results-table td:nth-child(2) {
-            width: 180px; /* 채널명 */
+            width: 150px; /* 채널명 */
         }
         
         .results-table th:nth-child(3),
         .results-table td:nth-child(3) {
-            width: 350px; /* 영상제목 (가장 넓게) */
+            width: 250px; /* 영상제목 */
         }
         
         .results-table th:nth-child(4),
@@ -505,41 +503,36 @@
         
         .results-table th:nth-child(5),
         .results-table td:nth-child(5) {
-            width: 80px; /* 국가 */
+            width: 120px; /* 현지시간 */
         }
         
         .results-table th:nth-child(6),
         .results-table td:nth-child(6) {
-            width: 130px; /* 업로드일 */
+            width: 120px; /* 한국시간 */
         }
         
         .results-table th:nth-child(7),
         .results-table td:nth-child(7) {
-            width: 130px; /* 한국시간 */
+            width: 100px; /* 조회수 */
         }
         
         .results-table th:nth-child(8),
         .results-table td:nth-child(8) {
-            width: 100px; /* 조회수 */
+            width: 80px; /* 구독자 */
         }
         
         .results-table th:nth-child(9),
         .results-table td:nth-child(9) {
-            width: 90px; /* 구독자 */
+            width: 60px; /* 링크 */
         }
         
         .results-table th:nth-child(10),
         .results-table td:nth-child(10) {
-            width: 60px; /* 링크 */
+            width: 80px; /* 재생시간 */
         }
         
         .results-table th:nth-child(11),
         .results-table td:nth-child(11) {
-            width: 90px; /* 재생시간 */
-        }
-        
-        .results-table th:nth-child(12),
-        .results-table td:nth-child(12) {
             width: 60px; /* 썸네일 다운로드 */
         }
         
@@ -757,25 +750,53 @@
             color: #495057;
         }
 
-        /* 업로드 날짜 컬럼 두 줄 표시 */
-        .upload-date {
+        /* 시간 컬럼 3줄 표시 */
+        .time-display {
             display: flex;
             flex-direction: column;
             align-items: center;
-            line-height: 1.2;
+            line-height: 1.1;
+            font-size: 0.8em;
         }
         
-        .upload-date .year {
+        .time-display .date-line {
             font-weight: 600;
-            font-size: 0.9em;
             color: #333;
+            margin-bottom: 1px;
         }
         
-        .upload-date .month-day {
-            font-weight: 600;
+        .time-display .day-line {
+            font-weight: 500;
+            color: #666;
             font-size: 0.9em;
-            color: #333;
-            margin-top: 2px;
+            margin-bottom: 1px;
+        }
+        
+        .time-display .time-line {
+            font-weight: 500;
+            color: #888;
+            font-size: 0.85em;
+        }
+        
+        /* 떡상률에 따른 시간 스타일 */
+        .time-display .time-line.viral-45 {
+            color: red !important;
+            font-weight: bold !important;
+        }
+        
+        .time-display .time-line.viral-40 {
+            color: hotpink !important;
+            font-weight: bold !important;
+        }
+        
+        .time-display .time-line.viral-30 {
+            color: orange !important;
+            font-weight: bold !important;
+        }
+        
+        .time-display .time-line.viral-20 {
+            color: skyblue !important;
+            font-weight: bold !important;
         }
 
         @media (max-width: 768px) {
@@ -851,338 +872,37 @@
             
             .results-table th:nth-child(5),
             .results-table td:nth-child(5) {
-                width: 80px; /* 업로드일 */
+                width: 90px; /* 현지시간 */
             }
             
             .results-table th:nth-child(6),
             .results-table td:nth-child(6) {
-                width: 90px; /* 조회수 */
+                width: 90px; /* 한국시간 */
             }
             
             .results-table th:nth-child(7),
             .results-table td:nth-child(7) {
-                width: 70px; /* 구독자 */
+                width: 80px; /* 조회수 */
             }
             
             .results-table th:nth-child(8),
             .results-table td:nth-child(8) {
-                width: 50px; /* 링크 */
+                width: 70px; /* 구독자 */
             }
             
             .results-table th:nth-child(9),
             .results-table td:nth-child(9) {
-                width: 70px; /* 재생시간 */
+                width: 50px; /* 링크 */
             }
             
             .results-table th:nth-child(10),
             .results-table td:nth-child(10) {
+                width: 60px; /* 재생시간 */
+            }
+            
+            .results-table th:nth-child(11),
+            .results-table td:nth-child(11) {
                 width: 50px; /* 썸네일 다운로드 */
-            }
-        }
-        
-        /* 듀얼 타임존 컬럼 스타일 */
-        .upload-date.home-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2em;
-        }
-        
-        .upload-date.home-icon span {
-            cursor: help;
-        }
-        
-        /* 상세 시간 표시 스타일 */
-        .upload-date.detailed-time {
-            text-align: center;
-            line-height: 1.2;
-        }
-        
-        .upload-date.detailed-time .date-part {
-            font-size: 0.9em;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        .upload-date.detailed-time .time-part {
-            font-size: 0.8em;
-            color: #666;
-            margin-top: 2px;
-        }
-        
-        /* 한국시간 컬럼 헤더는 기본 테이블 헤더 스타일 사용 */
-        
-        /* 고정 컬럼 크기 스타일 */
-        .results-table {
-            table-layout: fixed;
-            width: 100%;
-        }
-        
-        .results-table th,
-        .results-table td {
-            height: 60px;
-            vertical-align: middle;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            padding: 8px;
-        }
-        
-        /* 각 컬럼별 고정 너비 */
-        .results-table th:nth-child(1),  /* 썸네일 */
-        .results-table td:nth-child(1) {
-            width: 80px;
-        }
-        
-        .results-table th:nth-child(2),  /* 채널명 */
-        .results-table td:nth-child(2) {
-            width: 150px;
-        }
-        
-        .results-table th:nth-child(3),  /* 영상제목 */
-        .results-table td:nth-child(3) {
-            width: 250px;
-            white-space: normal;
-            line-height: 1.3;
-        }
-        
-        .results-table th:nth-child(4),  /* 카테고리 */
-        .results-table td:nth-child(4) {
-            width: 120px;
-        }
-        
-        .results-table th:nth-child(5),  /* 국가 */
-        .results-table td:nth-child(5) {
-            width: 80px;
-        }
-        
-        .results-table th:nth-child(6),  /* 업로드일 */
-        .results-table td:nth-child(6) {
-            width: 90px;
-        }
-        
-        .results-table th:nth-child(7),  /* 한국시간 */
-        .results-table td:nth-child(7) {
-            width: 120px;
-        }
-        
-        .results-table th:nth-child(8),  /* 조회수 */
-        .results-table td:nth-child(8) {
-            width: 90px;
-        }
-        
-        .results-table th:nth-child(9),  /* 구독자 */
-        .results-table td:nth-child(9) {
-            width: 80px;
-        }
-        
-        .results-table th:nth-child(10), /* 링크 */
-        .results-table td:nth-child(10) {
-            width: 50px;
-        }
-        
-        .results-table th:nth-child(11), /* 재생시간 */
-        .results-table td:nth-child(11) {
-            width: 70px;
-        }
-        
-        .results-table th:nth-child(12), /* 다운로드 */
-        .results-table td:nth-child(12) {
-            width: 60px;
-        }
-        
-        /* 국가 컬럼 스타일 */
-        .country-name {
-            font-size: 0.9em;
-            font-weight: 500;
-            color: #444;
-            text-align: center;
-            display: block;
-        }
-        
-        /* 결과내 재검색 필터 스타일 */
-        .results-filter-container {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border: 2px solid #dee2e6;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .filter-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 10px 10px 0 0;
-        }
-        
-        .filter-header h3 {
-            margin: 0;
-            font-size: 1.1em;
-            font-weight: 600;
-        }
-        
-        .toggle-filter-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85em;
-            transition: all 0.3s ease;
-        }
-        
-        .toggle-filter-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        .filter-content {
-            padding: 20px;
-        }
-        
-        .filter-stats {
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .filter-stats p {
-            margin: 0;
-            color: #495057;
-            font-weight: 500;
-        }
-        
-        .timezone-filter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .filter-group {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #e9ecef;
-            transition: all 0.3s ease;
-        }
-        
-        .filter-group:hover {
-            border-color: #667eea;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
-        }
-        
-        .filter-group h4 {
-            margin: 0 0 10px 0;
-            font-size: 0.9em;
-            color: #495057;
-            font-weight: 600;
-        }
-        
-        .filter-group label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 500;
-            color: #6c757d;
-        }
-        
-        .filter-group input[type="checkbox"] {
-            margin-right: 8px;
-            transform: scale(1.1);
-        }
-        
-        .filter-group span {
-            font-size: 0.85em;
-            color: #667eea;
-            font-weight: 600;
-        }
-        
-        .filter-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .apply-filter-btn {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .apply-filter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-        }
-        
-        .reset-filter-btn {
-            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .reset-filter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
-        }
-        
-        .best-times-btn {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .best-times-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
-        }
-        
-        #filteredResultsInfo {
-            color: #667eea;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-        
-        .filter-content.collapsed {
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            .timezone-filter-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .filter-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .filter-header {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
             }
         }
     </style>
@@ -1197,266 +917,140 @@
         <form class="search-form" id="searchForm">
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="country">국가 선택 (50개국 글로벌 커버리지)</label>
+                    <label for="country">국가 선택 (25개국 글로벌 커버리지)</label>
                     <div class="category-selector">
                         <div class="category-display" id="countryDisplay" tabindex="0">대한민국 선택됨</div>
                         <div class="category-dropdown" id="countryDropdown">
                             <div class="category-header">
                                 <input type="checkbox" id="selectAllCountries">
-                                <label for="selectAllCountries">🌍 모든 국가</label>
+                                <label for="selectAllCountries">모든 국가</label>
                             </div>
                             <div class="category-options">
-                                <!-- 1. 모든 국가 (최상단) 
+                                <!-- 글로벌 -->
                                 <div class="category-item">
                                     <input type="checkbox" id="country_WORLD" name="countries" value="worldwide">
-                                    <label for="country_WORLD">🌍 모든 국가</label>
-                                </div> -->
-                                <!-- 2. 대한민국 (두 번째) -->
+                                    <label for="country_WORLD">🌍 전세계</label>
+                                </div>
+                                <!-- 아시아-태평양 -->
+                                <div class="category-item" style="margin-top: 10px; font-weight: bold; color: #667eea;">
+                                    <span>🌏 아시아-태평양</span>
+                                </div>
                                 <div class="category-item">
                                     <input type="checkbox" id="country_KR" name="countries" value="korea" checked>
                                     <label for="country_KR">🇰🇷 대한민국</label>
                                 </div>
-                                <!-- 3. RPM 순위 1위: 호주 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_AU" name="countries" value="australia">
-                                    <label for="country_AU">🇦🇺 호주</label>
-                                </div>
-                                <!-- 4. RPM 순위 2위: 미국 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_US" name="countries" value="usa">
-                                    <label for="country_US">🇺🇸 미국</label>
-                                </div>
-                                <!-- 5. RPM 순위 3위: 캐나다 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_CA" name="countries" value="canada">
-                                    <label for="country_CA">🇨🇦 캐나다</label>
-                                </div>
-                                <!-- 6. RPM 순위 4위: 뉴질랜드 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_NZ" name="countries" value="newzealand">
-                                    <label for="country_NZ">🇳🇿 뉴질랜드</label>
-                                </div>
-                                <!-- 7. RPM 순위 5위: 스위스 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_CH" name="countries" value="switzerland">
-                                    <label for="country_CH">🇨🇭 스위스</label>
-                                </div>
-                                <!-- 8. RPM 순위 6위: 영국 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_GB" name="countries" value="uk">
-                                    <label for="country_GB">🇬🇧 영국</label>
-                                </div>
-                                <!-- 9. RPM 순위 7위: 노르웨이 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_NO" name="countries" value="norway">
-                                    <label for="country_NO">🇳🇴 노르웨이</label>
-                                </div>
-                                <!-- 10. RPM 순위 8위: 독일 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_DE" name="countries" value="germany">
-                                    <label for="country_DE">🇩🇪 독일</label>
-                                </div>
-                                <!-- 11. RPM 순위 9위: 아일랜드 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_IE" name="countries" value="ireland">
-                                    <label for="country_IE">🇮🇪 아일랜드</label>
-                                </div>
-                                <!-- 12. RPM 순위 10위: 네덜란드 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_NL" name="countries" value="netherlands">
-                                    <label for="country_NL">🇳🇱 네덜란드</label>
-                                </div>
-                                <!-- 13. RPM 순위 11위: 덴마크 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_DK" name="countries" value="denmark">
-                                    <label for="country_DK">🇩🇰 덴마크</label>
-                                </div>
-                                <!-- 14. RPM 순위 12위: 홍콩 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_HK" name="countries" value="hongkong">
-                                    <label for="country_HK">🇭🇰 홍콩</label>
-                                </div>
-                                <!-- 15. RPM 순위 13위: 스웨덴 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_SE" name="countries" value="sweden">
-                                    <label for="country_SE">🇸🇪 스웨덴</label>
-                                </div>
-                                <!-- 16. RPM 순위 14위: 핀란드 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_FI" name="countries" value="finland">
-                                    <label for="country_FI">🇫🇮 핀란드</label>
-                                </div>
-                                <!-- 17. RPM 순위 15위: 싱가포르 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_SG" name="countries" value="singapore">
-                                    <label for="country_SG">🇸🇬 싱가포르</label>
-                                </div>
-                                <!-- 18. RPM 순위 16위: 오스트리아 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_AT" name="countries" value="austria">
-                                    <label for="country_AT">🇦🇹 오스트리아</label>
-                                </div>
-                                <!-- 19. RPM 순위 17위: 룩셈부르크 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_LU" name="countries" value="luxembourg">
-                                    <label for="country_LU">🇱🇺 룩셈부르크</label>
-                                </div>
-                                <!-- 20. RPM 순위 18위: 벨기에 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_BE" name="countries" value="belgium">
-                                    <label for="country_BE">🇧🇪 벨기에</label>
-                                </div>
-                                <!-- 21. RPM 순위 19위: 프랑스 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_FR" name="countries" value="france">
-                                    <label for="country_FR">🇫🇷 프랑스</label>
-                                </div>
-                                <!-- 22. RPM 순위 20위: 이탈리아 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_IT" name="countries" value="italy">
-                                    <label for="country_IT">🇮🇹 이탈리아</label>
-                                </div>
-                                <!-- 23. RPM 순위 21위: 스페인 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_ES" name="countries" value="spain">
-                                    <label for="country_ES">🇪🇸 스페인</label>
-                                </div>
-                                <!-- 24. RPM 순위 22위: 체코 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_CZ" name="countries" value="czechrepublic">
-                                    <label for="country_CZ">🇨🇿 체코</label>
-                                </div>
-                                <!-- 25. RPM 순위 23위: 이스라엘 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_IL" name="countries" value="israel">
-                                    <label for="country_IL">🇮🇱 이스라엘</label>
-                                </div>
-                                <!-- 26. RPM 순위 24위: 포르투갈 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_PT" name="countries" value="portugal">
-                                    <label for="country_PT">🇵🇹 포르투갈</label>
-                                </div>
-                                <!-- 27. RPM 순위 25위: 일본 -->
                                 <div class="category-item">
                                     <input type="checkbox" id="country_JP" name="countries" value="japan">
                                     <label for="country_JP">🇯🇵 일본</label>
                                 </div>
-                                <!-- 28. RPM 순위 26위: 아랍에미리트 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_AE" name="countries" value="uae">
-                                    <label for="country_AE">🇦🇪 아랍에미리트</label>
-                                </div>
-                                <!-- 29. RPM 순위 27위: 카타르 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_QA" name="countries" value="qatar">
-                                    <label for="country_QA">🇶🇦 카타르</label>
-                                </div>
-                                <!-- 30. RPM 순위 28위: 쿠웨이트 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_KW" name="countries" value="kuwait">
-                                    <label for="country_KW">🇰🇼 쿠웨이트</label>
-                                </div>
-                                <!-- 31. RPM 순위 29위: 사우디아라비아 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_SA" name="countries" value="saudi">
-                                    <label for="country_SA">🇸🇦 사우디아라비아</label>
-                                </div>
-                                <!-- 32. RPM 순위 30위: 브라질 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_BR" name="countries" value="brazil">
-                                    <label for="country_BR">🇧🇷 브라질</label>
-                                </div>
-                                <!-- 33. RPM 순위 31위: 폴란드 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_PL" name="countries" value="poland">
-                                    <label for="country_PL">🇵🇱 폴란드</label>
-                                </div>
-                                <!-- 34. RPM 순위 32위: 남아프리카공화국 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_ZA" name="countries" value="southafrica">
-                                    <label for="country_ZA">🇿🇦 남아프리카공화국</label>
-                                </div>
-                                <!-- 35. RPM 순위 33위: 터키 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_TR" name="countries" value="turkey">
-                                    <label for="country_TR">🇹🇷 터키</label>
-                                </div>
-                                <!-- 36. RPM 순위 35위: 헝가리 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_HU" name="countries" value="hungary">
-                                    <label for="country_HU">🇭🇺 헝가리</label>
-                                </div>
-                                <!-- 37. RPM 순위 36위: 수리남 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_SR" name="countries" value="suriname">
-                                    <label for="country_SR">🇸🇷 수리남</label>
-                                </div>
-                                <!-- 38. RPM 순위 37위: 멕시코 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_MX" name="countries" value="mexico">
-                                    <label for="country_MX">🇲🇽 멕시코</label>
-                                </div>
-                                <!-- 39. RPM 순위 38위: 콜롬비아 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_CO" name="countries" value="colombia">
-                                    <label for="country_CO">🇨🇴 콜롬비아</label>
-                                </div>
-                                <!-- 40. RPM 순위 39위: 아르헨티나 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_AR" name="countries" value="argentina">
-                                    <label for="country_AR">🇦🇷 아르헨티나</label>
-                                </div>
-                                <!-- 41. RPM 순위 40위: 모잠비크 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_MZ" name="countries" value="mozambique">
-                                    <label for="country_MZ">🇲🇿 모잠비크</label>
-                                </div>
-                                <!-- 42. RPM 순위 41위: 인도네시아 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_ID" name="countries" value="indonesia">
-                                    <label for="country_ID">🇮🇩 인도네시아</label>
-                                </div>
-                                <!-- 43. RPM 순위 42위: 베트남 -->
-                                <div class="category-item">
-                                    <input type="checkbox" id="country_VN" name="countries" value="vietnam">
-                                    <label for="country_VN">🇻🇳 베트남</label>
-                                </div>
-                                <!-- 44. RPM 순위 43위: 인도 -->
                                 <div class="category-item">
                                     <input type="checkbox" id="country_IN" name="countries" value="india">
                                     <label for="country_IN">🇮🇳 인도</label>
                                 </div>
-                                <!-- 45. RPM 순위 44위: 파키스탄 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_PK" name="countries" value="pakistan">
-                                    <label for="country_PK">🇵🇰 파키스탄</label>
+                                    <input type="checkbox" id="country_TH" name="countries" value="thailand">
+                                    <label for="country_TH">🇹🇭 태국</label>
                                 </div>
-                                <!-- 46. RPM 순위 45위: 방글라데시 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_BD" name="countries" value="bangladesh">
-                                    <label for="country_BD">🇧🇩 방글라데시</label>
+                                    <input type="checkbox" id="country_VN" name="countries" value="vietnam">
+                                    <label for="country_VN">🇻🇳 베트남</label>
                                 </div>
-                                <!-- 47. RPM 순위 46위: 자메이카 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_JM" name="countries" value="jamaica">
-                                    <label for="country_JM">🇯🇲 자메이카</label>
+                                    <input type="checkbox" id="country_ID" name="countries" value="indonesia">
+                                    <label for="country_ID">🇮🇩 인도네시아</label>
                                 </div>
-                                <!-- 48. RPM 순위 47위: 리비아 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_LY" name="countries" value="libya">
-                                    <label for="country_LY">🇱🇾 리비아</label>
+                                    <input type="checkbox" id="country_AU" name="countries" value="australia">
+                                    <label for="country_AU">🇦🇺 호주</label>
                                 </div>
-                                <!-- 49. RPM 순위 48위: 아이슬란드 -->
+                                <!-- 북미 -->
+                                <div class="category-item" style="margin-top: 10px; font-weight: bold; color: #667eea;">
+                                    <span>🌎 북미</span>
+                                </div>
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_IS" name="countries" value="iceland">
-                                    <label for="country_IS">🇮🇸 아이슬란드</label>
+                                    <input type="checkbox" id="country_US" name="countries" value="usa">
+                                    <label for="country_US">🇺🇸 미국</label>
                                 </div>
-                                <!-- 50. RPM 순위 49위: 스리랑카 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_LK" name="countries" value="srilanka">
-                                    <label for="country_LK">🇱🇰 스리랑카</label>
+                                    <input type="checkbox" id="country_CA" name="countries" value="canada">
+                                    <label for="country_CA">🇨🇦 캐나다</label>
                                 </div>
-                                <!-- 51. RPM 순위 50위: 중국 -->
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_MX" name="countries" value="mexico">
+                                    <label for="country_MX">🇲🇽 멕시코</label>
+                                </div>
+                                <!-- 유럽 -->
+                                <div class="category-item" style="margin-top: 10px; font-weight: bold; color: #667eea;">
+                                    <span>🇪🇺 유럽</span>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_GB" name="countries" value="uk">
+                                    <label for="country_GB">🇬🇧 영국</label>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_DE" name="countries" value="germany">
+                                    <label for="country_DE">🇩🇪 독일</label>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_FR" name="countries" value="france">
+                                    <label for="country_FR">🇫🇷 프랑스</label>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_ES" name="countries" value="spain">
+                                    <label for="country_ES">🇪🇸 스페인</label>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_IT" name="countries" value="italy">
+                                    <label for="country_IT">🇮🇹 이탈리아</label>
+                                </div>
+                                <!-- 남미 -->
+                                <div class="category-item" style="margin-top: 10px; font-weight: bold; color: #667eea;">
+                                    <span>🌎 남미</span>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_BR" name="countries" value="brazil">
+                                    <label for="country_BR">🇧🇷 브라질</label>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_AR" name="countries" value="argentina">
+                                    <label for="country_AR">🇦🇷 아르헨티나</label>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_CO" name="countries" value="colombia">
+                                    <label for="country_CO">🇨🇴 콜롬비아</label>
+                                </div>
+                                <!-- 중동 & 아프리카 -->
+                                <div class="category-item" style="margin-top: 10px; font-weight: bold; color: #667eea;">
+                                    <span>🌍 중동 & 아프리카</span>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_SA" name="countries" value="saudi">
+                                    <label for="country_SA">🇸🇦 사우디아라비아</label>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_AE" name="countries" value="uae">
+                                    <label for="country_AE">🇦🇪 UAE</label>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_ZA" name="countries" value="southafrica">
+                                    <label for="country_ZA">🇿🇦 남아프리카공화국</label>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_NG" name="countries" value="nigeria">
+                                    <label for="country_NG">🇳🇬 나이지리아</label>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_EG" name="countries" value="egypt">
+                                    <label for="country_EG">🇪🇬 이집트</label>
+                                </div>
+                                <!-- 기타 -->
+                                <div class="category-item" style="margin-top: 10px; font-weight: bold; color: #667eea;">
+                                    <span>기타</span>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="country_RU" name="countries" value="russia">
+                                    <label for="country_RU">🇷🇺 러시아</label>
+                                </div>
                                 <div class="category-item">
                                     <input type="checkbox" id="country_CN" name="countries" value="china">
                                     <label for="country_CN">🇨🇳 중국</label>
@@ -1600,12 +1194,8 @@
                     <label for="uploadPeriod">업로드 기간</label>
                     <select id="uploadPeriod" name="uploadPeriod">
                         <option value="">전체 기간</option>
-                        <option value="1day">1일(⏫24시간내10만)</option>
-                        <option value="2days">2일(⏫실시간떡상중)</option>
-                        <option value="3days">3일(⏫떡상중)</option>
+                        <option value="1day">1일</option>
                         <option value="1week">1주일</option>
-                        <option value="2weeks">2주일</option>
-                        <option value="3weeks">3주일</option>
                         <option value="1month">1개월</option>
                         <option value="3months">3개월</option>
                         <option value="6months">6개월</option>
@@ -1707,10 +1297,177 @@
                 </div>
             </div>
 
-
+            <!-- 업로드 시간대 필터 -->
+            <div class="video-length-section">
+                <div class="section-header">
+                    <label class="section-label">🕐 업로드 시간대 필터</label>
+                    <div class="select-controls">
+                        <div class="select-all-container">
+                            <input type="checkbox" id="selectAllTimezone">
+                            <label for="selectAllTimezone">모두 선택</label>
+                        </div>
+                        <div class="select-group-container">
+                            <input type="checkbox" id="selectGoldenTime" checked>
+                            <label for="selectGoldenTime">골든타임</label>
+                        </div>
+                        <div class="select-group-container">
+                            <input type="checkbox" id="selectPeakTime">
+                            <label for="selectPeakTime">피크타임</label>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px; color: #666; font-size: 0.9em;">
+                    업로드된 시간대에 따라 떡상 확률이 최대 500% 차이납니다! "황금의 첫 2시간" 법칙 적용
+                </div>
+                <div class="video-length-grid">
+                    <!-- 글로벌 & 범용 시간대 -->
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneGlobalSweet" name="uploadTimezone" value="global_sweet" checked>
+                        <label for="timezoneGlobalSweet">🌍 글로벌 스윗스팟<br><span class="duration-desc">(14:00-16:00 EST / 떡상률 42%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneShortsPeak" name="uploadTimezone" value="shorts_peak" checked>
+                        <label for="timezoneShortsPeak">📱 쇼츠 피크타임<br><span class="duration-desc">(07:00-09:00, 12:00-13:00, 18:00-20:00 / 떡상률 45%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneWeekend" name="uploadTimezone" value="weekend" checked>
+                        <label for="timezoneWeekend">🎉 주말 오후 타임<br><span class="duration-desc">(토일 14:00-18:00 / 떡상률 25%)</span></label>
+                    </div>
+                    
+                    <!-- 아시아-태평양 시간대 -->
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneKrGolden" name="uploadTimezone" value="kr_golden" checked>
+                        <label for="timezoneKrGolden">🇰🇷 한국 골든타임<br><span class="duration-desc">(18:00-23:00 KST / 떡상률 35%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneJpPrime" name="uploadTimezone" value="jp_prime">
+                        <label for="timezoneJpPrime">🇯🇵 일본 프라임타임<br><span class="duration-desc">(19:00-23:00 JST / 떡상률 24%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneInPrime" name="uploadTimezone" value="in_prime">
+                        <label for="timezoneInPrime">🇮🇳 인도 저녁시간<br><span class="duration-desc">(18:00-22:00 IST / 떡상률 25%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneThGolden" name="uploadTimezone" value="th_golden">
+                        <label for="timezoneThGolden">🇹🇭 태국 골든타임<br><span class="duration-desc">(19:00-23:00 ICT / 떡상률 23%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneVnEvening" name="uploadTimezone" value="vn_evening">
+                        <label for="timezoneVnEvening">🇻🇳 베트남 저녁시간<br><span class="duration-desc">(18:00-22:00 ICT / 떡상률 22%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneIdPrime" name="uploadTimezone" value="id_prime">
+                        <label for="timezoneIdPrime">🇮🇩 인도네시아 프라임<br><span class="duration-desc">(19:00-23:00 WIB / 떡상률 21%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneAuPrime" name="uploadTimezone" value="au_prime">
+                        <label for="timezoneAuPrime">🇦🇺 호주 프라임타임<br><span class="duration-desc">(19:00-23:00 AEST / 떡상률 26%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneCnEvening" name="uploadTimezone" value="cn_evening">
+                        <label for="timezoneCnEvening">🇨🇳 중국 저녁시간<br><span class="duration-desc">(19:00-23:00 CST / 떡상률 28%)</span></label>
+                    </div>
+                    
+                    <!-- 북미 시간대 -->
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneUsEast" name="uploadTimezone" value="us_east_prime">
+                        <label for="timezoneUsEast">🇺🇸 미국 동부 프라임<br><span class="duration-desc">(19:00-23:00 EST / 떡상률 28%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneUsWest" name="uploadTimezone" value="us_west_prime">
+                        <label for="timezoneUsWest">🇺🇸 미국 서부 프라임<br><span class="duration-desc">(19:00-23:00 PST / 떡상률 27%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneCaPrime" name="uploadTimezone" value="ca_prime">
+                        <label for="timezoneCaPrime">🇨🇦 캐나다 프라임타임<br><span class="duration-desc">(19:00-23:00 EST / 떡상률 26%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneMxPrime" name="uploadTimezone" value="mx_prime">
+                        <label for="timezoneMxPrime">🇲🇽 멕시코 프라임타임<br><span class="duration-desc">(20:00-24:00 CST / 떡상률 24%)</span></label>
+                    </div>
+                    
+                    <!-- 유럽 시간대 -->
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneGbPrime" name="uploadTimezone" value="gb_prime">
+                        <label for="timezoneGbPrime">🇬🇧 영국 프라임타임<br><span class="duration-desc">(19:00-23:00 GMT / 떡상률 26%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneDePrime" name="uploadTimezone" value="de_prime">
+                        <label for="timezoneDePrime">🇩🇪 독일 골든아워<br><span class="duration-desc">(18:00-22:00 CET / 떡상률 24%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneFrEvening" name="uploadTimezone" value="fr_evening">
+                        <label for="timezoneFrEvening">🇫🇷 프랑스 저녁시간<br><span class="duration-desc">(19:00-22:00 CET / 떡상률 23%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneEsPrime" name="uploadTimezone" value="es_prime">
+                        <label for="timezoneEsPrime">🇪🇸 스페인 프라임타임<br><span class="duration-desc">(20:00-24:00 CET / 떡상률 25%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneItPrime" name="uploadTimezone" value="it_prime">
+                        <label for="timezoneItPrime">🇮🇹 이탈리아 프라임<br><span class="duration-desc">(20:00-23:00 CET / 떡상률 23%)</span></label>
+                    </div>
+                    
+                    <!-- 남미 시간대 -->
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneBrPrime" name="uploadTimezone" value="br_prime">
+                        <label for="timezoneBrPrime">🇧🇷 브라질 프라임타임<br><span class="duration-desc">(20:00-23:00 BRT / 떡상률 27%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneArPrime" name="uploadTimezone" value="ar_prime">
+                        <label for="timezoneArPrime">🇦🇷 아르헨티나 피크<br><span class="duration-desc">(19:00-22:00 ART / 떡상률 21%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneCoPrime" name="uploadTimezone" value="co_prime">
+                        <label for="timezoneCoPrime">🇨🇴 콜롬비아 프라임<br><span class="duration-desc">(19:00-23:00 COT / 떡상률 22%)</span></label>
+                    </div>
+                    
+                    <!-- 중동 & 아프리카 시간대 -->
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneSaPrime" name="uploadTimezone" value="sa_prime">
+                        <label for="timezoneSaPrime">🇸🇦 사우디 프라임타임<br><span class="duration-desc">(20:00-24:00 AST / 떡상률 26%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneAePrime" name="uploadTimezone" value="ae_prime">
+                        <label for="timezoneAePrime">🇦🇪 UAE 골든타임<br><span class="duration-desc">(19:00-23:00 GST / 떡상률 25%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneZaPrime" name="uploadTimezone" value="za_prime">
+                        <label for="timezoneZaPrime">🇿🇦 남아공 프라임타임<br><span class="duration-desc">(19:00-23:00 SAST / 떡상률 24%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneNgPrime" name="uploadTimezone" value="ng_prime">
+                        <label for="timezoneNgPrime">🇳🇬 나이지리아 골든<br><span class="duration-desc">(19:00-23:00 WAT / 떡상률 23%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneEgPrime" name="uploadTimezone" value="eg_prime">
+                        <label for="timezoneEgPrime">🇪🇬 이집트 프라임타임<br><span class="duration-desc">(19:00-23:00 EET / 떡상률 22%)</span></label>
+                    </div>
+                    
+                    <!-- 기타 시간대 -->
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneRuPrime" name="uploadTimezone" value="ru_prime">
+                        <label for="timezoneRuPrime">🇷🇺 러시아 프라임타임<br><span class="duration-desc">(19:00-23:00 MSK / 떡상률 25%)</span></label>
+                    </div>
+                    
+                    <!-- 한국 세부 시간대 (기존) -->
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneKrLunch" name="uploadTimezone" value="kr_lunch">
+                        <label for="timezoneKrLunch">🍱 한국 점심 피크<br><span class="duration-desc">(11:00-14:00 KST / 떡상률 22%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneKrNight" name="uploadTimezone" value="kr_night">
+                        <label for="timezoneKrNight">🌙 한국 심야타임<br><span class="duration-desc">(23:00-02:00 KST / 떡상률 18%)</span></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="timezoneKrMorning" name="uploadTimezone" value="kr_morning">
+                        <label for="timezoneKrMorning">🚇 한국 출근시간<br><span class="duration-desc">(07:00-09:00 KST / 떡상률 15%)</span></label>
+                    </div>
+                </div>
+            </div>
 
             <button type="submit" class="search-btn">
-                🔍 검색하기
+                🔍 떡상 검색하기
             </button>
         </form>
 
@@ -1722,86 +1479,9 @@
         <div id="errorMessage" class="error-message" style="display: none;"></div>
 
         <div id="resultsContainer" class="results-container" style="display: none;">
-            <!-- 결과내 재검색 필터 -->
-            <div id="resultsFilterContainer" class="results-filter-container" style="display: none;">
-                <div class="filter-header">
-                    <h3>🔍 결과내 재검색 - 업로드 시간대 필터링</h3>
-                    <button id="toggleResultsFilter" class="toggle-filter-btn">필터 접기/펼치기</button>
-                </div>
-                <div id="resultsFilterContent" class="filter-content">
-                    <div class="filter-stats">
-                        <p id="filterStats">시간대별 동영상 분포를 분석 중...</p>
-                    </div>
-                    <div class="timezone-filter-grid">
-                        <div class="filter-group">
-                            <h4>📊 골든타임 (20-23시)</h4>
-                            <label>
-                                <input type="checkbox" id="filterPrimeTime" checked>
-                                <span id="primeTimeCount">0개</span>
-                            </label>
-                        </div>
-                        <div class="filter-group">
-                            <h4>🌅 아침시간 (06-09시)</h4>
-                            <label>
-                                <input type="checkbox" id="filterMorningCommute" checked>
-                                <span id="morningCommuteCount">0개</span>
-                            </label>
-                        </div>
-                        <div class="filter-group">
-                            <h4>🍱 점심시간 (12-14시)</h4>
-                            <label>
-                                <input type="checkbox" id="filterLunchTime" checked>
-                                <span id="lunchTimeCount">0개</span>
-                            </label>
-                        </div>
-                        <div class="filter-group">
-                            <h4>🌆 퇴근시간 (18-20시)</h4>
-                            <label>
-                                <input type="checkbox" id="filterEveningCommute" checked>
-                                <span id="eveningCommuteCount">0개</span>
-                            </label>
-                        </div>
-                        <div class="filter-group">
-                            <h4>🌙 심야시간 (23-02시)</h4>
-                            <label>
-                                <input type="checkbox" id="filterLateNight" checked>
-                                <span id="lateNightCount">0개</span>
-                            </label>
-                        </div>
-                        <div class="filter-group">
-                            <h4>💼 업무시간 (09-18시)</h4>
-                            <label>
-                                <input type="checkbox" id="filterWorkTime" checked>
-                                <span id="workTimeCount">0개</span>
-                            </label>
-                        </div>
-                        <div class="filter-group">
-                            <h4>🎉 주말</h4>
-                            <label>
-                                <input type="checkbox" id="filterWeekend" checked>
-                                <span id="weekendCount">0개</span>
-                            </label>
-                        </div>
-                        <div class="filter-group">
-                            <h4>📅 평일</h4>
-                            <label>
-                                <input type="checkbox" id="filterWeekday" checked>
-                                <span id="weekdayCount">0개</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="filter-actions">
-                        <button id="applyTimezoneFilter" class="apply-filter-btn">필터 적용</button>
-                        <button id="resetTimezoneFilter" class="reset-filter-btn">필터 리셋</button>
-                        <button id="selectBestTimes" class="best-times-btn">떡상 시간대만 선택</button>
-                    </div>
-                </div>
-            </div>
-            
             <div class="results-header">
                 <div class="results-info">
                     <span id="resultsCount">0</span>개의 결과가 검색되었습니다.
-                    <span id="filteredResultsInfo" style="display: none;"> (필터링된 결과: <span id="filteredCount">0</span>개)</span>
                 </div>
                 <div class="results-controls">
                     <div class="pagination-controls">
@@ -1828,12 +1508,11 @@
                     <thead>
                         <tr>
                             <th data-sort="thumbnail_url">👍</th>
-                            <th data-sort="youtube_channel_name" class="sortable">✨</th>
-                            <th data-sort="title" class="sortable">📽️</th>
-                            <th data-sort="primary_category" class="sortable">✂️</th>
-                            <th data-sort="country" class="sortable">🏳️‍🌈</th>
-                            <th data-sort="status_date" class="sortable" id="uploadDateHeader">🗓️</th>
-                            <th data-sort="korea_time" class="sortable" id="koreaTimeHeader">🏠</th>
+                            <th data-sort="youtube_channel_name" class="sortable">채널명</th>
+                            <th data-sort="title" class="sortable">영상제목</th>
+                            <th data-sort="primary_category" class="sortable">카테고리</th>
+                            <th data-sort="status_date" class="sortable">현지시간</th>
+                            <th data-sort="status_date" class="sortable">한국시간</th>
                             <th data-sort="daily_view_count" class="sortable">👓</th>
                             <th data-sort="subscriber_count" class="sortable">👪</th>
                             <th data-sort="vod_url">▶️</th>
@@ -1863,10 +1542,36 @@
             e.preventDefault();
             await performSearch();
         });
+        
+        console.log('✅ 문서 클릭 이벤트 리스너 등록 완료');
 
 
 
-        // 검색 범위 이벤트들은 initializeApp에서 등록됨
+        // 검색 범위 드롭다운 기능
+        document.getElementById('searchScopeDisplay').addEventListener('click', () => {
+            const dropdown = document.getElementById('searchScopeDropdown');
+            dropdown.classList.toggle('show');
+        });
+
+        // 모든 검색 범위 선택/해제
+        document.getElementById('selectAllSearchScope').addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]');
+            
+            searchScopeCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            updateSearchScopeDisplay();
+        });
+
+        // 개별 검색 범위 체크박스 이벤트
+        document.querySelectorAll('input[name="searchScope"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateSelectAllSearchScope();
+                updateSearchScopeDisplay();
+            });
+        });
 
         // 검색 범위 디스플레이 업데이트 함수
         function updateSearchScopeDisplay() {
@@ -1933,7 +1638,7 @@
                 }
             }
             
-            // 국가 드롭다운 처리 (새로 추가)
+            // 국가 드롭다운 처리 (수정됨)
             const countryDisplay = document.getElementById('countryDisplay');
             const countryDropdown = document.getElementById('countryDropdown');
             
@@ -1941,11 +1646,30 @@
                 const countrySelector = countryDisplay.closest('.category-selector');
                 if (countrySelector && !countrySelector.contains(e.target)) {
                     countryDropdown.classList.remove('show');
+                    console.log('💵 국가 드롭다운 닫기');
                 }
             }
         });
 
-        // 카테고리 이벤트들은 initializeApp에서 등록됨
+        // 모든 카테고리 선택/해제
+        document.getElementById('selectAllCategories').addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
+            
+            categoryCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            updateCategoryDisplay();
+        });
+
+        // 개별 카테고리 체크박스 이벤트
+        document.querySelectorAll('input[name="categories"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateSelectAllCategories();
+                updateCategoryDisplay();
+            });
+        });
 
         // 카테고리 디스플레이 업데이트 함수
         function updateCategoryDisplay() {
@@ -2329,298 +2053,6 @@
             }
         }
 
-        // 동영상 국가 감지 함수 (개선됨)
-        function detectVideoCountry(video) {
-            // 1. 검색 시 설정된 국가 정보가 있다면 우선 사용
-            if (video.country && video.country !== 'unknown') {
-                const countryNames = {
-                    'korea': '한국',
-                    'usa': '미국',
-                    'japan': '일본',
-                    'uk': '영국',
-                    'germany': '독일',
-                    'france': '프랑스',
-                    'canada': '캐나다',
-                    'australia': '호주',
-                    'india': '인도',
-                    'brazil': '브라질',
-                    'mexico': '멕시코',
-                    'italy': '이탈리아',
-                    'spain': '스페인',
-                    'china': '중국',
-                    'worldwide': '전세계'
-                };
-                return countryNames[video.country.toLowerCase()] || video.country;
-            }
-            
-            // 2. 채널명이나 제목에서 언어 패턴 분석
-            const koreanPattern = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
-            const japanesePattern = /[ひらがなカタカナ一-龯]/;
-            const chinesePattern = /[\u4e00-\u9fff]/;
-            
-            const title = video.title || '';
-            const channelName = video.youtube_channel_name || '';
-            const fullText = title + ' ' + channelName;
-            
-            if (koreanPattern.test(fullText)) {
-                return '한국';
-            } else if (japanesePattern.test(fullText)) {
-                return '일본';
-            } else if (chinesePattern.test(fullText)) {
-                return '중국';
-            }
-            
-            // 3. 기본값으로 현재 검색 국가 사용
-            if (typeof primarySearchCountry !== 'undefined' && primarySearchCountry) {
-                const countryNames = {
-                    'korea': '한국',
-                    'usa': '미국',
-                    'japan': '일본',
-                    'uk': '영국',
-                    'germany': '독일',
-                    'france': '프랑스',
-                    'canada': '캐나다',
-                    'australia': '호주',
-                    'india': '인도',
-                    'brazil': '브라질',
-                    'mexico': '멕시코',
-                    'italy': '이탈리아',
-                    'spain': '스페인',
-                    'china': '중국',
-                    'worldwide': '전세계'
-                };
-                return countryNames[primarySearchCountry.toLowerCase()] || primarySearchCountry;
-            }
-            
-            return '알 수 없음';
-        }
-        
-        // 날짜/시간 셀 생성 함수 (개선됨)
-        function generateDateTimeCells(result, uploadDateObj) {
-            const countryName = detectVideoCountry(result).toLowerCase();
-            const isKoreanVideo = countryName === '한국';
-            
-            // 업로드일 컬럼 (동영상 원본 국가 시간대)
-            let uploadDateCell;
-            if (isKoreanVideo) {
-                // 한국 동영상인 경우 집 이모지 표시
-                uploadDateCell = `
-                    <td>
-                        <div class="upload-date home-icon">
-                            <span title="한국 동영상 (현지 시간)">🏠</span>
-                        </div>
-                    </td>
-                `;
-            } else {
-                // 다른 국가 동영상인 경우 해당 국가 시간대로 표시
-                const countryTimezones = {
-                    '미국': 'America/New_York',
-                    '일본': 'Asia/Tokyo',
-                    '영국': 'Europe/London',
-                    '독일': 'Europe/Berlin',
-                    '프랑스': 'Europe/Paris',
-                    '캐나다': 'America/Toronto',
-                    '호주': 'Australia/Sydney',
-                    '인도': 'Asia/Kolkata',
-                    '브라질': 'America/Sao_Paulo',
-                    '멕시코': 'America/Mexico_City',
-                    '이탈리아': 'Europe/Rome',
-                    '스페인': 'Europe/Madrid',
-                    '중국': 'Asia/Shanghai'
-                };
-                
-                const timezone = countryTimezones[countryName] || 'UTC';
-                const localTime = new Date(result.status_date).toLocaleString('en-CA', {
-                    timeZone: timezone,
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
-                });
-                
-                const [datePart, timePart] = localTime.split(', ');
-                const timeOnly = timePart ? timePart.substring(0, 5) : '';
-                
-                uploadDateCell = `
-                    <td>
-                        <div class="upload-date detailed-time">
-                            <div class="date-part">${datePart}</div>
-                            <div class="time-part">${timeOnly}</div>
-                        </div>
-                    </td>
-                `;
-            }
-            
-            // 한국시간 컬럼 (항상 한국 시간대로 표시)
-            const koreanTime = new Date(result.status_date).toLocaleString('en-CA', {
-                timeZone: 'Asia/Seoul',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            });
-            
-            const [koreanDatePart, koreanTimePart] = koreanTime.split(', ');
-            const koreanTimeOnly = koreanTimePart ? koreanTimePart.substring(0, 5) : '';
-            
-            const koreaTimeCell = `
-                <td>
-                    <div class="upload-date detailed-time">
-                        <div class="date-part">${koreanDatePart}</div>
-                        <div class="time-part">${koreanTimeOnly}</div>
-                    </div>
-                </td>
-            `;
-            
-            return { uploadDateCell, koreaTimeCell };
-        }
-        
-        // 검색 시나리오 및 기준 국가 변수들
-        let currentSearchScenario = 'single-country';
-        let primarySearchCountry = 'korea';
-        
-        // 검색 시나리오 판별 함수
-        function determineSearchScenario(selectedCountries) {
-            if (selectedCountries.length === 0 || (selectedCountries.length === 1 && selectedCountries[0] === 'worldwide')) {
-                return 'worldwide';
-            } else if (selectedCountries.length === 1) {
-                return 'single-country';
-            } else {
-                return 'multi-country';
-            }
-        }
-        
-        // 테이블 헤더 업데이트 함수
-        function updateTableHeaders() {
-            const uploadDateHeader = document.getElementById('uploadDateHeader');
-            const koreaTimeHeader = document.getElementById('koreaTimeHeader');
-            
-            if (uploadDateHeader && koreaTimeHeader) {
-                switch(currentSearchScenario) {
-                    case 'single-country':
-                        if (primarySearchCountry === 'korea') {
-                            uploadDateHeader.textContent = '📅 업로드일';
-                            koreaTimeHeader.textContent = '🏠 한국시간';
-                        } else {
-                            const countryNames = {
-                                'usa': '미국', 'japan': '일본', 'uk': '영국', 'germany': '독일',
-                                'france': '프랑스', 'canada': '캐나다', 'australia': '호주',
-                                'india': '인도', 'brazil': '브라질', 'mexico': '멕시코',
-                                'italy': '이탈리아', 'spain': '스페인', 'china': '중국'
-                            };
-                            const countryName = countryNames[primarySearchCountry] || primarySearchCountry;
-                            uploadDateHeader.textContent = `📅 ${countryName}시간`;
-                            koreaTimeHeader.textContent = '🏠 한국시간';
-                        }
-                        break;
-                    case 'multi-country':
-                    case 'worldwide':
-                        uploadDateHeader.textContent = '📅 업로드일';
-                        koreaTimeHeader.textContent = '🏠 한국시간';
-                        break;
-                }
-            }
-        }
-        
-        // 수정된 업로드 시간대 분석 함수들 - 시간대 변환 로직 개선
-        function analyzeUploadTime(publishedAt, targetCountry = 'korea') {
-            const publishDate = new Date(publishedAt);
-            
-            // 국가별 시간대 매핑 (IANA 시간대 식별자 사용)
-            const countryTimezones = {
-                'korea': 'Asia/Seoul',
-                'usa': 'America/New_York',  // 동부 표준시
-                'japan': 'Asia/Tokyo',
-                'uk': 'Europe/London',
-                'germany': 'Europe/Berlin',
-                'france': 'Europe/Paris',
-                'canada': 'America/Toronto',
-                'australia': 'Australia/Sydney',
-                'india': 'Asia/Kolkata',
-                'brazil': 'America/Sao_Paulo',
-                'mexico': 'America/Mexico_City',
-                'italy': 'Europe/Rome',
-                'spain': 'Europe/Madrid',
-                'china': 'Asia/Shanghai',
-                'worldwide': 'UTC'
-            };
-            
-            const timezone = countryTimezones[targetCountry.toLowerCase()] || 'Asia/Seoul';
-            
-            // Intl.DateTimeFormat을 사용하여 정확한 시간대 변환
-            const formatter = new Intl.DateTimeFormat('en-CA', {
-                timeZone: timezone,
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            });
-            
-            // 시간대 변환된 시간 정보 가져오기
-            const parts = formatter.formatToParts(publishDate);
-            const partsObj = parts.reduce((acc, part) => {
-                acc[part.type] = part.value;
-                return acc;
-            }, {});
-            
-            // 변환된 시간에서 시간과 요일 정보 추출
-            const localTime = new Date(
-                parseInt(partsObj.year),
-                parseInt(partsObj.month) - 1,
-                parseInt(partsObj.day),
-                parseInt(partsObj.hour),
-                parseInt(partsObj.minute),
-                parseInt(partsObj.second)
-            );
-            
-            const hour = parseInt(partsObj.hour);
-            const dayOfWeek = localTime.getDay(); // 0=일요일, 6=토요일
-            
-            return {
-                hour: hour,
-                dayOfWeek: dayOfWeek,
-                isWeekend: dayOfWeek === 0 || dayOfWeek === 6,
-                timeCategory: getTimeCategory(hour),
-                timezone: timezone,
-                localTimeString: formatter.format(publishDate),
-                originalDate: publishDate,
-                convertedDate: localTime
-            };
-        }
-        
-        function getTimeCategory(hour) {
-            // 시간대별 카테고리 분류
-            if (hour >= 6 && hour < 9) return 'morning-commute'; // 아침 출근시간
-            if (hour >= 9 && hour < 12) return 'morning-work'; // 오전 업무시간
-            if (hour >= 12 && hour < 14) return 'lunch-time'; // 점심시간
-            if (hour >= 14 && hour < 18) return 'afternoon-work'; // 오후 업무시간
-            if (hour >= 18 && hour < 20) return 'evening-commute'; // 저녁 퇴근시간
-            if (hour >= 20 && hour < 23) return 'prime-time'; // 골든타임
-            if (hour >= 23 || hour < 2) return 'late-night'; // 심야시간
-            if (hour >= 2 && hour < 6) return 'early-morning'; // 새벽시간
-            return 'other';
-        }
-        
-        function getTimeCategoryKorean(category) {
-            const categories = {
-                'morning-commute': '아침 출근시간 (06-09시)',
-                'morning-work': '오전 업무시간 (09-12시)',
-                'lunch-time': '점심시간 (12-14시)',
-                'afternoon-work': '오후 업무시간 (14-18시)',
-                'evening-commute': '저녁 퇴근시간 (18-20시)',
-                'prime-time': '골든타임 (20-23시)',
-                'late-night': '심야시간 (23-02시)',
-                'early-morning': '새벽시간 (02-06시)',
-                'other': '기타'
-            };
-            return categories[category] || '알 수 없음';
-        }
-
         // 통합된 초기화 함수
         function initializeApp() {
             
@@ -2649,76 +2081,30 @@
                 categoryDisplay.addEventListener('keydown', categoryDisplayKeyHandler);
             }
             
-            // 국가 드롭다운 초기화
+            // 국가 드롭다운 초기화 (새로 추가)
             const countryDisplay = document.getElementById('countryDisplay');
             const countryDropdown = document.getElementById('countryDropdown');
             
             if (countryDisplay && countryDropdown) {
                 countryDisplay.addEventListener('click', countryDisplayClickHandler);
                 countryDisplay.addEventListener('keydown', countryDisplayKeyHandler);
+                console.log('✅ 국가 드롭다운 이벤트 핸들러 등록 완료');
+            } else {
+                console.error('❌ 국가 드롭다운 요소를 찾을 수 없습니다:', { countryDisplay, countryDropdown });
             }
             
-            // 국가 체크박스 이벤트 리스너 추가
-            document.querySelectorAll('input[name="countries"]').forEach(checkbox => {
-                checkbox.addEventListener('change', () => {
-                    updateCountryDisplay();
-                    updateSelectAllCountries();
-                });
-            });
+            // 국가 체크박스 이벤트 초기화 (새로 추가)
+            initializeCountryCheckboxes();
             
-            // 모든 국가 선택 체크박스 이벤트
-            const selectAllCountriesCheckbox = document.getElementById('selectAllCountries');
-            if (selectAllCountriesCheckbox) {
-                selectAllCountriesCheckbox.addEventListener('change', (e) => {
-                    const isChecked = e.target.checked;
-                    document.querySelectorAll('input[name="countries"]').forEach(cb => {
-                        cb.checked = isChecked;
-                    });
-                    updateCountryDisplay();
-                });
-            }
-            
-            // 모든 카테고리 선택/해제 이벤트 추가
-            const selectAllCategoriesCheckbox = document.getElementById('selectAllCategories');
-            if (selectAllCategoriesCheckbox) {
-                selectAllCategoriesCheckbox.addEventListener('change', (e) => {
-                    const isChecked = e.target.checked;
-                    const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
-                    
-                    categoryCheckboxes.forEach(checkbox => {
-                        checkbox.checked = isChecked;
-                    });
-                    
-                    updateCategoryDisplay();
-                });
-            }
-            
-            // 카테고리 체크박스 이벤트 리스너 추가
-            document.querySelectorAll('input[name="categories"]').forEach(checkbox => {
-                checkbox.addEventListener('change', () => {
-                    updateCategoryDisplay();
-                    updateSelectAllCategories();
-                });
-            });
+            // 시간대 필터 초기화
+            initializeTimezoneFilters();
             
             // 초기 상태 설정
             updateSelectAllVideoLength();
             updateGroupCheckboxes();
             updateSearchScopeDisplay();
             updateCategoryDisplay();
-            updateCountryDisplay();
-            
-            // 검색 범위 드롭다운 초기화
-            const searchScopeDisplay = document.getElementById('searchScopeDisplay');
-            if (searchScopeDisplay) {
-                searchScopeDisplay.addEventListener('click', () => {
-                    const dropdown = document.getElementById('searchScopeDropdown');
-                    dropdown.classList.toggle('show');
-                });
-            }
-            
-            // 시간대 필터 초기화
-            initializeTimezoneFilter();
+            updateCountryDisplay(); // 새로 추가
             
         }
         
@@ -2824,515 +2210,10 @@
 
 
 
-        // 전역 변수는 이미 위에서 선언됨 (2505-2506라인)
-        
-        // 검색 시나리오 판별 함수
-        function determineSearchScenario(selectedCountries) {
-            // 국가가 선택되지 않았거나 전세계인 경우
-            if (!selectedCountries || selectedCountries.length === 0 || 
-                (selectedCountries.length === 1 && selectedCountries[0] === 'worldwide')) {
-                return 'korea_only'; // 한국 기준으로 분석
-            }
-            
-            // 한국만 선택된 경우
-            if (selectedCountries.length === 1 && selectedCountries[0] === 'korea') {
-                return 'korea_only';
-            }
-            
-            // 다중 국가 선택 (외국+한국 또는 외국만)
-            return 'foreign_korea_multi';
-        }
-        
-        // 선택된 국가 목록 가져오기 함수
-        function getSelectedCountries() {
-            const countryCheckboxes = document.querySelectorAll('#countryFilter input[type="checkbox"]:checked');
-            const selectedCountries = [];
-            
-            countryCheckboxes.forEach(checkbox => {
-                const value = checkbox.value;
-                if (value && value !== 'worldwide') {
-                    selectedCountries.push(value);
-                }
-            });
-            
-            // 전세계가 선택되었거나 아무것도 선택되지 않은 경우
-            if (selectedCountries.length === 0) {
-                const worldwideCheckbox = document.querySelector('#countryFilter input[value="worldwide"]:checked');
-                if (worldwideCheckbox) {
-                    selectedCountries.push('worldwide');
-                }
-            }
-            
-            return selectedCountries;
-        }
-        
-        // 시나리오에 따른 테이블 헤더 업데이트
-        function updateTableHeaders() {
-            const uploadDateHeader = document.getElementById('uploadDateHeader');
-            const koreaTimeHeader = document.getElementById('koreaTimeHeader');
-            
-            // 모든 시나리오에서 한국시간 컬럼 표시 (이모지만 표시)
-            koreaTimeHeader.style.display = 'table-cell';
-            koreaTimeHeader.textContent = '🏠';
-            
-            // 업로드일 컬럼도 이모지만 표시
-            uploadDateHeader.textContent = '🗓️';
-        }
-        
-        // 국가 코드를 표시명으로 변환
-        function getCountryDisplayName(countryCode) {
-            const countryNames = {
-                'korea': '한국',
-                'usa': '미국',
-                'japan': '일본',
-                'china': '중국',
-                'uk': '영국',
-                'germany': '독일',
-                'france': '프랑스',
-                'canada': '캐나다',
-                'australia': '호주',
-                'india': '인도',
-                'brazil': '브라질',
-                'mexico': '멕시코',
-                'russia': '러시아',
-                'italy': '이탈리아',
-                'spain': '스페인',
-                'thailand': '태국',
-                'vietnam': '베트남',
-                'indonesia': '인도네시아',
-                'argentina': '아르헨티나',
-                'colombia': '콜롱비아',
-                'saudi': '사우디아라비아',
-                'uae': 'UAE',
-                'southafrica': '남아프리카공화국',
-                'nigeria': '나이지리아',
-                'egypt': '이집트',
-                'worldwide': '전세계'
-            };
-            return countryNames[countryCode] || countryCode;
-        }
-        
-        // 날짜/시간 셀 생성 함수 (시나리오별 로직)
-        function generateDateTimeCells(result, uploadDateObj) {
-            if (currentSearchScenario === 'korea_only') {
-                // 시나리오 1: 한국 단독 검색 - 업로드일에 🏠, 한국시간에 상세 시간
-                const koreaDateTime = formatDetailedDateTime(uploadDateObj, 'Asia/Seoul', 'KST');
-                
-                const uploadDateCell = `
-                    <td>
-                        <div class="upload-date home-icon">
-                            <span title="한국 영상">🏠</span>
-                        </div>
-                    </td>`;
-                
-                const koreaTimeCell = `
-                    <td>
-                        <div class="upload-date detailed-time">
-                            <div class="date-part">${koreaDateTime.dateOnly}</div>
-                            <div class="time-part">${koreaDateTime.timeOnly}</div>
-                        </div>
-                    </td>`;
-                
-                return { uploadDateCell, koreaTimeCell };
-            } else {
-                // 시나리오 2: 외국+한국 다중 검색 - 듀얼 컬럼
-                const isKoreanVideo = isVideoFromKorea(result);
-                
-                if (isKoreanVideo) {
-                    // 한국 영상: 업로드일에 🏠, 한국시간에 상세 시간
-                    const koreaDateTime = formatDetailedDateTime(uploadDateObj, 'Asia/Seoul', 'KST');
-                    
-                    const uploadDateCell = `
-                        <td>
-                            <div class="upload-date home-icon">
-                                <span title="한국 영상">🏠</span>
-                            </div>
-                        </td>`;
-                    
-                    const koreaTimeCell = `
-                        <td>
-                            <div class="upload-date detailed-time">
-                                <div class="date-part">${koreaDateTime.dateOnly}</div>
-                                <div class="time-part">${koreaDateTime.timeOnly}</div>
-                            </div>
-                        </td>`;
-                    
-                    return { uploadDateCell, koreaTimeCell };
-                } else {
-                    // 외국 영상: 업로드일에 현지시간, 한국시간에 변환된 시간
-                    const detectedCountry = detectVideoCountry(result);
-                    const countryCode = getCountryCodeFromName(detectedCountry);
-                    const countryTimezone = getCountryTimezone(countryCode);
-                    const timezoneAbbr = getTimezoneAbbr(countryCode);
-                    
-                    const localDateTime = formatDetailedDateTime(uploadDateObj, countryTimezone, timezoneAbbr);
-                    const koreaDateTime = formatDetailedDateTime(uploadDateObj, 'Asia/Seoul', 'KST');
-                    
-                    const uploadDateCell = `
-                        <td>
-                            <div class="upload-date detailed-time">
-                                <div class="date-part">${localDateTime.dateOnly}</div>
-                                <div class="time-part">${localDateTime.timeOnly}</div>
-                            </div>
-                        </td>`;
-                    
-                    const koreaTimeCell = `
-                        <td>
-                            <div class="upload-date detailed-time">
-                                <div class="date-part">${koreaDateTime.dateOnly}</div>
-                                <div class="time-part">${koreaDateTime.timeOnly}</div>
-                            </div>
-                        </td>`;
-                    
-                    return { uploadDateCell, koreaTimeCell };
-                }
-            }
-        }
-        
-        // 국가별 타임존 가져오기
-        function getCountryTimezone(countryCode) {
-            const countryTimezones = {
-                'usa': 'America/New_York',
-                'uk': 'Europe/London', 
-                'germany': 'Europe/Berlin',
-                'france': 'Europe/Paris',
-                'japan': 'Asia/Tokyo',
-                'china': 'Asia/Shanghai',
-                'australia': 'Australia/Sydney',
-                'india': 'Asia/Kolkata',
-                'brazil': 'America/Sao_Paulo',
-                'canada': 'America/Toronto',
-                'mexico': 'America/Mexico_City',
-                'russia': 'Europe/Moscow',
-                'italy': 'Europe/Rome',
-                'korea': 'Asia/Seoul'
-            };
-            
-            return countryTimezones[countryCode] || 'Asia/Seoul';
-        }
-        
-        // 한국 영상 식별 함수 (개선된 버전)
-        function isVideoFromKorea(result) {
-            const channelName = result.youtube_channel_name || '';
-            const title = result.title || '';
-            const description = result.description || '';
-            
-            // 한글 패턴 (자음, 모음, 완성형 한글)
-            const koreanRegex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
-            
-            // 1단계: 채널명에 한글이 많이 포함된 경우 (우선순위 높음)
-            const channelKoreanCount = (channelName.match(/[가-힣]/g) || []).length;
-            const channelTotalLength = channelName.length;
-            
-            if (channelTotalLength > 0) {
-                const channelKoreanRatio = channelKoreanCount / channelTotalLength;
-                // 채널명의 30% 이상이 한글이면 한국 채널로 판별
-                if (channelKoreanRatio >= 0.3) {
-                    return true;
-                }
-            }
-            
-            // 2단계: 제목에 한글이 많이 포함된 경우
-            const titleKoreanCount = (title.match(/[가-힣]/g) || []).length;
-            const titleTotalLength = title.replace(/\s+/g, '').length; // 공백 제외한 길이
-            
-            if (titleTotalLength > 0) {
-                const titleKoreanRatio = titleKoreanCount / titleTotalLength;
-                // 제목의 50% 이상이 한글이면 한국 영상으로 판별 (채널명보다 높은 기준)
-                if (titleKoreanRatio >= 0.5) {
-                    return true;
-                }
-            }
-            
-            // 3단계: 외국 채널인지 우선 확인 (영어권 채널명 패턴)
-            const foreignChannelPatterns = [
-                /\b(news|media|tv|channel|network|broadcasting|press)\b/i,
-                /\b(gaming|game|play|stream|live)\b/i,
-                /\b(military|defense|aviation|air force|navy)\b/i,
-                /\b(official|productions|studios|entertainment)\b/i
-            ];
-            
-            const isLikelyForeignChannel = foreignChannelPatterns.some(pattern => 
-                pattern.test(channelName)
-            );
-            
-            // 4단계: 외국 채널로 추정되면서 한글 비율이 낮으면 외국 영상으로 판별
-            if (isLikelyForeignChannel) {
-                const combinedText = channelName + ' ' + title;
-                const combinedKoreanCount = (combinedText.match(/[가-힣]/g) || []).length;
-                const combinedTotalLength = combinedText.replace(/\s+/g, '').length;
-                
-                if (combinedTotalLength > 0) {
-                    const combinedKoreanRatio = combinedKoreanCount / combinedTotalLength;
-                    // 전체 텍스트에서 한글 비율이 20% 미만이면 외국 영상
-                    if (combinedKoreanRatio < 0.2) {
-                        return false;
-                    }
-                }
-            }
-            
-            // 5단계: 기본 fallback - 한글이 있으면 한국 영상 (기존 로직)
-            return koreanRegex.test(channelName) || koreanRegex.test(title);
-        }
-        
-        // 영상의 국가 정보 감지 함수
-        function detectVideoCountry(result) {
-            // 1. 한글 패턴으로 한국 영상 우선 판별
-            const isKorean = isVideoFromKorea(result);
-            
-            // 디버깅을 위한 로그 (개발용)
-            if (result.title && (result.title.toLowerCase().includes('kf') || result.title.toLowerCase().includes('미국'))) {
-                console.log('🔍 국가 감지 디버그:', {
-                    title: result.title.substring(0, 50) + '...',
-                    channel: result.youtube_channel_name,
-                    isKorean: isKorean,
-                    detected: isKorean ? '한국' : '외국'
-                });
-            }
-            
-            if (isKorean) {
-                return '한국';
-            }
-            
-            // 2. 주요 언어별 국가 추정
-            const channelName = result.youtube_channel_name || '';
-            const title = result.title || '';
-            const combined = (channelName + ' ' + title).toLowerCase();
-            
-            // 일본어 패턴 (히라가나, 가타카나, 한자)
-            if (/[぀-ゟ゠-ヿ一-龯]/.test(combined)) {
-                return '일본';
-            }
-            
-            // 중국어 간체자 패턴
-            if (/[一-鿿]/.test(combined) && !/[぀-ゟ゠-ヿ]/.test(combined)) {
-                return '중국';
-            }
-            
-            // 영어권 국가 키워드 기반 추정
-            const countryKeywords = {
-                '미국': ['usa', 'america', 'american', 'united states'],
-                '영국': ['uk', 'britain', 'british', 'england', 'london'],
-                '캐나다': ['canada', 'canadian', 'toronto', 'vancouver'],
-                '호주': ['australia', 'australian', 'sydney', 'melbourne'],
-                '독일': ['germany', 'german', 'deutschland', 'berlin'],
-                '프랑스': ['france', 'french', 'paris'],
-                '이탈리아': ['italy', 'italian', 'rome'],
-                '스페인': ['spain', 'spanish', 'madrid'],
-                '브라질': ['brazil', 'brazilian', 'portuguese'],
-                '멕시코': ['mexico', 'mexican'],
-                '인도': ['india', 'indian', 'hindi'],
-                '태국': ['thailand', 'thai', 'bangkok'],
-                '베트남': ['vietnam', 'vietnamese'],
-                '인도네시아': ['indonesia', 'indonesian'],
-                // 추가 35개국 (50개국 지원)
-                '뉴질랜드': ['newzealand', 'new zealand', 'auckland', 'wellington'],
-                '스위스': ['switzerland', 'swiss', 'zurich', 'geneva'],
-                '노르웨이': ['norway', 'norwegian', 'oslo'],
-                '아일랜드': ['ireland', 'irish', 'dublin'],
-                '네덜란드': ['netherlands', 'dutch', 'amsterdam', 'holland'],
-                '덴마크': ['denmark', 'danish', 'copenhagen'],
-                '홍콩': ['hongkong', 'hong kong', 'hk'],
-                '스웨덴': ['sweden', 'swedish', 'stockholm'],
-                '핀란드': ['finland', 'finnish', 'helsinki'],
-                '싱가포르': ['singapore', 'singaporean'],
-                '오스트리아': ['austria', 'austrian', 'vienna'],
-                '룩셈부르크': ['luxembourg'],
-                '벨기에': ['belgium', 'belgian', 'brussels'],
-                '체코': ['czech', 'czechrepublic', 'prague'],
-                '이스라엘': ['israel', 'israeli', 'tel aviv', 'jerusalem'],
-                '포르투갈': ['portugal', 'portuguese', 'lisbon'],
-                '아랍에미리트': ['uae', 'emirates', 'dubai', 'abu dhabi'],
-                '카타르': ['qatar', 'doha'],
-                '쿠웨이트': ['kuwait'],
-                '사우디아라비아': ['saudi', 'saudi arabia', 'riyadh'],
-                '폴란드': ['poland', 'polish', 'warsaw'],
-                '남아프리카공화국': ['south africa', 'southafrica', 'cape town'],
-                '터키': ['turkey', 'turkish', 'istanbul'],
-                '헝가리': ['hungary', 'hungarian', 'budapest'],
-                '수리남': ['suriname'],
-                '콜롱비아': ['colombia', 'colombian', 'bogota'],
-                '아르헨티나': ['argentina', 'argentinian', 'buenos aires'],
-                '모잠비크': ['mozambique'],
-                '파키스탄': ['pakistan', 'pakistani', 'karachi'],
-                '방글라데시': ['bangladesh', 'bangladeshi', 'dhaka'],
-                '자메이카': ['jamaica', 'jamaican', 'kingston'],
-                '리비아': ['libya', 'libyan', 'tripoli'],
-                '아이슬란드': ['iceland', 'icelandic', 'reykjavik'],
-                '스리랑카': ['sri lanka', 'srilanka', 'colombo']
-            };
-            
-            for (const [country, keywords] of Object.entries(countryKeywords)) {
-                for (const keyword of keywords) {
-                    if (combined.includes(keyword)) {
-                        return country;
-                    }
-                }
-            }
-            
-            // 기본값: 검색 기준 국가 또는 미분류
-            if (currentSearchScenario === 'korea_only') {
-                return '한국';
-            } else {
-                const countryDisplayName = getCountryDisplayName(primarySearchCountry);
-                return countryDisplayName !== primarySearchCountry ? countryDisplayName : '미분류';
-            }
-        }
-        
-        // 한국어 국가명을 영어 코드로 변환
-        function getCountryCodeFromName(countryName) {
-            const countryCodeMap = {
-                '한국': 'korea',
-                '미국': 'usa', 
-                '일본': 'japan',
-                '중국': 'china',
-                '영국': 'uk',
-                '캐나다': 'canada',
-                '호주': 'australia',
-                '독일': 'germany',
-                '프랑스': 'france',
-                '이탈리아': 'italy',
-                '스페인': 'spain',
-                '브라질': 'brazil',
-                '멕시코': 'mexico',
-                '인도': 'india',
-                '태국': 'thailand',
-                '베트남': 'vietnam',
-                '인도네시아': 'indonesia',
-                '뉴질랜드': 'newzealand',
-                '스위스': 'switzerland',
-                '노르웨이': 'norway',
-                '아일랜드': 'ireland',
-                '네덜란드': 'netherlands',
-                '덴마크': 'denmark',
-                '홍콩': 'hongkong',
-                '스웨덴': 'sweden',
-                '핀란드': 'finland',
-                '싱가포르': 'singapore',
-                '오스트리아': 'austria',
-                '룩셈부르크': 'luxembourg',
-                '벨기에': 'belgium',
-                '체코': 'czech',
-                '이스라엘': 'israel',
-                '포르투갈': 'portugal',
-                '아랍에미리트': 'uae',
-                '카타르': 'qatar',
-                '쿠웨이트': 'kuwait',
-                '사우디아라비아': 'saudi',
-                '폴란드': 'poland',
-                '남아프리카공화국': 'southafrica',
-                '터키': 'turkey',
-                '헝가리': 'hungary',
-                '수리남': 'suriname',
-                '콜롬비아': 'colombia',
-                '아르헨티나': 'argentina',
-                '모잠비크': 'mozambique',
-                '파키스탄': 'pakistan',
-                '방글라데시': 'bangladesh',
-                '자메이카': 'jamaica',
-                '리비아': 'libya',
-                '아이슬란드': 'iceland',
-                '스리랑카': 'srilanka'
-            };
-            
-            return countryCodeMap[countryName] || 'usa'; // 기본값은 미국
-        }
-        
-        // 국가별 시간대 변환
-        function convertToCountryTime(utcDate, countryCode) {
-            // 국가별 시간대 매핑 (기존 analyzeUploadTime 함수에서 사용하던 매핑 활용)
-            const countryTimezones = {
-                'usa': 'America/New_York',
-                'uk': 'Europe/London', 
-                'germany': 'Europe/Berlin',
-                'france': 'Europe/Paris',
-                'japan': 'Asia/Tokyo',
-                'china': 'Asia/Shanghai',
-                'australia': 'Australia/Sydney',
-                'india': 'Asia/Kolkata',
-                'brazil': 'America/Sao_Paulo',
-                'canada': 'America/Toronto',
-                'mexico': 'America/Mexico_City',
-                'russia': 'Europe/Moscow',
-                'italy': 'Europe/Rome'
-            };
-            
-            const timezone = countryTimezones[countryCode] || 'Asia/Seoul';
-            const localDate = new Date(utcDate.toLocaleString("en-US", {timeZone: timezone}));
-            
-            return {
-                year: localDate.getFullYear(),
-                monthDay: localDate.toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })
-            };
-        }
-        
-        // 한국 시간대로 변환
-        function convertToKoreaTime(utcDate) {
-            const koreaDate = new Date(utcDate.toLocaleString("en-US", {timeZone: 'Asia/Seoul'}));
-            
-            return {
-                year: koreaDate.getFullYear(),
-                monthDay: koreaDate.toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })
-            };
-        }
-        
-        // 상세 시간 형식 생성 (2025.08.26 TUE 09:30 KST)
-        function formatDetailedDateTime(date, timezone, timezoneAbbr) {
-            const localDate = new Date(date.toLocaleString("en-US", {timeZone: timezone}));
-            
-            const year = localDate.getFullYear();
-            const month = String(localDate.getMonth() + 1).padStart(2, '0');
-            const day = String(localDate.getDate()).padStart(2, '0');
-            const hours = String(localDate.getHours()).padStart(2, '0');
-            const minutes = String(localDate.getMinutes()).padStart(2, '0');
-            
-            const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-            const dayOfWeek = dayNames[localDate.getDay()];
-            
-            return {
-                dateOnly: `${year}.${month}.${day}`,
-                timeOnly: `${dayOfWeek} ${hours}:${minutes} ${timezoneAbbr}`,
-                fullDateTime: `${year}.${month}.${day} ${dayOfWeek} ${hours}:${minutes} ${timezoneAbbr}`
-            };
-        }
-        
-        // 국가별 시간대 약어 매핑
-        function getTimezoneAbbr(countryCode) {
-            const timezoneAbbrs = {
-                'usa': 'EST',
-                'uk': 'GMT', 
-                'germany': 'CET',
-                'france': 'CET',
-                'japan': 'JST',
-                'china': 'CST',
-                'australia': 'AEDT',
-                'india': 'IST',
-                'brazil': 'BRT',
-                'canada': 'EST',
-                'mexico': 'CST',
-                'russia': 'MSK',
-                'italy': 'CET',
-                'korea': 'KST'
-            };
-            
-            return timezoneAbbrs[countryCode] || 'UTC';
-        }
-        
         // 검색 수행 함수
         async function performSearch() {
             const formData = new FormData(document.getElementById('searchForm'));
             const searchParams = new URLSearchParams();
-            
-            // 검색 시나리오 판별 로직
-            const selectedCountries = getSelectedCountries();
-            currentSearchScenario = determineSearchScenario(selectedCountries);
-            primarySearchCountry = selectedCountries.length > 0 ? selectedCountries[0] : 'korea';
-            
-            console.log(`🎯 검색 시나리오: ${currentSearchScenario}`);
-            console.log(`🗺️ 기준 국가: ${primarySearchCountry}`);
-            
-            // 테이블 헤더 업데이트
-            updateTableHeaders();
 
             // 폼 데이터 처리
             for (let [key, value] of formData.entries()) {
@@ -3466,19 +2347,27 @@
             // 키워드 확인 및 안내 메시지
             const keyword = document.getElementById('keyword').value;
             // 국가 체크박스 처리 (수정됨)
-            const selectedCountriesForServer = [];
+            const selectedCountries = [];
             document.querySelectorAll('input[name="countries"]:checked').forEach(checkbox => {
-                selectedCountriesForServer.push(checkbox.value);
+                selectedCountries.push(checkbox.value);
             });
             
-            console.log('🌍 선택된 국가들:', selectedCountriesForServer);
-            searchParams.append('countries', selectedCountriesForServer.join(','));
+            console.log('🌍 선택된 국가들:', selectedCountries);
+            searchParams.append('countries', selectedCountries.join(','));
 
-            // 시간대 필터는 결과내 재검색으로 구현됨 (서버 전송 불필요)
+            // 시간대 체크박스 처리 (새로 추가)
+            const selectedTimezones = [];
+            document.querySelectorAll('input[name="uploadTimezone"]:checked').forEach(checkbox => {
+                selectedTimezones.push(checkbox.value);
+            });
+            
+            console.log('🕐 선택된 시간대들:', selectedTimezones);
+            searchParams.append('uploadTimezone', selectedTimezones.join(','));
             const isEmptyKeyword = !keyword || !keyword.trim();
             
             console.log('=== 클라이언트 검색 요청 디버그 ===');
-            console.log('🌍 선택된 국가들:', selectedCountriesForServer);
+            console.log('🌍 선택된 국가들:', selectedCountries);
+            console.log('🕐 선택된 시간대들:', selectedTimezones);
             console.log('🔍 입력된 키워드:', keyword || '없음');
             console.log('📋 검색 파라미터:', searchParams.toString());
             console.log('===========================');
@@ -3505,29 +2394,21 @@
 
                 hideLoading();
 
-                                                 if (data.success) {
-                    searchResults = data.data;
-                    currentPage = 1;
-                    
-                    // 검색 시마다 정렬을 조회수 내림차순으로 초기화
-                    sortColumn = 'daily_view_count';
-                    sortDirection = 'desc';
-                    
-                    sortResults();
-                    renderResults();
-                    showResults();
-                    
-                    // 시간대 분석 및 필터 표시
-                    if (searchResults.length > 0) {
-                    analyzeSearchResults(searchResults);
-                    }
-                    
-                    // Excel 다운로드 버튼 표시
-                    showExcelDownloadButton();
-                    
-                    // 중복 제거 정보 표시 (콘솔에만)
-                    console.log(`✅ 검색 완료: ${searchResults.length}개 고유 결과`);
-                } else {
+                                 if (data.success) {
+                     searchResults = data.data;
+                     currentPage = 1;
+                     
+                     // 검색 시마다 정렬을 조회수 내림차순으로 초기화
+                     sortColumn = 'daily_view_count';
+                     sortDirection = 'desc';
+                     
+                     sortResults();
+                     renderResults();
+                     showResults();
+                     
+                     // 중복 제거 정보 표시 (콘솔에만)
+                     console.log(`✅ 검색 완료: ${searchResults.length}개 고유 결과`);
+                 } else {
                     // 오류 타입별 처리
                     if (data.errorType === 'quota_exceeded') {
                         showError(`
@@ -3616,10 +2497,9 @@
             tbody.innerHTML = '';
 
             if (pageResults.length === 0) {
-                // 모든 시나리오에서 12개 컬럼 사용 (국가 컬럼 추가로 인해)
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="12" class="no-results">
+                        <td colspan="11" class="no-results">
                             <h3>검색 결과가 없습니다</h3>
                             <p>다른 검색 조건으로 시도해보세요.</p>
                         </td>
@@ -3631,16 +2511,18 @@
             pageResults.forEach(result => {
                 const row = document.createElement('tr');
                 
+                // 시간 정보 처리
                 const uploadDateObj = new Date(result.status_date);
+                
+                // 현지시간 정보 (가정: 선택된 국가의 시간대)
+                const localTimeData = formatLocalTime(uploadDateObj, getSelectedCountry());
+                
+                // 한국시간 정보 (UTC+9)
+                const koreaTimeData = formatKoreaTime(uploadDateObj);
+                
                 const viewCount = formatViewCount(result.daily_view_count);
                 const subscriberCount = formatSubscriberCount(result.subscriber_count || 0);
                 const formattedDuration = formatDuration(result.duration_seconds);
-                
-                // 시나리오별 날짜/시간 표시 로직
-                const { uploadDateCell, koreaTimeCell } = generateDateTimeCells(result, uploadDateObj);
-                
-                // 국가 정보 감지
-                const countryName = detectVideoCountry(result);
                 
                 row.innerHTML = `
                     <td>
@@ -3660,10 +2542,19 @@
                     </td>
                     <td>${result.primary_category}</td>
                     <td>
-                        <span class="country-name">${countryName}</span>
+                        <div class="time-display">
+                            <div class="date-line">${localTimeData.date}</div>
+                            <div class="day-line">${localTimeData.countryDay}</div>
+                            <div class="time-line ${localTimeData.viralClass}">${localTimeData.time}</div>
+                        </div>
                     </td>
-                    ${uploadDateCell}
-                    ${koreaTimeCell}
+                    <td>
+                        <div class="time-display">
+                            <div class="date-line">${koreaTimeData.date}</div>
+                            <div class="day-line">${koreaTimeData.countryDay}</div>
+                            <div class="time-line ${koreaTimeData.viralClass}">${koreaTimeData.time}</div>
+                        </div>
+                    </td>
                     <td>
                         <span class="view-count">${viewCount}</span>
                     </td>
@@ -3900,26 +2791,20 @@
                 };
 
                 // Excel 생성에 필요한 데이터만 추출하여 페이로드 크기 최적화
-                const optimizedResults = searchResults.map(result => {
-                    // 국가 정보 감지 (실시간 처리)
-                    const countryInfo = detectVideoCountry(result);
-                    
-                    return {
-                        youtube_channel_name: result.youtube_channel_name,
-                        thumbnail_url: result.thumbnail_url,
-                        status: result.status,
-                        youtube_channel_id: result.youtube_channel_id,
-                        title: result.title,
-                        daily_view_count: result.daily_view_count,
-                        subscriber_count: result.subscriber_count,
-                        vod_url: result.vod_url,
-                        status_date: result.status_date,
-                        duration_seconds: result.duration_seconds,
-                        video_length_category: result.video_length_category,
-                        primary_category: result.primary_category,
-                        country: countryInfo // 국가 정보 추가
-                    };
-                });
+                const optimizedResults = searchResults.map(result => ({
+                    youtube_channel_name: result.youtube_channel_name,
+                    thumbnail_url: result.thumbnail_url,
+                    status: result.status,
+                    youtube_channel_id: result.youtube_channel_id,
+                    title: result.title,
+                    daily_view_count: result.daily_view_count,
+                    subscriber_count: result.subscriber_count,
+                    vod_url: result.vod_url,
+                    status_date: result.status_date,
+                    duration_seconds: result.duration_seconds,
+                    video_length_category: result.video_length_category,
+                    primary_category: result.primary_category
+                }));
 
                 console.log('Excel 다운로드 요청:', {
                     resultsCount: optimizedResults.length,
@@ -4372,23 +3257,230 @@
             }, 3000);
         }
 
-        // 검색 범위 이벤트들은 initializeApp에서 등록됨
+        // 검색 범위 드롭다운 기능
+        document.getElementById('searchScopeDisplay').addEventListener('click', () => {
+            const dropdown = document.getElementById('searchScopeDropdown');
+            dropdown.classList.toggle('show');
+        });
 
-        // 중복된 함수 정의 제거됨 (이미 위에서 정의됨)
+        // 모든 검색 범위 선택/해제
+        document.getElementById('selectAllSearchScope').addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]');
+            
+            searchScopeCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            updateSearchScopeDisplay();
+        });
 
-        // 중복된 검색 범위 이벤트 제거됨 (initializeApp에서 등록)
+        // 개별 검색 범위 체크박스 이벤트
+        document.querySelectorAll('input[name="searchScope"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateSelectAllSearchScope();
+                updateSearchScopeDisplay();
+            });
+        });
 
-        // 중복된 함수 정의 제거됨 (이미 위에서 정의됨)
+        // 검색 범위 디스플레이 업데이트 함수
+        function updateSearchScopeDisplay() {
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]:checked');
+            const display = document.getElementById('searchScopeDisplay');
+            
+            if (searchScopeCheckboxes.length === 0) {
+                display.textContent = '검색 범위를 선택해주세요';
+            } else if (searchScopeCheckboxes.length === document.querySelectorAll('input[name="searchScope"]').length) {
+                display.textContent = '모든 범위 선택됨';
+            } else {
+                const selectedNames = Array.from(searchScopeCheckboxes).map(cb => {
+                    const label = cb.parentElement.querySelector('label');
+                    return label.textContent;
+                });
+                display.textContent = selectedNames.join(', ') + ' 선택됨';
+            }
+        }
+
+        // 모든 검색 범위 체크박스 상태 업데이트
+        function updateSelectAllSearchScope() {
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]');
+            const checkedSearchScope = document.querySelectorAll('input[name="searchScope"]:checked');
+            const selectAllCheckbox = document.getElementById('selectAllSearchScope');
+            
+            if (checkedSearchScope.length === 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            } else if (checkedSearchScope.length === searchScopeCheckboxes.length) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = true;
+            }
+        }
+
+        // 검색 범위 드롭다운 기능
+        document.getElementById('searchScopeDisplay').addEventListener('click', () => {
+            const dropdown = document.getElementById('searchScopeDropdown');
+            dropdown.classList.toggle('show');
+        });
+
+        // 모든 검색 범위 선택/해제
+        document.getElementById('selectAllSearchScope').addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]');
+            
+            searchScopeCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            updateSearchScopeDisplay();
+        });
+
+        // 개별 검색 범위 체크박스 이벤트
+        document.querySelectorAll('input[name="searchScope"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateSelectAllSearchScope();
+                updateSearchScopeDisplay();
+            });
+        });
+
+        // 검색 범위 디스플레이 업데이트 함수
+        function updateSearchScopeDisplay() {
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]:checked');
+            const display = document.getElementById('searchScopeDisplay');
+            
+            if (searchScopeCheckboxes.length === 0) {
+                display.textContent = '검색 범위를 선택해주세요';
+            } else if (searchScopeCheckboxes.length === document.querySelectorAll('input[name="searchScope"]').length) {
+                display.textContent = '모든 범위 선택됨';
+            } else {
+                const selectedNames = Array.from(searchScopeCheckboxes).map(cb => {
+                    const label = cb.parentElement.querySelector('label');
+                    return label.textContent;
+                });
+                display.textContent = selectedNames.join(', ') + ' 선택됨';
+            }
+        }
+
+        // 모든 검색 범위 체크박스 상태 업데이트
+        function updateSelectAllSearchScope() {
+            const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]');
+            const checkedSearchScope = document.querySelectorAll('input[name="searchScope"]:checked');
+            const selectAllCheckbox = document.getElementById('selectAllSearchScope');
+            
+            if (checkedSearchScope.length === 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            } else if (checkedSearchScope.length === searchScopeCheckboxes.length) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = true;
+            }
+        }
 
         // 카테고리 드롭다운 기능 (DOMContentLoaded에서 설정됨)
         
-        // 중복된 document 클릭 이벤트 제거됨 (1913라인에 이미 정의됨)
+        // 문서 클릭 시 드롭다운 닫기
+        document.addEventListener('click', (e) => {
+            // 검색 범위 드롭다운 처리
+            const searchScopeDisplay = document.getElementById('searchScopeDisplay');
+            const searchScopeDropdown = document.getElementById('searchScopeDropdown');
+            
+            if (searchScopeDisplay && searchScopeDropdown) {
+                const searchScopeSelector = searchScopeDisplay.closest('.category-selector');
+                if (searchScopeSelector && !searchScopeSelector.contains(e.target)) {
+                    searchScopeDropdown.classList.remove('show');
+                }
+            }
+            
+            // 카테고리 드롭다운 처리
+            const categoryDisplay = document.getElementById('categoryDisplay');
+            const categoryDropdown = document.getElementById('categoryDropdown');
+            
+            if (categoryDisplay && categoryDropdown) {
+                const categorySelector = categoryDisplay.closest('.category-selector');
+                if (categorySelector && !categorySelector.contains(e.target)) {
+                    categoryDropdown.classList.remove('show');
+                }
+            }
+        });
 
-        // 모든 카테고리 선택/해제 이벤트는 initializeApp에서 등록됨
+        // 모든 카테고리 선택/해제
+        document.getElementById('selectAllCategories').addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
+            
+            categoryCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            updateCategoryDisplay();
+        });
 
-        // 개별 카테고리 체크박스 이벤트는 initializeApp에서 등록됨
+        // 개별 카테고리 체크박스 이벤트
+        document.querySelectorAll('input[name="categories"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateSelectAllCategories();
+                updateCategoryDisplay();
+            });
+        });
 
-        // 중복된 함수 정의 제거됨 (2744라인에 이미 정의되어 있음)
+        // 카테고리 디스플레이 업데이트 함수
+        function updateCategoryDisplay() {
+            const categoryCheckboxes = document.querySelectorAll('input[name="categories"]:checked');
+            const display = document.getElementById('categoryDisplay');
+            
+            if (categoryCheckboxes.length === 0) {
+                display.textContent = '카테고리를 선택해주세요';
+            } else if (categoryCheckboxes.length === document.querySelectorAll('input[name="categories"]').length) {
+                display.textContent = '모든 카테고리 선택됨';
+            } else if (categoryCheckboxes.length <= 3) {
+                const selectedNames = Array.from(categoryCheckboxes).map(cb => {
+                    const label = cb.parentElement.querySelector('label');
+                    return label.textContent;
+                });
+                display.textContent = selectedNames.join(', ');
+            } else {
+                display.textContent = `${categoryCheckboxes.length}개 카테고리 선택됨`;
+            }
+        }
+
+        // 모든 카테고리 체크박스 상태 업데이트
+        function updateSelectAllCategories() {
+            const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
+            const checkedCategories = document.querySelectorAll('input[name="categories"]:checked');
+            const selectAllCheckbox = document.getElementById('selectAllCategories');
+            
+            if (checkedCategories.length === 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            } else if (checkedCategories.length === categoryCheckboxes.length) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = true;
+            }
+        }
+
+        // 카테고리 드롭다운 클릭 핸들러 함수 (간소화)
+        function categoryDisplayClickHandler() {
+            const dropdown = document.getElementById('categoryDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+        
+        // 카테고리 키보드 이벤트 핸들러
+        function categoryDisplayKeyHandler(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                categoryDisplayClickHandler();
+            }
+        }
         
         // 국가 드롭다운 클릭 핸들러 함수
         function countryDisplayClickHandler() {
@@ -4445,14 +3537,58 @@
             }
         }
 
+        // 국가 체크박스 초기화 함수 (새로 추가)
+        function initializeCountryCheckboxes() {
+            // 국가 "모든 국가" 체크박스 이벤트
+            const selectAllCountriesCheckbox = document.getElementById('selectAllCountries');
+            if (selectAllCountriesCheckbox) {
+                selectAllCountriesCheckbox.addEventListener('change', (e) => {
+                    const isChecked = e.target.checked;
+                    const countryCheckboxes = document.querySelectorAll('input[name="countries"]');
+                    
+                    countryCheckboxes.forEach(checkbox => {
+                        checkbox.checked = isChecked;
+                    });
+                    
+                    updateCountryDisplay();
+                });
+            }
+
+            // 개별 국가 체크박스 이벤트
+            const countryCheckboxes = document.querySelectorAll('input[name="countries"]');
+            countryCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    updateSelectAllCountries();
+                    updateCountryDisplay();
+                });
+            });
+            
+            console.log('✅ 국가 체크박스 이벤트 등록 완료:', countryCheckboxes.length + '개');
+        }
+        
         // 시간대 필터 초기화
         function initializeTimezoneFilters() {
             // 시간대 "모두 선택" 체크박스 이벤트
             document.getElementById('selectAllTimezone').addEventListener('change', (e) => {
                 const isChecked = e.target.checked;
                 const timezoneCheckboxes = [
-                    'timezoneKrGolden', 'timezoneGlobalSweet', 'timezoneShortsPeak', 'timezoneKrLunch',
-                    'timezoneUsEast', 'timezoneKrNight', 'timezoneKrMorning', 'timezoneWeekend', 'timezoneJpPrime'
+                    // 글로벌 & 범용
+                    'timezoneGlobalSweet', 'timezoneShortsPeak', 'timezoneWeekend',
+                    // 아시아-태평양
+                    'timezoneKrGolden', 'timezoneJpPrime', 'timezoneInPrime', 'timezoneThGolden', 
+                    'timezoneVnEvening', 'timezoneIdPrime', 'timezoneAuPrime', 'timezoneCnEvening',
+                    // 북미
+                    'timezoneUsEast', 'timezoneUsWest', 'timezoneCaPrime', 'timezoneMxPrime',
+                    // 유럽
+                    'timezoneGbPrime', 'timezoneDePrime', 'timezoneFrEvening', 'timezoneEsPrime', 'timezoneItPrime',
+                    // 남미
+                    'timezoneBrPrime', 'timezoneArPrime', 'timezoneCoPrime',
+                    // 중동 & 아프리카
+                    'timezoneSaPrime', 'timezoneAePrime', 'timezoneZaPrime', 'timezoneNgPrime', 'timezoneEgPrime',
+                    // 기타
+                    'timezoneRuPrime',
+                    // 한국 세부
+                    'timezoneKrLunch', 'timezoneKrNight', 'timezoneKrMorning'
                 ];
                 
                 timezoneCheckboxes.forEach(id => {
@@ -4465,10 +3601,13 @@
                 updateTimezoneGroupCheckboxes();
             });
 
-            // 시간대 "골든타임" 그룹 체크박스 이벤트
+            // 시간대 "골든타임" 그룹 체크박스 이벤트 (업데이트됨)
             document.getElementById('selectGoldenTime').addEventListener('change', (e) => {
                 const isChecked = e.target.checked;
-                const goldenTimeCheckboxes = ['timezoneKrGolden', 'timezoneGlobalSweet', 'timezoneShortsPeak'];
+                const goldenTimeCheckboxes = [
+                    'timezoneGlobalSweet', 'timezoneShortsPeak', 'timezoneWeekend',
+                    'timezoneKrGolden', 'timezoneUsEast', 'timezoneGbPrime', 'timezoneBrPrime'
+                ];
                 
                 goldenTimeCheckboxes.forEach(id => {
                     const checkbox = document.getElementById(id);
@@ -4481,15 +3620,59 @@
                 updateTimezoneGroupCheckboxes();
             });
 
-            // 시간대 "피크타임" 그룹 체크박스 이벤트
+            // 시간대 "피크타임" 그룹 체크박스 이벤트 (업데이트됨)
             document.getElementById('selectPeakTime').addEventListener('change', (e) => {
                 const isChecked = e.target.checked;
-                const peakTimeCheckboxes = ['timezoneKrLunch', 'timezoneUsEast', 'timezoneWeekend', 'timezoneJpPrime'];
+                const peakTimeCheckboxes = [
+                    'timezoneJpPrime', 'timezoneInPrime', 'timezoneAuPrime', 'timezoneCnEvening',
+                    'timezoneUsWest', 'timezoneCaPrime', 'timezoneDePrime', 'timezoneEsPrime',
+                    'timezoneArPrime', 'timezoneSaPrime', 'timezoneRuPrime'
+                ];
                 
                 peakTimeCheckboxes.forEach(id => {
                     const checkbox = document.getElementById(id);
                     if (checkbox) {
                         checkbox.checked = isChecked;
+                    }
+                });
+                
+                updateSelectAllTimezone();
+                updateTimezoneGroupCheckboxes();
+            });
+
+            // 개별 시간대 체크박스 변경 시 상태 업데이트
+            const allTimezoneCheckboxes = [
+                // 글로벌 & 범용
+                'timezoneGlobalSweet', 'timezoneShortsPeak', 'timezoneWeekend',
+                // 아시아-태평양
+                'timezoneKrGolden', 'timezoneJpPrime', 'timezoneInPrime', 'timezoneThGolden', 
+                'timezoneVnEvening', 'timezoneIdPrime', 'timezoneAuPrime', 'timezoneCnEvening',
+                // 북미
+                'timezoneUsEast', 'timezoneUsWest', 'timezoneCaPrime', 'timezoneMxPrime',
+                // 유럽
+                'timezoneGbPrime', 'timezoneDePrime', 'timezoneFrEvening', 'timezoneEsPrime', 'timezoneItPrime',
+                // 남미
+                'timezoneBrPrime', 'timezoneArPrime', 'timezoneCoPrime',
+                // 중동 & 아프리카
+                'timezoneSaPrime', 'timezoneAePrime', 'timezoneZaPrime', 'timezoneNgPrime', 'timezoneEgPrime',
+                // 기타
+                'timezoneRuPrime',
+                // 한국 세부
+                'timezoneKrLunch', 'timezoneKrNight', 'timezoneKrMorning'
+            ];
+            
+            allTimezoneCheckboxes.forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.addEventListener('change', () => {
+                        updateSelectAllTimezone();
+                        updateTimezoneGroupCheckboxes();
+                    });
+                }
+            });
+            
+            console.log('✅ 시간대 필터 초기화 완료:', allTimezoneCheckboxes.length + '개 체크박스');
+        }ked;
                     }
                 });
                 
@@ -4516,12 +3699,27 @@
 
         // 시간대 "모두 선택" 상태 업데이트
         function updateSelectAllTimezone() {
-            const timezoneCheckboxes = [
-                'timezoneKrGolden', 'timezoneGlobalSweet', 'timezoneShortsPeak', 'timezoneKrLunch',
-                'timezoneUsEast', 'timezoneKrNight', 'timezoneKrMorning', 'timezoneWeekend', 'timezoneJpPrime'
+            const allTimezoneCheckboxes = [
+                // 글로벌 & 범용
+                'timezoneGlobalSweet', 'timezoneShortsPeak', 'timezoneWeekend',
+                // 아시아-태평양
+                'timezoneKrGolden', 'timezoneJpPrime', 'timezoneInPrime', 'timezoneThGolden', 
+                'timezoneVnEvening', 'timezoneIdPrime', 'timezoneAuPrime', 'timezoneCnEvening',
+                // 북미
+                'timezoneUsEast', 'timezoneUsWest', 'timezoneCaPrime', 'timezoneMxPrime',
+                // 유럽
+                'timezoneGbPrime', 'timezoneDePrime', 'timezoneFrEvening', 'timezoneEsPrime', 'timezoneItPrime',
+                // 남미
+                'timezoneBrPrime', 'timezoneArPrime', 'timezoneCoPrime',
+                // 중동 & 아프리카
+                'timezoneSaPrime', 'timezoneAePrime', 'timezoneZaPrime', 'timezoneNgPrime', 'timezoneEgPrime',
+                // 기타
+                'timezoneRuPrime',
+                // 한국 세부
+                'timezoneKrLunch', 'timezoneKrNight', 'timezoneKrMorning'
             ];
             
-            const checkedCount = timezoneCheckboxes.filter(id => {
+            const checkedCount = allTimezoneCheckboxes.filter(id => {
                 const checkbox = document.getElementById(id);
                 return checkbox && checkbox.checked;
             }).length;
@@ -4530,7 +3728,7 @@
             if (checkedCount === 0) {
                 selectAllCheckbox.checked = false;
                 selectAllCheckbox.indeterminate = false;
-            } else if (checkedCount === timezoneCheckboxes.length) {
+            } else if (checkedCount === allTimezoneCheckboxes.length) {
                 selectAllCheckbox.checked = true;
                 selectAllCheckbox.indeterminate = false;
             } else {
@@ -4541,8 +3739,15 @@
 
         // 시간대 그룹 체크박스 상태 업데이트
         function updateTimezoneGroupCheckboxes() {
-            const goldenTimeCheckboxes = ['timezoneKrGolden', 'timezoneGlobalSweet', 'timezoneShortsPeak'];
-            const peakTimeCheckboxes = ['timezoneKrLunch', 'timezoneUsEast', 'timezoneWeekend', 'timezoneJpPrime'];
+            const goldenTimeCheckboxes = [
+                'timezoneGlobalSweet', 'timezoneShortsPeak', 'timezoneWeekend',
+                'timezoneKrGolden', 'timezoneUsEast', 'timezoneGbPrime', 'timezoneBrPrime'
+            ];
+            const peakTimeCheckboxes = [
+                'timezoneJpPrime', 'timezoneInPrime', 'timezoneAuPrime', 'timezoneCnEvening',
+                'timezoneUsWest', 'timezoneCaPrime', 'timezoneDePrime', 'timezoneEsPrime',
+                'timezoneArPrime', 'timezoneSaPrime', 'timezoneRuPrime'
+            ];
             
             // 골든타임 체크박스 상태 확인
             const goldenCheckedCount = goldenTimeCheckboxes.filter(id => {
@@ -4581,471 +3786,396 @@
             }
         }
         
-        // 중복된 DOMContentLoaded 이벤트 제거됨 (통합된 initializeApp 함수로 대체)
+        // 국가별 시간대 매핑
+        const countryTimezones = {
+            'korea': 'Asia/Seoul',
+            'japan': 'Asia/Tokyo', 
+            'usa': 'America/New_York',
+            'canada': 'America/Toronto',
+            'uk': 'Europe/London',
+            'germany': 'Europe/Berlin',
+            'france': 'Europe/Paris',
+            'spain': 'Europe/Madrid',
+            'italy': 'Europe/Rome',
+            'brazil': 'America/Sao_Paulo',
+            'argentina': 'America/Buenos_Aires',
+            'colombia': 'America/Bogota',
+            'mexico': 'America/Mexico_City',
+            'india': 'Asia/Kolkata',
+            'thailand': 'Asia/Bangkok',
+            'vietnam': 'Asia/Ho_Chi_Minh',
+            'indonesia': 'Asia/Jakarta',
+            'australia': 'Australia/Sydney',
+            'china': 'Asia/Shanghai',
+            'russia': 'Europe/Moscow',
+            'saudi': 'Asia/Riyadh',
+            'uae': 'Asia/Dubai',
+            'egypt': 'Africa/Cairo',
+            'nigeria': 'Africa/Lagos',
+            'southafrica': 'Africa/Johannesburg',
+            'worldwide': 'UTC'
+        };
         
-        // 중복된 DOMContentLoaded 제거됨 (initializeApp에서 모든 초기화 처리)
-
-        // 전역 변수들
-        let allSearchResults = []; // 원본 검색 결과 저장
-        let filteredResults = []; // 필터링된 결과
-        let currentTimezoneFilter = {}; // 현재 적용된 시간대 필터
+        // 국가별 국가 코드 매핑
+        const countryCodeMap = {
+            'korea': 'KR',
+            'japan': 'JP', 
+            'usa': 'US',
+            'canada': 'CA',
+            'uk': 'GB',
+            'germany': 'DE',
+            'france': 'FR',
+            'spain': 'ES',
+            'italy': 'IT',
+            'brazil': 'BR',
+            'argentina': 'AR',
+            'colombia': 'CO',
+            'mexico': 'MX',
+            'india': 'IN',
+            'thailand': 'TH',
+            'vietnam': 'VN',
+            'indonesia': 'ID',
+            'australia': 'AU',
+            'china': 'CN',
+            'russia': 'RU',
+            'saudi': 'SA',
+            'uae': 'AE',
+            'egypt': 'EG',
+            'nigeria': 'NG',
+            'southafrica': 'ZA',
+            'worldwide': 'GL'
+        };
         
-        // 결과내 재검색 필터링 로직
-        function initializeTimezoneFilter() {
-            // 필터 토글 버튼
-            document.getElementById('toggleResultsFilter').addEventListener('click', () => {
-                const content = document.getElementById('resultsFilterContent');
-                content.classList.toggle('collapsed');
-            });
-            
-            // 필터 적용 버튼
-            document.getElementById('applyTimezoneFilter').addEventListener('click', applyTimezoneFilter);
-            
-            // 필터 리셋 버튼
-            document.getElementById('resetTimezoneFilter').addEventListener('click', resetTimezoneFilter);
-            
-            // 떡상 시간대만 선택 버튼
-            document.getElementById('selectBestTimes').addEventListener('click', selectBestTimes);
-            
-            // 체크박스 이벤트 리스너
-            const filterCheckboxes = [
-                'filterPrimeTime', 'filterMorningCommute', 'filterLunchTime',
-                'filterEveningCommute', 'filterLateNight', 'filterWorkTime',
-                'filterWeekend', 'filterWeekday'
-            ];
-            
-            filterCheckboxes.forEach(id => {
-                document.getElementById(id).addEventListener('change', updateFilterPreview);
-            });
+        // 선택된 국가 가져오기
+        function getSelectedCountry() {
+            const selectedCountries = document.querySelectorAll('input[name="countries"]:checked');
+            if (selectedCountries.length > 0) {
+                return selectedCountries[0].value; // 첫 번째 선택된 국가
+            }
+            return 'korea'; // 기본값
         }
         
-        // 검색 결과에 시간대 분석 추가
-        function analyzeSearchResults(results) {
-            console.log('🔍 시간대 분석 시작:', results.length, '개 동영상');
+        // 떡상률 판단 함수
+        function getViralRateClass(hours, minutes, dayOfWeek, country) {
+            // 시간을 분 단위로 변환
+            const timeInMinutes = hours * 60 + minutes;
             
-            const analyzedResults = results.map(video => {
-                const timeAnalysis = analyzeUploadTime(video.status_date, 'korea');
-                return {
-                    ...video,
-                    timeAnalysis: timeAnalysis
-                };
-            });
+            // 주말 여부 확인 (0: 일요일, 6: 토요일)
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
             
-            allSearchResults = analyzedResults;
-            filteredResults = [...analyzedResults];
+            // 떡상률 45% 이상: 최고 피크 시간대
+            // 그로벌 스윗스팟 (14:00-16:00 EST) - 42%
+            // 쇼츠 피크타임 (07:00-09:00, 12:00-13:00, 18:00-20:00) - 45%
+            if (
+                (timeInMinutes >= 420 && timeInMinutes <= 540) ||  // 07:00-09:00 (쇼츠 피크)
+                (timeInMinutes >= 720 && timeInMinutes <= 780) ||  // 12:00-13:00 (쇼츠 피크)
+                (timeInMinutes >= 1080 && timeInMinutes <= 1200)   // 18:00-20:00 (쇼츠 피크)
+            ) {
+                return 'viral-45';
+            }
             
-            updateTimezoneStats(analyzedResults);
-            showTimezoneFilter();
+            // 떡상률 40% 이상: 그로벌 스윗스팟
+            if (timeInMinutes >= 840 && timeInMinutes <= 960) { // 14:00-16:00 (그로벌 스윗스팟)
+                return 'viral-40';
+            }
             
-            return analyzedResults;
+            // 떡상률 30% 이상: 한국 골든타임, 미국 동부 프라임
+            if (
+                (country === 'korea' && timeInMinutes >= 1080 && timeInMinutes <= 1380) || // 18:00-23:00 KST (한국 골든타임 - 35%)
+                (country === 'usa' && timeInMinutes >= 1140 && timeInMinutes <= 1380)      // 19:00-23:00 EST (미국 동부 프라임 - 28%)
+            ) {
+                return 'viral-30';
+            }
+            
+            // 떡상률 20% 이상: 기타 골든타임들
+            if (
+                (country === 'korea' && timeInMinutes >= 660 && timeInMinutes <= 840) ||  // 11:00-14:00 KST (한국 점심 피크 - 22%)
+                (isWeekend && timeInMinutes >= 840 && timeInMinutes <= 1080) ||           // 주말 14:00-18:00 (주말 오후 타임 - 25%)
+                (country === 'japan' && timeInMinutes >= 1140 && timeInMinutes <= 1380)   // 19:00-23:00 JST (일본 프라임타임 - 24%)
+            ) {
+                return 'viral-20';
+            }
+            
+            // 기본값 (떡상률 20% 미만)
+            return '';
         }
         
-        // 시간대별 통계 업데이트
-        function updateTimezoneStats(results) {
-            const stats = {
-                'prime-time': 0,
-                'morning-commute': 0,
-                'lunch-time': 0,
-                'evening-commute': 0,
-                'late-night': 0,
-                'work-time': 0, // morning-work + afternoon-work 합계
-                'weekend': 0,
-                'weekday': 0
-            };
+        // 현지시간 포맷팅
+        function formatLocalTime(dateObj, country) {
+            const timezone = countryTimezones[country] || 'UTC';
+            const countryCode = countryCodeMap[country] || 'GL';
             
-            results.forEach(video => {
-                const analysis = video.timeAnalysis;
-                const category = analysis.timeCategory;
-                
-                // 기본 시간대별 카운트
-                if (stats.hasOwnProperty(category)) {
-                    stats[category]++;
-                }
-                
-                // 업무시간 (09-18시) 계산
-                if (category === 'morning-work' || category === 'afternoon-work') {
-                    stats['work-time']++;
-                }
-                
-                // 주말/평일 카운트
-                if (analysis.isWeekend) {
-                    stats['weekend']++;
-                } else {
-                    stats['weekday']++;
-                }
-            });
+            // 현지시간으로 변환
+            const localDate = new Date(dateObj.toLocaleString("en-US", {timeZone: timezone}));
             
-            // UI 업데이트
-            document.getElementById('primeTimeCount').textContent = `${stats['prime-time']}개`;
-            document.getElementById('morningCommuteCount').textContent = `${stats['morning-commute']}개`;
-            document.getElementById('lunchTimeCount').textContent = `${stats['lunch-time']}개`;
-            document.getElementById('eveningCommuteCount').textContent = `${stats['evening-commute']}개`;
-            document.getElementById('lateNightCount').textContent = `${stats['late-night']}개`;
-            document.getElementById('workTimeCount').textContent = `${stats['work-time']}개`;
-            document.getElementById('weekendCount').textContent = `${stats['weekend']}개`;
-            document.getElementById('weekdayCount').textContent = `${stats['weekday']}개`;
+            // 1줄: 연월일
+            const year = localDate.getFullYear();
+            const month = String(localDate.getMonth() + 1).padStart(2, '0');
+            const day = String(localDate.getDate()).padStart(2, '0');
+            const dateStr = `${year}.${month}.${day}`;
             
-            // 통계 요약 표시
-            const totalVideos = results.length;
-            const bestTimeSlots = [
-                { name: '골든타임 (20-23시)', count: stats['prime-time'], rate: (stats['prime-time']/totalVideos*100).toFixed(1) },
-                { name: '퇴근시간 (18-20시)', count: stats['evening-commute'], rate: (stats['evening-commute']/totalVideos*100).toFixed(1) },
-                { name: '점심시간 (12-14시)', count: stats['lunch-time'], rate: (stats['lunch-time']/totalVideos*100).toFixed(1) }
-            ].sort((a, b) => b.count - a.count);
+            // 2줄: 국가코드 + 요일
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const dayName = dayNames[localDate.getDay()];
+            const countryDayStr = `${countryCode} ${dayName}`;
             
-            const statsText = `총 ${totalVideos}개 영상 분석 완료 | 
-                상위 시간대: ${bestTimeSlots[0].name} ${bestTimeSlots[0].count}개 (${bestTimeSlots[0].rate}%), 
-                ${bestTimeSlots[1].name} ${bestTimeSlots[1].count}개 (${bestTimeSlots[1].rate}%), 
-                ${bestTimeSlots[2].name} ${bestTimeSlots[2].count}개 (${bestTimeSlots[2].rate}%)`;
+            // 3줄: 시분초 (AM/PM 형식)
+            let hours = localDate.getHours();
+            const minutes = String(localDate.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = hours % 12;
+            const finalHours = displayHours === 0 ? 12 : displayHours;
+            const timeStr = `${ampm} ${finalHours}:${minutes}`;
             
-            document.getElementById('filterStats').textContent = statsText;
-        }
-        
-        // 시간대 필터 표시
-        function showTimezoneFilter() {
-            document.getElementById('resultsFilterContainer').style.display = 'block';
-        }
-        
-        // 필터 미리보기 업데이트
-        function updateFilterPreview() {
-            const selectedFilters = getSelectedFilters();
-            const previewCount = countFilteredResults(selectedFilters);
+            // 떡상률 클래스 결정
+            const viralClass = getViralRateClass(hours, localDate.getMinutes(), localDate.getDay(), country);
             
-            // 여기서 실시간으로 필터링 결과 개수를 보여줄 수 있음
-            console.log('필터 미리보기:', previewCount, '개 결과 예상');
-        }
-        
-        // 선택된 필터 가져오기
-        function getSelectedFilters() {
             return {
-                primeTime: document.getElementById('filterPrimeTime').checked,
-                morningCommute: document.getElementById('filterMorningCommute').checked,
-                lunchTime: document.getElementById('filterLunchTime').checked,
-                eveningCommute: document.getElementById('filterEveningCommute').checked,
-                lateNight: document.getElementById('filterLateNight').checked,
-                workTime: document.getElementById('filterWorkTime').checked,
-                weekend: document.getElementById('filterWeekend').checked,
-                weekday: document.getElementById('filterWeekday').checked
+                date: dateStr,
+                countryDay: countryDayStr,
+                time: timeStr,
+                viralClass: viralClass
             };
         }
         
-        // 필터링된 결과 개수 계산
-        function countFilteredResults(filters) {
-            return allSearchResults.filter(video => matchesTimeFilter(video, filters)).length;
+        // 한국시간 포맷팅
+        function formatKoreaTime(dateObj) {
+            // 한국시간(UTC+9)으로 변환
+            const koreaDate = new Date(dateObj.toLocaleString("en-US", {timeZone: 'Asia/Seoul'}));
+            
+            // 1줄: 연월일
+            const year = koreaDate.getFullYear();
+            const month = String(koreaDate.getMonth() + 1).padStart(2, '0');
+            const day = String(koreaDate.getDate()).padStart(2, '0');
+            const dateStr = `${year}.${month}.${day}`;
+            
+            // 2줄: Ko + 요일
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const dayName = dayNames[koreaDate.getDay()];
+            const countryDayStr = `Ko ${dayName}`;
+            
+            // 3줄: 시분초 (오전/오후 형식)
+            let hours = koreaDate.getHours();
+            const minutes = String(koreaDate.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? '오후' : '오전';
+            const displayHours = hours % 12;
+            const finalHours = displayHours === 0 ? 12 : displayHours;
+            const timeStr = `${ampm} ${finalHours}:${minutes}`;
+            
+            // 한국 시간대 기준으로 떡상률 클래스 결정
+            const viralClass = getViralRateClass(hours, koreaDate.getMinutes(), koreaDate.getDay(), 'korea');
+            
+            return {
+                date: dateStr,
+                countryDay: countryDayStr,
+                time: timeStr,
+                viralClass: viralClass
+            };
         }
         
-        // 시간대 필터 매칭 검사
-        function matchesTimeFilter(video, filters) {
-            const analysis = video.timeAnalysis;
-            const category = analysis.timeCategory;
-            
-            // 시간대별 필터 확인
-            if (filters.primeTime && category === 'prime-time') return true;
-            if (filters.morningCommute && category === 'morning-commute') return true;
-            if (filters.lunchTime && category === 'lunch-time') return true;
-            if (filters.eveningCommute && category === 'evening-commute') return true;
-            if (filters.lateNight && category === 'late-night') return true;
-            if (filters.workTime && (category === 'morning-work' || category === 'afternoon-work')) return true;
-            
-            // 주말/평일 필터 확인
-            if (filters.weekend && analysis.isWeekend) return true;
-            if (filters.weekday && !analysis.isWeekend) return true;
-            
-            return false;
-        }
-        
-        // 필터 적용
-        function applyTimezoneFilter() {
-            const filters = getSelectedFilters();
-            
-            // 최소 하나의 필터는 선택되어야 함
-            const hasAnyFilter = Object.values(filters).some(value => value);
-            if (!hasAnyFilter) {
-                alert('최소 하나의 시간대를 선택해주세요.');
-                return;
-            }
-            
-            filteredResults = allSearchResults.filter(video => matchesTimeFilter(video, filters));
-            currentTimezoneFilter = filters;
-            
-            console.log('🔍 필터 적용 완료:', filteredResults.length, '개 결과');
-            
-            // 결과 표시 업데이트
-            updateFilteredResultsDisplay();
-        }
-        
-        // 필터 리셋
-        function resetTimezoneFilter() {
-            // 모든 체크박스 선택
-            const checkboxes = [
-                'filterPrimeTime', 'filterMorningCommute', 'filterLunchTime',
-                'filterEveningCommute', 'filterLateNight', 'filterWorkTime',
-                'filterWeekend', 'filterWeekday'
-            ];
-            
-            checkboxes.forEach(id => {
-                document.getElementById(id).checked = true;
-            });
-            
-            filteredResults = [...allSearchResults];
-            currentTimezoneFilter = {};
-            
-            updateFilteredResultsDisplay();
-        }
-        
-        // 떡상 시간대만 선택
-        function selectBestTimes() {
-            // 모든 체크박스 해제
-            const checkboxes = [
-                'filterPrimeTime', 'filterMorningCommute', 'filterLunchTime',
-                'filterEveningCommute', 'filterLateNight', 'filterWorkTime',
-                'filterWeekend', 'filterWeekday'
-            ];
-            
-            checkboxes.forEach(id => {
-                document.getElementById(id).checked = false;
-            });
-            
-            // 떡상 확률이 높은 시간대만 선택 (골든타임, 퇴근시간, 점심시간)
-            document.getElementById('filterPrimeTime').checked = true;
-            document.getElementById('filterEveningCommute').checked = true;
-            document.getElementById('filterLunchTime').checked = true;
-            document.getElementById('filterWeekend').checked = true; // 주말도 떡상 시간대
-            
-            applyTimezoneFilter();
-        }
-        
-        // 필터링된 결과 표시 업데이트
-        function updateFilteredResultsDisplay() {
-            // 결과 개수 업데이트
-            document.getElementById('resultsCount').textContent = allSearchResults.length;
-            
-            const filteredInfo = document.getElementById('filteredResultsInfo');
-            const filteredCount = document.getElementById('filteredCount');
-            
-            if (filteredResults.length !== allSearchResults.length) {
-                filteredCount.textContent = filteredResults.length;
-                filteredInfo.style.display = 'inline';
+        // 조회수 포맷팅
+        function formatViewCount(viewCount) {
+            const num = parseInt(viewCount) || 0;
+            if (num >= 100000000) { // 1억 이상
+                return Math.floor(num / 100000000) + '억';
+            } else if (num >= 10000000) { // 1천만 이상
+                return Math.floor(num / 10000000) + '천만';
+            } else if (num >= 1000000) { // 100만 이상
+                return Math.floor(num / 10000) + '만';
+            } else if (num >= 10000) { // 1만 이상
+                return Math.floor(num / 10000) + '만';
+            } else if (num >= 1000) { // 1천 이상
+                return Math.floor(num / 1000) + 'K';
             } else {
-                filteredInfo.style.display = 'none';
+                return num.toString();
+            }
+        }
+        
+        // 구독자수 포맷팅 (만 단위)
+        function formatSubscriberCount(subscriberCount) {
+            const num = parseInt(subscriberCount) || 0;
+            if (num >= 100000000) { // 1억 이상
+                return Math.floor(num / 100000000) + '억';
+            } else if (num >= 10000) { // 1만 이상
+                return Math.floor(num / 10000) + '만';
+            } else if (num >= 1000) { // 1천 이상
+                return Math.floor(num / 1000) + 'K';
+            } else {
+                return num.toString();
+            }
+        }
+        
+        // 동영상 시간 포맷팅
+        function formatDuration(durationSeconds) {
+            const seconds = parseInt(durationSeconds) || 0;
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const remainingSeconds = seconds % 60;
+            
+            if (hours > 0) {
+                return `${hours}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+            } else {
+                return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`;
+            }
+        }
+        
+        // 동영상 URL 열기 및 복사
+        function openVideoWithCopy(url) {
+            // 새 탭에서 동영상 열기
+            window.open(url, '_blank');
+            
+            // URL을 클립보드에 복사
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    console.log('URL이 클립보드에 복사되었습니다:', url);
+                }).catch(err => {
+                    console.error('URL 복사 실패:', err);
+                    fallbackCopyToClipboard(url);
+                });
+            } else {
+                // 구형 브라우저 지원
+                fallbackCopyToClipboard(url);
+            }
+        }
+        
+        // 클립보드 복사 fallback 함수
+        function fallbackCopyToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                console.log('URL이 클립보드에 복사되었습니다 (fallback):', text);
+            } catch (err) {
+                console.error('Fallback 복사도 실패:', err);
             }
             
-            // 필터링된 결과로 searchResults 업데이트 후 렌더링
-            searchResults = [...filteredResults];
-            currentPage = 1; // 첫 페이지로 리셋
+            document.body.removeChild(textArea);
+        }
+        
+        // UI 상태 관리 함수들
+        function showLoading() {
+            document.getElementById('loadingIndicator').style.display = 'block';
+        }
+        
+        function hideLoading() {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.innerHTML = message;
+            errorDiv.style.display = 'block';
+        }
+        
+        function hideError() {
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+        
+        function showResults() {
+            document.getElementById('resultsContainer').style.display = 'block';
+            document.getElementById('downloadExcelBtn').style.display = 'flex';
+        }
+        
+        function hideResults() {
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('downloadExcelBtn').style.display = 'none';
+        }
+        
+        function showInfo(message) {
+            // 간단한 정보 메시지 표시 (필요시 구현)
+            console.log('ℹ️ 정보:', message);
+        }
+        
+        // 페이지 변경 함수
+        function changePage(page) {
+            if (page < 1 || page > Math.ceil(searchResults.length / itemsPerPage)) return;
+            currentPage = page;
             renderResults();
         }
         
-
+        // 정렬 헤더 업데이트
+        function updateSortHeaders() {
+            // 모든 헤더에서 정렬 클래스 제거
+            document.querySelectorAll('.results-table th').forEach(th => {
+                th.classList.remove('sort-asc', 'sort-desc');
+            });
+            
+            // 현재 정렬 컬럼에 클래스 추가
+            const currentHeader = document.querySelector(`[data-sort="${sortColumn}"]`);
+            if (currentHeader) {
+                currentHeader.classList.add(sortDirection === 'asc' ? 'sort-asc' : 'sort-desc');
+            }
+        }
+        
+        // 테이블 헤더 클릭 이벤트 (정렬)
+        function initializeSorting() {
+            document.querySelectorAll('.results-table th[data-sort]').forEach(th => {
+                th.addEventListener('click', () => {
+                    const column = th.getAttribute('data-sort');
+                    if (sortColumn === column) {
+                        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        sortColumn = column;
+                        sortDirection = 'desc';
+                    }
+                    sortResults();
+                    renderResults();
+                });
+            });
+        }
         
         // Excel 다운로드 함수
         async function downloadExcel() {
             try {
                 const button = document.getElementById('downloadExcelBtn');
-                const originalText = button.innerHTML;
-                
-                // 버튼 상태 변경
                 button.disabled = true;
-                button.innerHTML = '📊 ...';
+                button.textContent = '📊 생성중...';
                 
-                // 현재 표시된 결과 데이터 가져오기
-                if (!searchResults || searchResults.length === 0) {
-                    alert('다운로드할 검색 결과가 없습니다.');
-                    return;
-                }
-                
-                // 검색 파라미터 수집
-                const searchParams = {
-                    country: getSelectedCountries().join(',') || 'worldwide',
-                    keyword: document.getElementById('keyword').value || '',
-                    minViews: document.getElementById('minViews').value || '',
-                    maxViews: document.getElementById('maxViews').value || '',
-                    uploadPeriod: document.getElementById('uploadPeriod').value || '',
-                    startDate: document.getElementById('startDate').value || '',
-                    endDate: document.getElementById('endDate').value || '',
-                    categories: getSelectedCategories().join(',') || '',
-                    maxResults: document.getElementById('maxResults').value || '20'
-                };
-                
-                console.log('Excel 다운로드 시작:', {
-                    resultsCount: searchResults.length,
-                    searchParams: searchParams
-                });
-                
-                // 서버로 Excel 다운로드 요청
                 const response = await fetch('/api/download-excel', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        searchResults: searchResults,
-                        searchParams: searchParams
-                    })
+                    body: JSON.stringify({ data: searchResults })
                 });
                 
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                    throw new Error('Excel 다운로드 실패');
                 }
                 
-                // 파일 다운로드 처리
                 const blob = await response.blob();
-                
-                // 파일명 추출 (Content-Disposition 헤더에서)
-                const contentDisposition = response.headers.get('Content-Disposition');
-                let filename = 'YouTube_검색결과.xlsx';
-                
-                if (contentDisposition) {
-                    const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/); 
-                if (filenameMatch) {
-                    filename = decodeURIComponent(filenameMatch[1].replace(/['"]/g, ''));
-                }
-                }
-                
-                // 폴더 선택 가능한 다운로드 처리
-                await downloadExcelWithFolderChoice(blob, filename);
-                
-                console.log('Excel 파일 다운로드 성공:', filename);
-                alert(`✅ Excel 파일이 다운로드되었습니다!\n\n파일명: ${filename}\n결과 수: ${searchResults.length}건`);
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `youtube_search_results_${new Date().toISOString().slice(0, 10)}.xlsx`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
                 
             } catch (error) {
                 console.error('Excel 다운로드 오류:', error);
-                
-                let errorMessage = 'Excel 파일 다운로드에 실패했습니다.';
-                
-                if (error.message.includes('413')) {
-                    errorMessage += '\n\n원인: 결과가 너무 많습니다 (1000건 초과)\n해결: 검색 결과를 1000건 이하로 줄여주세요.';
-                } else if (error.message.includes('400')) {
-                    errorMessage += '\n\n원인: 잘못된 요청 데이터\n해결: 검색을 다시 실행해주세요.';
-                } else if (error.message.includes('500')) {
-                    errorMessage += '\n\n원인: 서버 내부 오류\n해결: 잠시 후 다시 시도해주세요.';
-                } else {
-                    errorMessage += `\n\n오류 세부사항: ${error.message}`;
-                }
-                
-                alert(errorMessage);
+                alert('Excel 다운로드 중 오류가 발생했습니다.');
             } finally {
-                // 버튼 상태 복원
                 const button = document.getElementById('downloadExcelBtn');
-                if (button) {
-                    button.disabled = false;
-                    button.innerHTML = '📊';
-                }
+                button.disabled = false;
+                button.textContent = '📊';
             }
         }
-
-        // 선택된 국가 목록 반환 함수
-        function getSelectedCountries() {
-            const countryCheckboxes = document.querySelectorAll('input[name="countries"]:checked');
-            return Array.from(countryCheckboxes).map(cb => cb.value);
-        }
-
-        // 선택된 카테고리 목록 반환 함수  
-        function getSelectedCategories() {
-            const categoryCheckboxes = document.querySelectorAll('input[name="categories"]:checked');
-            return Array.from(categoryCheckboxes).map(cb => cb.value);
-        }
-
-        // Excel 파일 다운로드 (폴더 선택 가능)
-        async function downloadExcelWithFolderChoice(blob, filename) {
-            try {
-                // 최신 브라우저에서 File System Access API 지원 확인
-                if ('showSaveFilePicker' in window) {
-                    // File System Access API 사용 (Chrome 86+, Edge 86+)
-                    await downloadExcelWithFilePicker(blob, filename);
-                } else if ('showDirectoryPicker' in window) {
-                    // Directory Picker API 사용 (대체 방법)
-                    await downloadExcelWithDirectoryPicker(blob, filename);
-                } else {
-                    // 기존 방식 (자동 다운로드) - 브라우저 호환성을 위한 fallback
-                    await downloadExcelWithTraditionalMethod(blob, filename);
-                }
-            } catch (error) {
-                console.error('Excel 다운로드 오류:', error);
-                // 오류 발생 시 기본 방식으로 fallback
-                await downloadExcelWithTraditionalMethod(blob, filename);
-            }
-        }
-
-        // File System Access API를 사용한 Excel 파일 저장 (위치 선택 가능)
-        async function downloadExcelWithFilePicker(blob, filename) {
-            try {
-                // 파일 저장 위치 선택 다이얼로그 표시
-                const fileHandle = await window.showSaveFilePicker({
-                    suggestedName: filename,
-                    types: [{
-                        description: 'Excel 파일',
-                        accept: {
-                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
-                            'application/vnd.ms-excel': ['.xls']
-                        }
-                    }]
-                });
-
-                // 선택한 위치에 파일 저장
-                const writable = await fileHandle.createWritable();
-                await writable.write(blob);
-                await writable.close();
-                
-                console.log(`✅ Excel 파일이 선택한 위치에 저장되었습니다: ${filename}`);
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    console.log('사용자가 저장을 취소했습니다.');
-                    throw new Error('저장이 취소되었습니다.');
-                } else {
-                    throw error;
-                }
-            }
-        }
-
-        // Directory Picker API를 사용한 Excel 파일 저장
-        async function downloadExcelWithDirectoryPicker(blob, filename) {
-            try {
-                // 폴더 선택 다이얼로그 표시
-                const dirHandle = await window.showDirectoryPicker();
-                
-                // 선택한 폴더에 파일 생성 및 저장
-                const fileHandle = await dirHandle.getFileHandle(filename, { create: true });
-                const writable = await fileHandle.createWritable();
-                await writable.write(blob);
-                await writable.close();
-                
-                console.log(`✅ Excel 파일이 선택한 폴더에 저장되었습니다: ${filename}`);
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    console.log('사용자가 폴더 선택을 취소했습니다.');
-                    throw new Error('폴더 선택이 취소되었습니다.');
-                } else {
-                    throw error;
-                }
-            }
-        }
-
-        // 기존 방식 Excel 다운로드 (브라우저 호환성 fallback)
-        async function downloadExcelWithTraditionalMethod(blob, filename) {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-            
-            console.log(`📁 Excel 파일이 기본 다운로드 폴더에 저장됩니다: ${filename}`);
-        }
-
-        // performSearch 함수에서 Excel 버튼 표시 처리
-        function showExcelDownloadButton() {
-            const excelBtn = document.getElementById('downloadExcelBtn');
-            if (excelBtn && searchResults && searchResults.length > 0) {
-                excelBtn.style.display = 'flex';
-                console.log('Excel 다운로드 버튼 활성화:', searchResults.length, '개 결과');
-            }
-        }
-
-        // 초기화는 initializeApp에서 처리됨
+        
+        // 초기화 시 정렬 이벤트 추가
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeSorting();
+        });
+        
+        // 중복된 DOMContentLoaded 이벤트 제거됨 (통합된 initializeApp 함수로 대체)
     </script>
     
 

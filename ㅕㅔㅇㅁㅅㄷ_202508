@@ -1,0 +1,5 @@
+# 인덱스 리프레시 (재부팅 없이)
+curl -X POST "http://localhost:9200/videos/_refresh"
+
+# 세그먼트 병합 (성능 개선)
+curl -X POST "http://localhost:9200/videos/_forcemerge?max_num_segments=1"
