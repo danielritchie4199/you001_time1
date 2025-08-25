@@ -2544,6 +2544,44 @@
                 'italy': 'Europe/Rome',
                 'spain': 'Europe/Madrid',
                 'china': 'Asia/Shanghai',
+                'israel': 'Asia/Jerusalem',
+                'russia': 'Europe/Moscow',
+                // 누락된 34개국 추가
+                'newzealand': 'Pacific/Auckland',
+                'switzerland': 'Europe/Zurich',
+                'norway': 'Europe/Oslo',
+                'ireland': 'Europe/Dublin',
+                'netherlands': 'Europe/Amsterdam',
+                'denmark': 'Europe/Copenhagen',
+                'hongkong': 'Asia/Hong_Kong',
+                'sweden': 'Europe/Stockholm',
+                'finland': 'Europe/Helsinki',
+                'singapore': 'Asia/Singapore',
+                'austria': 'Europe/Vienna',
+                'luxembourg': 'Europe/Luxembourg',
+                'belgium': 'Europe/Brussels',
+                'czechrepublic': 'Europe/Prague',
+                'portugal': 'Europe/Lisbon',
+                'uae': 'Asia/Dubai',
+                'qatar': 'Asia/Qatar',
+                'kuwait': 'Asia/Kuwait',
+                'saudi': 'Asia/Riyadh',
+                'poland': 'Europe/Warsaw',
+                'southafrica': 'Africa/Johannesburg',
+                'turkey': 'Europe/Istanbul',
+                'hungary': 'Europe/Budapest',
+                'suriname': 'America/Paramaribo',
+                'colombia': 'America/Bogota',
+                'argentina': 'America/Argentina/Buenos_Aires',
+                'mozambique': 'Africa/Maputo',
+                'indonesia': 'Asia/Jakarta',
+                'vietnam': 'Asia/Ho_Chi_Minh',
+                'pakistan': 'Asia/Karachi',
+                'bangladesh': 'Asia/Dhaka',
+                'jamaica': 'America/Jamaica',
+                'libya': 'Africa/Tripoli',
+                'iceland': 'Atlantic/Reykjavik',
+                'srilanka': 'Asia/Colombo',
                 'worldwide': 'UTC'
             };
             
@@ -2915,13 +2953,14 @@
         // 날짜/시간 셀 생성 함수 (시나리오별 로직)
         function generateDateTimeCells(result, uploadDateObj) {
             if (currentSearchScenario === 'korea_only') {
-                // 시나리오 1: 한국 단독 검색 - 업로드일에 🏠, 한국시간에 상세 시간
+                // 시나리오 1: 한국 단독 검색 - 업로드일과 한국시간 모두 한국시간 표시
                 const koreaDateTime = formatDetailedDateTime(uploadDateObj, 'Asia/Seoul', 'KST');
                 
                 const uploadDateCell = `
                     <td>
-                        <div class="upload-date home-icon">
-                            <span title="한국 영상">🏠</span>
+                        <div class="upload-date detailed-time">
+                            <div class="date-part">${koreaDateTime.dateOnly}</div>
+                            <div class="time-part">${koreaDateTime.timeOnly}</div>
                         </div>
                     </td>`;
                 
@@ -2939,13 +2978,14 @@
                 const isKoreanVideo = isVideoFromKorea(result);
                 
                 if (isKoreanVideo) {
-                    // 한국 영상: 업로드일에 🏠, 한국시간에 상세 시간
+                    // 한국 영상: 업로드일과 한국시간 모두 한국시간 표시
                     const koreaDateTime = formatDetailedDateTime(uploadDateObj, 'Asia/Seoul', 'KST');
                     
                     const uploadDateCell = `
                         <td>
-                            <div class="upload-date home-icon">
-                                <span title="한국 영상">🏠</span>
+                            <div class="upload-date detailed-time">
+                                <div class="date-part">${koreaDateTime.dateOnly}</div>
+                                <div class="time-part">${koreaDateTime.timeOnly}</div>
                             </div>
                         </td>`;
                     
@@ -3005,10 +3045,48 @@
                 'mexico': 'America/Mexico_City',
                 'russia': 'Europe/Moscow',
                 'italy': 'Europe/Rome',
-                'korea': 'Asia/Seoul'
+                'spain': 'Europe/Madrid',
+                'israel': 'Asia/Jerusalem',
+                'korea': 'Asia/Seoul',
+                // 누락된 34개국 추가
+                'newzealand': 'Pacific/Auckland',
+                'switzerland': 'Europe/Zurich',
+                'norway': 'Europe/Oslo',
+                'ireland': 'Europe/Dublin',
+                'netherlands': 'Europe/Amsterdam',
+                'denmark': 'Europe/Copenhagen',
+                'hongkong': 'Asia/Hong_Kong',
+                'sweden': 'Europe/Stockholm',
+                'finland': 'Europe/Helsinki',
+                'singapore': 'Asia/Singapore',
+                'austria': 'Europe/Vienna',
+                'luxembourg': 'Europe/Luxembourg',
+                'belgium': 'Europe/Brussels',
+                'czechrepublic': 'Europe/Prague',
+                'portugal': 'Europe/Lisbon',
+                'uae': 'Asia/Dubai',
+                'qatar': 'Asia/Qatar',
+                'kuwait': 'Asia/Kuwait',
+                'saudi': 'Asia/Riyadh',
+                'poland': 'Europe/Warsaw',
+                'southafrica': 'Africa/Johannesburg',
+                'turkey': 'Europe/Istanbul',
+                'hungary': 'Europe/Budapest',
+                'suriname': 'America/Paramaribo',
+                'colombia': 'America/Bogota',
+                'argentina': 'America/Argentina/Buenos_Aires',
+                'mozambique': 'Africa/Maputo',
+                'indonesia': 'Asia/Jakarta',
+                'vietnam': 'Asia/Ho_Chi_Minh',
+                'pakistan': 'Asia/Karachi',
+                'bangladesh': 'Asia/Dhaka',
+                'jamaica': 'America/Jamaica',
+                'libya': 'Africa/Tripoli',
+                'iceland': 'Atlantic/Reykjavik',
+                'srilanka': 'Asia/Colombo'
             };
             
-            return countryTimezones[countryCode] || 'Asia/Seoul';
+            return countryTimezones[countryCode] || 'UTC';
         }
         
         // 한국 영상 식별 함수 (개선된 버전)
@@ -3254,10 +3332,48 @@
                 'canada': 'America/Toronto',
                 'mexico': 'America/Mexico_City',
                 'russia': 'Europe/Moscow',
-                'italy': 'Europe/Rome'
+                'italy': 'Europe/Rome',
+                'spain': 'Europe/Madrid',
+                'israel': 'Asia/Jerusalem',
+                // 누락된 34개국 추가
+                'newzealand': 'Pacific/Auckland',
+                'switzerland': 'Europe/Zurich',
+                'norway': 'Europe/Oslo',
+                'ireland': 'Europe/Dublin',
+                'netherlands': 'Europe/Amsterdam',
+                'denmark': 'Europe/Copenhagen',
+                'hongkong': 'Asia/Hong_Kong',
+                'sweden': 'Europe/Stockholm',
+                'finland': 'Europe/Helsinki',
+                'singapore': 'Asia/Singapore',
+                'austria': 'Europe/Vienna',
+                'luxembourg': 'Europe/Luxembourg',
+                'belgium': 'Europe/Brussels',
+                'czechrepublic': 'Europe/Prague',
+                'portugal': 'Europe/Lisbon',
+                'uae': 'Asia/Dubai',
+                'qatar': 'Asia/Qatar',
+                'kuwait': 'Asia/Kuwait',
+                'saudi': 'Asia/Riyadh',
+                'poland': 'Europe/Warsaw',
+                'southafrica': 'Africa/Johannesburg',
+                'turkey': 'Europe/Istanbul',
+                'hungary': 'Europe/Budapest',
+                'suriname': 'America/Paramaribo',
+                'colombia': 'America/Bogota',
+                'argentina': 'America/Argentina/Buenos_Aires',
+                'mozambique': 'Africa/Maputo',
+                'indonesia': 'Asia/Jakarta',
+                'vietnam': 'Asia/Ho_Chi_Minh',
+                'pakistan': 'Asia/Karachi',
+                'bangladesh': 'Asia/Dhaka',
+                'jamaica': 'America/Jamaica',
+                'libya': 'Africa/Tripoli',
+                'iceland': 'Atlantic/Reykjavik',
+                'srilanka': 'Asia/Colombo'
             };
             
-            const timezone = countryTimezones[countryCode] || 'Asia/Seoul';
+            const timezone = countryTimezones[countryCode] || 'UTC';
             const localDate = new Date(utcDate.toLocaleString("en-US", {timeZone: timezone}));
             
             return {
@@ -3312,7 +3428,45 @@
                 'mexico': 'CST',
                 'russia': 'MSK',
                 'italy': 'CET',
-                'korea': 'KST'
+                'spain': 'CET',
+                'israel': 'IST',
+                'korea': 'KST',
+                // 누락된 34개국 시간대 약어 추가
+                'newzealand': 'NZDT',
+                'switzerland': 'CET',
+                'norway': 'CET',
+                'ireland': 'GMT',
+                'netherlands': 'CET',
+                'denmark': 'CET',
+                'hongkong': 'HKT',
+                'sweden': 'CET',
+                'finland': 'EET',
+                'singapore': 'SGT',
+                'austria': 'CET',
+                'luxembourg': 'CET',
+                'belgium': 'CET',
+                'czechrepublic': 'CET',
+                'portugal': 'WET',
+                'uae': 'GST',
+                'qatar': 'AST',
+                'kuwait': 'AST',
+                'saudi': 'AST',
+                'poland': 'CET',
+                'southafrica': 'SAST',
+                'turkey': 'TRT',
+                'hungary': 'CET',
+                'suriname': 'SRT',
+                'colombia': 'COT',
+                'argentina': 'ART',
+                'mozambique': 'CAT',
+                'indonesia': 'WIB',
+                'vietnam': 'ICT',
+                'pakistan': 'PKT',
+                'bangladesh': 'BST',
+                'jamaica': 'EST',
+                'libya': 'EET',
+                'iceland': 'GMT',
+                'srilanka': 'LKT'
             };
             
             return timezoneAbbrs[countryCode] || 'UTC';
