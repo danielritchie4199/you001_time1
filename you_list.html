@@ -667,7 +667,7 @@
             background: #f8f9fa;
             padding: 4px 8px;
             border-radius: 4px;
-            font-size: 13px;
+            font-size: 10x;
         }
 
         .video-link {
@@ -895,7 +895,7 @@
         
         /* 상세 시간 표시 스타일 */
         .upload-date.detailed-time {
-            text-align: center;
+            text-align: left;
             line-height: 1.2;
         }
         
@@ -1787,7 +1787,7 @@
         <div id="loadingIndicator" class="loading" style="display: none;">
             <div class="spinner"></div>
             <p>검색 중입니다... 잠시만 기다려주세요.</p>
-        </div>
+                        </div>
 
         <div id="errorMessage" class="error-message" style="display: none;"></div>
 
@@ -1797,11 +1797,11 @@
                 <div class="filter-header">
                     <h3>🔍 결과내 재검색 - 업로드 시간대 필터링</h3>
                     <button id="toggleResultsFilter" class="toggle-filter-btn">필터 접기/펼치기</button>
-                </div>
+                        </div>
                 <div id="resultsFilterContent" class="filter-content">
                     <div class="filter-stats">
                         <p id="filterStats">시간대별 동영상 분포를 분석 중...</p>
-                    </div>
+                        </div>
                     <div class="timezone-filter-grid">
                         <div class="filter-group">
                             <h4>📊 골든타임 (20-23시)</h4>
@@ -1809,93 +1809,93 @@
                                 <input type="checkbox" id="filterPrimeTime" checked>
                                 <span id="primeTimeCount">0개</span>
                             </label>
-                        </div>
+                    </div>
                         <div class="filter-group">
                             <h4>🌅 아침시간 (06-09시)</h4>
                             <label>
                                 <input type="checkbox" id="filterMorningCommute" checked>
                                 <span id="morningCommuteCount">0개</span>
                             </label>
-                        </div>
+                </div>
                         <div class="filter-group">
                             <h4>🍱 점심시간 (12-14시)</h4>
                             <label>
                                 <input type="checkbox" id="filterLunchTime" checked>
                                 <span id="lunchTimeCount">0개</span>
                             </label>
-                        </div>
+                </div>
                         <div class="filter-group">
                             <h4>🌆 퇴근시간 (18-20시)</h4>
                             <label>
                                 <input type="checkbox" id="filterEveningCommute" checked>
                                 <span id="eveningCommuteCount">0개</span>
                             </label>
-                        </div>
+                    </div>
                         <div class="filter-group">
                             <h4>🌙 심야시간 (23-02시)</h4>
                             <label>
                                 <input type="checkbox" id="filterLateNight" checked>
                                 <span id="lateNightCount">0개</span>
                             </label>
-                        </div>
+                    </div>
                         <div class="filter-group">
                             <h4>💼 업무시간 (09-18시)</h4>
                             <label>
                                 <input type="checkbox" id="filterWorkTime" checked>
                                 <span id="workTimeCount">0개</span>
                             </label>
-                        </div>
+                    </div>
                         <div class="filter-group">
                             <h4>🎉 주말</h4>
                             <label>
                                 <input type="checkbox" id="filterWeekend" checked>
                                 <span id="weekendCount">0개</span>
                             </label>
-                        </div>
+                    </div>
                         <div class="filter-group">
                             <h4>📅 평일</h4>
                             <label>
                                 <input type="checkbox" id="filterWeekday" checked>
                                 <span id="weekdayCount">0개</span>
                             </label>
-                        </div>
+                    </div>
                         <div class="filter-group">
                             <h4>☀️ 오전시간 (09-12시)</h4>
                             <label>
                                 <input type="checkbox" id="filterMorningTime" checked>
                                 <span id="morningTimeCount">0개</span>
                             </label>
-                        </div>
+                    </div>
                         <div class="filter-group">
                             <h4>🌇 오후시간 (14-18시)</h4>
                             <label>
                                 <input type="checkbox" id="filterAfternoonTime" checked>
                                 <span id="afternoonTimeCount">0개</span>
                             </label>
-                        </div>
+                    </div>
                         <div class="filter-group">
                             <h4>🌃 저녁시간 (20-23시)</h4>
                             <label>
                                 <input type="checkbox" id="filterEveningTime" checked>
                                 <span id="eveningTimeCount">0개</span>
                             </label>
-                        </div>
+                    </div>
                         <div class="filter-group">
                             <h4>🌌 새벽시간 (02-06시)</h4>
                             <label>
                                 <input type="checkbox" id="filterEarlyMorningTime" checked>
                                 <span id="earlyMorningTimeCount">0개</span>
                             </label>
-                        </div>
-                    </div>
-                    <div class="filter-actions">
-                        <button id="applyTimezoneFilter" class="apply-filter-btn">필터 적용</button>
-                        <button id="resetTimezoneFilter" class="reset-filter-btn">필터 리셋</button>
-                        <button id="selectBestTimes" class="best-times-btn">떡상 시간대만 선택</button>
                     </div>
                 </div>
+                    <div class="filter-actions">
+                        <button id="applyTimezoneFilter" class="apply-filter-btn">필터 적용</button>
+                        <button id="resetTimezoneFilter" class="reset-filter-btn">모두 해제</button>
+                        <button id="selectBestTimes" class="best-times-btn">떡상 시간대만 선택</button>
             </div>
-            
+                </div>
+        </div>
+
             <div class="results-header">
                 <div class="results-info">
                     <span id="resultsCount">0</span>개의 결과가 검색되었습니다.
@@ -1916,7 +1916,7 @@
                         </select>
                     </div>
                     <button id="downloadExcelBtn" class="excel-download-btn" style="display: none;" title="클릭하면 저장 위치를 선택할 수 있습니다 (Chrome/Edge 86+ 지원)">
-                         📊 
+                        📊
                     </button>
                 </div>
             </div>
@@ -3595,7 +3595,7 @@
             
             return timezoneAbbrs[countryCode] || 'UTC';
         }
-        
+
         // 검색 수행 함수
         async function performSearch() {
             const formData = new FormData(document.getElementById('searchForm'));
@@ -3780,17 +3780,17 @@
 
                 hideLoading();
 
-                                                 if (data.success) {
-                    searchResults = data.data;
-                    currentPage = 1;
-                    
-                    // 검색 시마다 정렬을 조회수 내림차순으로 초기화
-                    sortColumn = 'daily_view_count';
-                    sortDirection = 'desc';
-                    
-                    sortResults();
-                    renderResults();
-                    showResults();
+                                 if (data.success) {
+                     searchResults = data.data;
+                     currentPage = 1;
+                     
+                     // 검색 시마다 정렬을 조회수 내림차순으로 초기화
+                     sortColumn = 'daily_view_count';
+                     sortDirection = 'desc';
+                     
+                     sortResults();
+                     renderResults();
+                     showResults();
                     
                     // 시간대 분석 및 필터 표시
                     if (searchResults.length > 0) {
@@ -3799,10 +3799,10 @@
                     
                     // Excel 다운로드 버튼 표시
                     showExcelDownloadButton();
-                    
-                    // 중복 제거 정보 표시 (콘솔에만)
-                    console.log(`✅ 검색 완료: ${searchResults.length}개 고유 결과`);
-                } else {
+                     
+                     // 중복 제거 정보 표시 (콘솔에만)
+                     console.log(`✅ 검색 완료: ${searchResults.length}개 고유 결과`);
+                 } else {
                     // 오류 타입별 처리
                     if (data.errorType === 'quota_exceeded') {
                         showError(`
@@ -4192,17 +4192,17 @@
                     const countryInfo = detectVideoCountry(result);
                     
                     return {
-                        youtube_channel_name: result.youtube_channel_name,
-                        thumbnail_url: result.thumbnail_url,
-                        status: result.status,
-                        youtube_channel_id: result.youtube_channel_id,
-                        title: result.title,
-                        daily_view_count: result.daily_view_count,
-                        subscriber_count: result.subscriber_count,
-                        vod_url: result.vod_url,
-                        status_date: result.status_date,
-                        duration_seconds: result.duration_seconds,
-                        video_length_category: result.video_length_category,
+                    youtube_channel_name: result.youtube_channel_name,
+                    thumbnail_url: result.thumbnail_url,
+                    status: result.status,
+                    youtube_channel_id: result.youtube_channel_id,
+                    title: result.title,
+                    daily_view_count: result.daily_view_count,
+                    subscriber_count: result.subscriber_count,
+                    vod_url: result.vod_url,
+                    status_date: result.status_date,
+                    duration_seconds: result.duration_seconds,
+                    video_length_category: result.video_length_category,
                         primary_category: result.primary_category,
                         country: countryInfo // 국가 정보 추가
                     };
@@ -4279,8 +4279,12 @@
                     await downloadExcelWithTraditionalMethod(blob, filename);
                 }
             } catch (error) {
+                // 사용자가 취소한 경우 fallback 하지 않음
+                if (error.message && error.message.includes('취소')) {
+                    throw error; // 취소 오류를 상위로 전달
+                }
                 console.error('Excel 다운로드 오류:', error);
-                // 오류 발생 시 기본 방식으로 fallback
+                // 다른 오류 발생 시에만 기본 방식으로 fallback
                 await downloadExcelWithTraditionalMethod(blob, filename);
             }
         }
@@ -4889,7 +4893,10 @@
             console.log('🔍 시간대 분석 시작:', results.length, '개 동영상');
             
             const analyzedResults = results.map(video => {
-                const timeAnalysis = analyzeUploadTime(video.status_date, 'korea');
+                // 각 동영상의 국가에 맞는 시간대 사용
+                const detectedCountry = detectVideoCountry(video);
+                const countryCode = getCountryCodeFromName(detectedCountry);
+                const timeAnalysis = analyzeUploadTime(video.status_date, countryCode);
                 return {
                     ...video,
                     timeAnalysis: timeAnalysis
@@ -5056,9 +5063,8 @@
             updateFilteredResultsDisplay();
         }
         
-        // 필터 리셋
+        // 필터 리셋 (토글 방식)
         function resetTimezoneFilter() {
-            // 모든 체크박스 선택
             const checkboxes = [
                 'filterPrimeTime', 'filterMorningCommute', 'filterLunchTime',
                 'filterEveningCommute', 'filterLateNight', 'filterWorkTime',
@@ -5066,12 +5072,31 @@
                 'filterAfternoonTime', 'filterEveningTime', 'filterEarlyMorningTime'
             ];
             
+            // 현재 선택된 체크박스 개수 확인
+            const checkedCount = checkboxes.filter(id => 
+                document.getElementById(id).checked
+            ).length;
+            
+            // 모두 선택되어 있으면 모두 해제, 아니면 모두 선택
+            const shouldSelectAll = checkedCount < checkboxes.length;
+            
             checkboxes.forEach(id => {
-                document.getElementById(id).checked = true;
+                document.getElementById(id).checked = shouldSelectAll;
             });
             
-            filteredResults = [...allSearchResults];
-            currentTimezoneFilter = {};
+            if (shouldSelectAll) {
+                // 모두 선택 시 - 전체 결과 표시
+                filteredResults = [...allSearchResults];
+                currentTimezoneFilter = {};
+                // 버튼 텍스트 변경
+                document.getElementById('resetTimezoneFilter').textContent = '모두 해제';
+            } else {
+                // 모두 해제 시 - 빈 결과 표시
+                filteredResults = [];
+                currentTimezoneFilter = {};
+                // 버튼 텍스트 변경
+                document.getElementById('resetTimezoneFilter').textContent = '모두 선택';
+            }
             
             updateFilteredResultsDisplay();
         }
@@ -5196,6 +5221,12 @@
             } catch (error) {
                 console.error('Excel 다운로드 오류:', error);
                 
+                // 사용자가 취소한 경우 알림 표시하지 않음
+                if (error.message && error.message.includes('취소')) {
+                    console.log('사용자가 Excel 다운로드를 취소했습니다.');
+                    return;
+                }
+                
                 let errorMessage = 'Excel 파일 다운로드에 실패했습니다.';
                 
                 if (error.message.includes('413')) {
@@ -5242,8 +5273,12 @@
                     await downloadExcelWithTraditionalMethod(blob, filename);
                 }
             } catch (error) {
+                // 사용자가 취소한 경우 fallback 하지 않음
+                if (error.message && error.message.includes('취소')) {
+                    throw error; // 취소 오류를 상위로 전달
+                }
                 console.error('Excel 다운로드 오류:', error);
-                // 오류 발생 시 기본 방식으로 fallback
+                // 다른 오류 발생 시에만 기본 방식으로 fallback
                 await downloadExcelWithTraditionalMethod(blob, filename);
             }
         }
