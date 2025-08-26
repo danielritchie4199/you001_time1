@@ -1142,6 +1142,14 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
         console.log(`  📡 채널 구독자 수 조회 중: ${video.snippet.channelId}`);
         const subscriberCount = await getChannelSubscriberCount(video.snippet.channelId);
         console.log(`  👥 구독자 수: ${subscriberCount.toLocaleString()}`);
+        
+        // 채널 개설일 정보 가져오기 (새 기능)
+        console.log(`  📅 채널 개설일 조회 중: ${video.snippet.channelId}`);
+        const channelCreatedDate = await getChannelCreatedDate(video.snippet.channelId);
+        console.log(`  🗓️ 채널 개설일: ${channelCreatedDate || '조회 안됨'}`);
+
+        // 실제 좋아요 개수 가져오기 (있으면 사용, 없으면 null)
+        const actualLikeCount = video.statistics.likeCount ? parseInt(video.statistics.likeCount) : null;
 
         const result = {
           youtube_channel_name: video.snippet.channelTitle,
@@ -1156,6 +1164,8 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
           status_date: video.snippet.publishedAt,
           daily_view_count: viewCount,
           subscriber_count: subscriberCount,
+          channel_created_date: channelCreatedDate,  // 새로 추가된 필드
+          actual_like_count: actualLikeCount,  // 실제 좋아요 개수 (없으면 null)
           vod_url: `https://www.youtube.com/watch?v=${video.id}`,
           video_id: video.id,
           title: video.snippet.title,
@@ -1678,6 +1688,28 @@ function getVideoLengthCategory(durationInSeconds) {
 function matchesVideoLength(videoLengthCategory, selectedLengths) {
   if (!selectedLengths || selectedLengths.length === 0) return true;
   return selectedLengths.includes(videoLengthCategory);
+}
+
+// 채널 개설일 가져오기 (새 기능)
+async function getChannelCreatedDate(channelId) {
+  try {
+    const youtubeInstance = apiKeyManager.getYouTubeInstance();
+    const currentKey = youtubeInstance.currentKey;
+    const channelResponse = await youtubeInstance.youtube.channels.list({
+      part: 'snippet',
+      id: channelId
+    });
+
+    if (channelResponse.data.items && channelResponse.data.items.length > 0) {
+      const publishedAt = channelResponse.data.items[0].snippet.publishedAt;
+      return publishedAt;
+    }
+    
+    return null;
+  } catch (error) {
+    console.error(`채널 개설일 조회 오류 (${channelId}):`, error.message);
+    return null;
+  }
 }
 
 // 채널 구독자 수 가져오기

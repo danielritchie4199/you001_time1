@@ -21,7 +21,7 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1540px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -306,7 +306,7 @@
 
         .video-length-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
             align-items: start;
         }
@@ -482,7 +482,7 @@
             table-layout: fixed; /* 컬럼 width 고정 */
         }
 
-        /* 각 컬럼의 고정 width 설정 (12개 컬럼) */
+        /* 각 컬럼의 고정 width 설정 (13개 컬럼) */
         .results-table th:nth-child(1),
         .results-table td:nth-child(1) {
             width: 70px; /* 썸네일 */
@@ -568,6 +568,29 @@
             opacity: 0.6;
         }
 
+        .sort-icon {
+            cursor: pointer;
+            margin: 0 2px;
+            transition: transform 0.2s ease;
+            position: relative;
+        }
+
+        .sort-icon::after {
+            content: "↕";
+            font-size: 0.8em;
+            opacity: 0.6;
+            margin-left: 1px;
+        }
+
+        .sort-icon:hover {
+            transform: scale(1.2);
+        }
+
+        /* 채널명 컬럼은 개별 이모지에만 화살표 표시 */
+        .sortable.multi-sort::after {
+            display: none;
+        }
+
         .results-table th.sort-asc::after {
             content: " ↑";
             opacity: 1;
@@ -646,6 +669,26 @@
             font-weight: bold;
         }
 
+        /* 채널 개설일 표시 스타일 (새 기능) */
+        .channel-created-date {
+            color: #0066ff !important;
+            font-weight: bold !important;
+            font-size: 0.85em;
+            margin-top: 2px;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .channel-link:hover .channel-created-date {
+            color: #0066ff !important;
+            text-decoration: none;
+        }
+        
+        .channel-link:active .channel-created-date {
+            color: #0066ff !important;
+            text-decoration: none;
+        }
+
         .view-count {
             font-weight: 600;
             color: #28a745;
@@ -668,6 +711,23 @@
             padding: 2px 4px;
             border-radius: 3px;
             font-size: 11px;
+        }
+
+        .like-count {
+            font-weight: 600;
+            text-align: center;
+            display: block;
+            font-size: 11px;
+        }
+
+        /* 실제 좋아요 개수 (빨간색) */
+        .like-count-actual {
+            color: #e91e63;
+        }
+
+        /* 추정 좋아요 개수 (파란색) */
+        .like-count-estimated {
+            color: #2196f3;
         }
 
         .video-link {
@@ -821,7 +881,7 @@
             }
             
             .video-length-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
             }
             
@@ -829,7 +889,7 @@
                 padding: 12px;
             }
             
-            /* 모바일에서 컬럼 width 재조정 */
+            /* 모바일에서 컬럼 width 재조정 (13개 컬럼) */
             .results-table th:nth-child(1),
             .results-table td:nth-child(1) {
                 width: 70px; /* 썸네일 */
@@ -857,26 +917,31 @@
             
             .results-table th:nth-child(6),
             .results-table td:nth-child(6) {
-                width: 90px; /* 조회수 */
+                width: 50px; /* 좋아요 */
             }
             
             .results-table th:nth-child(7),
             .results-table td:nth-child(7) {
-                width: 70px; /* 구독자 */
+                width: 90px; /* 조회수 */
             }
             
             .results-table th:nth-child(8),
             .results-table td:nth-child(8) {
-                width: 50px; /* 링크 */
+                width: 70px; /* 구독자 */
             }
             
             .results-table th:nth-child(9),
             .results-table td:nth-child(9) {
-                width: 70px; /* 재생시간 */
+                width: 50px; /* 링크 */
             }
             
             .results-table th:nth-child(10),
             .results-table td:nth-child(10) {
+                width: 70px; /* 재생시간 */
+            }
+            
+            .results-table th:nth-child(11),
+            .results-table td:nth-child(11) {
                 width: 50px; /* 썸네일 다운로드 */
             }
         }
@@ -1032,28 +1097,33 @@
             width: 120px;
         }
         
-        .results-table th:nth-child(8),  /* 조회수 */
+        .results-table th:nth-child(8),  /* 좋아요 */
         .results-table td:nth-child(8) {
+            width: 60px;
+        }
+        
+        .results-table th:nth-child(9),  /* 조회수 */
+        .results-table td:nth-child(9) {
             width: 90px;
         }
         
-        .results-table th:nth-child(9),  /* 구독자 */
-        .results-table td:nth-child(9) {
+        .results-table th:nth-child(10), /* 구독자 */
+        .results-table td:nth-child(10) {
             width: 80px;
         }
         
-        .results-table th:nth-child(10), /* 링크 */
-        .results-table td:nth-child(10) {
+        .results-table th:nth-child(11), /* 링크 */
+        .results-table td:nth-child(11) {
             width: 50px;
         }
         
-        .results-table th:nth-child(11), /* 재생시간 */
-        .results-table td:nth-child(11) {
+        .results-table th:nth-child(12), /* 재생시간 */
+        .results-table td:nth-child(12) {
             width: 70px;
         }
         
-        .results-table th:nth-child(12), /* 다운로드 */
-        .results-table td:nth-child(12) {
+        .results-table th:nth-child(13), /* 다운로드 */
+        .results-table td:nth-child(13) {
             width: 60px;
         }
         
@@ -1903,7 +1973,7 @@
                 </div>
                 <div class="results-controls">
                     <div class="pagination-controls">
-                        <label>(구독자수: 만 단위) &nbsp;&nbsp;페이지당 표시:</label>
+                        <label>(구독자수: 만 단위) &nbsp;&nbsp; </label>
                         <select id="itemsPerPage">
                             <option value="10">10개</option>
                             <option value="20">20개</option>
@@ -1926,12 +1996,16 @@
                     <thead>
                         <tr>
                             <th data-sort="thumbnail_url">👍</th>
-                            <th data-sort="youtube_channel_name" class="sortable">✨</th>
+                            <th class="sortable multi-sort">
+                                <span data-sort="youtube_channel_name" class="sort-icon">✨</span>
+                                <span data-sort="channel_created_date" class="sort-icon">📅</span>
+                            </th>
                             <th data-sort="title" class="sortable">📽️</th>
                             <th data-sort="primary_category" class="sortable">️‍🌈</th>
                             <th data-sort="country" class="sortable">🏳️‍🌈</th>
                             <th data-sort="status_date" class="sortable" id="uploadDateHeader">🗓️</th>
                             <th data-sort="korea_time" class="sortable" id="koreaTimeHeader">🏠</th>
+                            <th data-sort="likes" class="sortable" style="color: red;">💛</th>
                             <th data-sort="daily_view_count" class="sortable">👓</th>
                             <th data-sort="subscriber_count" class="sortable">👪</th>
                             <th data-sort="vod_url">▶️</th>
@@ -2401,6 +2475,88 @@
             updateSelectAllVideoLength();
             updateGroupCheckboxes();
         });
+
+        // 채널 개설일 포맷 함수 (새 기능)
+        function formatChannelCreatedDate(createdDate) {
+            if (!createdDate) {
+                return '조회 안됨';
+            }
+            
+            try {
+                const date = new Date(createdDate);
+                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                
+                return `${year}.${month}.${day}`;
+            } catch (error) {
+                console.error('채널 개설일 포맷 오류:', error);
+                return '조회 안됨';
+            }
+        }
+        
+        // 좋아요 개수 처리 함수 (실제 데이터 우선, 없으면 추정)
+        function getLikeCount(video) {
+            // 실제 좋아요 개수가 있으면 우선 사용
+            if (video.actual_like_count !== null && video.actual_like_count !== undefined) {
+                return {
+                    count: video.actual_like_count,
+                    isEstimated: false
+                };
+            }
+            
+            // 실제 데이터가 없으면 추정값 생성
+            return {
+                count: generateEstimatedLikeCount(video),
+                isEstimated: true
+            };
+        }
+
+        // 좋아요 개수 추정 함수 (실제 데이터가 없는 경우에만 사용)
+        function generateEstimatedLikeCount(video) {
+            // 조회수를 기반으로 좋아요 개수 추정 (일반적으로 조회수의 3-8%)
+            const viewCount = parseInt(video.daily_view_count || 0);
+            
+            // 동영상별로 일관된 시드값 생성 (video_id, 채널명, 제목 조합)
+            const seedString = (video.vod_url || '') + (video.youtube_channel_name || '') + (video.title || '');
+            const seed = generateSeedFromString(seedString);
+            
+            if (viewCount === 0) return Math.floor(seededRandom(seed) * 1000);
+            
+            // 채널 구독자 수에 따른 좋아요 비율 조정
+            const subscriberCount = parseInt(video.subscriber_count || 0);
+            let likeRatio = 0.05; // 기본 5%
+            
+            // 구독자가 많은 채널일수록 좋아요 비율이 약간 높음
+            if (subscriberCount > 1000000) likeRatio = 0.06; // 100만 이상: 6%
+            else if (subscriberCount > 100000) likeRatio = 0.055; // 10만 이상: 5.5%
+            else if (subscriberCount > 10000) likeRatio = 0.05; // 1만 이상: 5%
+            else likeRatio = 0.04; // 그 외: 4%
+            
+            // 고정된 랜덤 요소 추가 (±30%)
+            const randomFactor = 0.7 + seededRandom(seed + 1) * 0.6;
+            const estimatedLikes = Math.floor(viewCount * likeRatio * randomFactor);
+            
+            return estimatedLikes;
+        }
+
+        // 문자열로부터 시드값 생성
+        function generateSeedFromString(str) {
+            let hash = 0;
+            if (!str || str.length === 0) return hash;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // 32bit integer로 변환
+            }
+            return Math.abs(hash);
+        }
+
+        // 시드값 기반 고정 랜덤 함수
+        function seededRandom(seed) {
+            const x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
 
         // 개별 동영상 길이 체크박스 변경 시 "모두 선택" 상태 업데이트
         function updateSelectAllVideoLength() {
@@ -2886,6 +3042,41 @@
             
             // 시간대 필터 초기화
             initializeTimezoneFilter();
+            
+            // 테이블 헤더 클릭 이벤트 (정렬)
+            document.querySelectorAll('.results-table th.sortable').forEach(th => {
+                // 기존 방식: data-sort가 있는 th 클릭
+                if (th.dataset.sort) {
+                    th.addEventListener('click', () => {
+                        const column = th.dataset.sort;
+                        if (sortColumn === column) {
+                            sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+                        } else {
+                            sortColumn = column;
+                            sortDirection = 'desc';
+                        }
+                        sortResults();
+                        renderResults();
+                    });
+                }
+            });
+
+            // 새로운 방식: 개별 이모지 클릭 (채널명 컬럼)
+            document.querySelectorAll('.sort-icon').forEach(icon => {
+                icon.addEventListener('click', (e) => {
+                    e.stopPropagation(); // 부모 th 클릭 이벤트 방지
+                    const column = icon.dataset.sort;
+                    console.log('Sort icon clicked:', column); // 디버깅용
+                    if (sortColumn === column) {
+                        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        sortColumn = column;
+                        sortDirection = 'desc';
+                    }
+                    sortResults();
+                    renderResults();
+                });
+            });
             
         }
         
@@ -3861,6 +4052,12 @@
                     bVal = parseInt(b.duration_seconds) || 0;
                 }
 
+                // 좋아요 수 처리
+                if (sortColumn === 'likes') {
+                    aVal = getLikeCount(a).count;
+                    bVal = getLikeCount(b).count;
+                }
+
                 // 날짜 값 처리
                 if (sortColumn === 'status_date') {
                     aVal = new Date(aVal);
@@ -3877,6 +4074,12 @@
                 if (sortColumn === 'country') {
                     aVal = detectVideoCountry(a);
                     bVal = detectVideoCountry(b);
+                }
+
+                // 채널 개설일 정렬 처리
+                if (sortColumn === 'channel_created_date') {
+                    aVal = a.channel_created_date ? new Date(a.channel_created_date) : new Date(0);
+                    bVal = b.channel_created_date ? new Date(b.channel_created_date) : new Date(0);
                 }
 
                 // 문자열 값 처리
@@ -3906,7 +4109,7 @@
                 // 모든 시나리오에서 12개 컬럼 사용 (국가 컬럼 추가로 인해)
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="12" class="no-results">
+                        <td colspan="13" class="no-results">
                             <h3>검색 결과가 없습니다</h3>
                             <p>다른 검색 조건으로 시도해보세요.</p>
                         </td>
@@ -3937,6 +4140,9 @@
                         <a href="https://www.youtube.com/channel/${result.youtube_channel_id}" target="_blank" class="channel-link" title="${result.youtube_channel_name} 채널 홈으로 이동">
                             <div class="channel-name">
                                 ${result.youtube_channel_name}
+                                <div class="channel-created-date">
+                                    📅 ${formatChannelCreatedDate(result.channel_created_date)}
+                                </div>
                             </div>
                         </a>
                     </td>
@@ -3951,6 +4157,13 @@
                     </td>
                     ${uploadDateCell}
                     ${koreaTimeCell}
+                    <td>
+                        ${(() => {
+                            const likeData = getLikeCount(result);
+                            const colorClass = likeData.isEstimated ? 'like-count-estimated' : 'like-count-actual';
+                            return `<span class="like-count ${colorClass}">${likeData.count.toLocaleString()}</span>`;
+                        })()}
+                    </td>
                     <td>
                         <span class="view-count">${viewCount}</span>
                     </td>
@@ -4071,20 +4284,7 @@
             });
         }
 
-        // 테이블 헤더 클릭 이벤트 (정렬)
-        document.querySelectorAll('.results-table th.sortable').forEach(th => {
-            th.addEventListener('click', () => {
-                const column = th.dataset.sort;
-                if (sortColumn === column) {
-                    sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-                } else {
-                    sortColumn = column;
-                    sortDirection = 'desc';
-                }
-                sortResults();
-                renderResults();
-            });
-        });
+
 
 
 
@@ -4197,13 +4397,19 @@
                     status: result.status,
                     youtube_channel_id: result.youtube_channel_id,
                     title: result.title,
+                    description: result.description || '',
                     daily_view_count: result.daily_view_count,
+                    likes: (() => {
+                        const likeData = getLikeCount(result);
+                        return likeData.isEstimated ? `[${likeData.count}]` : likeData.count;
+                    })(),
                     subscriber_count: result.subscriber_count,
                     vod_url: result.vod_url,
                     status_date: result.status_date,
                     duration_seconds: result.duration_seconds,
                     video_length_category: result.video_length_category,
                         primary_category: result.primary_category,
+                        tags: result.tags || '',
                         country: countryInfo // 국가 정보 추가
                     };
                 });
