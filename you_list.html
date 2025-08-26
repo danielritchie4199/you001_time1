@@ -553,12 +553,13 @@
             font-weight: 600;
             cursor: pointer;
             user-select: none;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.6s ease;
             position: relative;
+            font-size: 1.4em;
         }
 
         .results-table th:hover {
-            background: #5a6fd8;
+            background: #7b8af0;
         }
 
         .results-table th.sortable::after {
@@ -906,8 +907,73 @@
         
         .upload-date.detailed-time .time-part {
             font-size: 0.8em;
-            color: #666;
+            /* color: #666; */  /* 기존 색상 주석 처리 - 자식 요소가 색상 제어 */
+            font-weight: normal;
             margin-top: 2px;
+            position: relative;
+        }
+        
+        .upload-date.detailed-time .time-part .weekday {
+            color: black;
+            font-weight: bold;
+        }
+        
+        .upload-date.detailed-time .time-part .time-only {
+            color: red;
+            font-weight: bold;
+        }
+        
+        .upload-date.detailed-time .time-part .timezone {
+            color: black;
+            font-weight: bold;
+        }
+        
+        /* 개선된 시간 표시 스타일 - 우선순위 강화 */
+        .upload-date.detailed-time .time-part .time-display {
+            display: inline !important;
+        }
+        
+        .upload-date.detailed-time .time-part .time-display .weekday-bold {
+            color: blue !important;
+            font-weight: bold !important;
+        }
+        
+        .upload-date.detailed-time .time-part .time-display .time-red-bold {
+            color: red !important;
+            font-weight: bold !important;
+        }
+        
+        .upload-date.detailed-time .time-part .time-display .timezone-bold {
+            color: blue !important;
+            font-weight: bold !important;
+        }
+        
+        /* 상위 요소에서 색상 상속 방지 */
+        .results-table td .upload-date.detailed-time .time-part {
+            color: inherit !important; /* 기본 색상 상속 방지 */
+        }
+        
+        .results-table td .upload-date.detailed-time .time-part * {
+            color: inherit !important; /* 모든 자식 요소에 적용 */
+        }
+        
+        /* 시간 표시 전용 스타일 - 최고 우선순위 */
+        .results-table .time-display .weekday-bold,
+        td .time-display .weekday-bold {
+            color: blue !important;
+            font-weight: bold !important;
+        }
+        
+        .results-table .time-display .time-red-bold,
+        td .time-display .time-red-bold {
+            color: red !important;
+            font-weight: bold !important;
+        }
+        
+        .results-table .time-display .timezone-bold,
+        td .time-display .timezone-bold {
+            color: blue !important;
+            font-weight: bold !important;
         }
         
         /* 한국시간 컬럼 헤더는 기본 테이블 헤더 스타일 사용 */
@@ -1202,263 +1268,267 @@
                         <div class="category-display" id="countryDisplay" tabindex="0">대한민국 선택됨</div>
                         <div class="category-dropdown" id="countryDropdown">
                             <div class="category-header">
-                                <input type="checkbox" id="selectAllCountries">
-                                <label for="selectAllCountries">🌍 모든 국가</label>
+                                <span>🌍 국가를 선택하세요 (단일 선택)</span>
                             </div>
                             <div class="category-options">
+                                <!-- 전세계 옵션 추가 -->
+                                <div class="category-item">
+                                    <input type="radio" id="country_WORLD" name="country" value="worldwide">
+                                    <label for="country_WORLD">🌍 전세계</label>
+                                </div>
                                 <!-- 1. 모든 국가 (최상단) 
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_WORLD" name="countries" value="worldwide">
+                                    <input type="radio" id="country_WORLD" name="country" value="worldwide">
                                     <label for="country_WORLD">🌍 모든 국가</label>
                                 </div> -->
                                 <!-- 2. 대한민국 (두 번째) -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_KR" name="countries" value="korea" checked>
+                                    <input type="radio" id="country_KR" name="country" value="korea" checked>
                                     <label for="country_KR">🇰🇷 대한민국</label>
                                 </div>
                                 <!-- 3. RPM 순위 1위: 호주 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_AU" name="countries" value="australia">
+                                    <input type="radio" id="country_AU" name="country" value="australia">
                                     <label for="country_AU">🇦🇺 호주</label>
                                 </div>
                                 <!-- 4. RPM 순위 2위: 미국 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_US" name="countries" value="usa">
+                                    <input type="radio" id="country_US" name="country" value="usa">
                                     <label for="country_US">🇺🇸 미국</label>
                                 </div>
                                 <!-- 5. RPM 순위 3위: 캐나다 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_CA" name="countries" value="canada">
+                                    <input type="radio" id="country_CA" name="country" value="canada">
                                     <label for="country_CA">🇨🇦 캐나다</label>
                                 </div>
                                 <!-- 6. RPM 순위 4위: 뉴질랜드 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_NZ" name="countries" value="newzealand">
+                                    <input type="radio" id="country_NZ" name="country" value="newzealand">
                                     <label for="country_NZ">🇳🇿 뉴질랜드</label>
                                 </div>
                                 <!-- 7. RPM 순위 5위: 스위스 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_CH" name="countries" value="switzerland">
+                                    <input type="radio" id="country_CH" name="country" value="switzerland">
                                     <label for="country_CH">🇨🇭 스위스</label>
                                 </div>
                                 <!-- 8. RPM 순위 6위: 영국 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_GB" name="countries" value="uk">
+                                    <input type="radio" id="country_GB" name="country" value="uk">
                                     <label for="country_GB">🇬🇧 영국</label>
                                 </div>
                                 <!-- 9. RPM 순위 7위: 노르웨이 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_NO" name="countries" value="norway">
+                                    <input type="radio" id="country_NO" name="country" value="norway">
                                     <label for="country_NO">🇳🇴 노르웨이</label>
                                 </div>
                                 <!-- 10. RPM 순위 8위: 독일 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_DE" name="countries" value="germany">
+                                    <input type="radio" id="country_DE" name="country" value="germany">
                                     <label for="country_DE">🇩🇪 독일</label>
                                 </div>
                                 <!-- 11. RPM 순위 9위: 아일랜드 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_IE" name="countries" value="ireland">
+                                    <input type="radio" id="country_IE" name="country" value="ireland">
                                     <label for="country_IE">🇮🇪 아일랜드</label>
                                 </div>
                                 <!-- 12. RPM 순위 10위: 네덜란드 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_NL" name="countries" value="netherlands">
+                                    <input type="radio" id="country_NL" name="country" value="netherlands">
                                     <label for="country_NL">🇳🇱 네덜란드</label>
                                 </div>
                                 <!-- 13. RPM 순위 11위: 덴마크 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_DK" name="countries" value="denmark">
+                                    <input type="radio" id="country_DK" name="country" value="denmark">
                                     <label for="country_DK">🇩🇰 덴마크</label>
                                 </div>
                                 <!-- 14. RPM 순위 12위: 홍콩 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_HK" name="countries" value="hongkong">
+                                    <input type="radio" id="country_HK" name="country" value="hongkong">
                                     <label for="country_HK">🇭🇰 홍콩</label>
                                 </div>
                                 <!-- 15. RPM 순위 13위: 스웨덴 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_SE" name="countries" value="sweden">
+                                    <input type="radio" id="country_SE" name="country" value="sweden">
                                     <label for="country_SE">🇸🇪 스웨덴</label>
                                 </div>
                                 <!-- 16. RPM 순위 14위: 핀란드 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_FI" name="countries" value="finland">
+                                    <input type="radio" id="country_FI" name="country" value="finland">
                                     <label for="country_FI">🇫🇮 핀란드</label>
                                 </div>
                                 <!-- 17. RPM 순위 15위: 싱가포르 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_SG" name="countries" value="singapore">
+                                    <input type="radio" id="country_SG" name="country" value="singapore">
                                     <label for="country_SG">🇸🇬 싱가포르</label>
                                 </div>
                                 <!-- 18. RPM 순위 16위: 오스트리아 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_AT" name="countries" value="austria">
+                                    <input type="radio" id="country_AT" name="country" value="austria">
                                     <label for="country_AT">🇦🇹 오스트리아</label>
                                 </div>
                                 <!-- 19. RPM 순위 17위: 룩셈부르크 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_LU" name="countries" value="luxembourg">
+                                    <input type="radio" id="country_LU" name="country" value="luxembourg">
                                     <label for="country_LU">🇱🇺 룩셈부르크</label>
                                 </div>
                                 <!-- 20. RPM 순위 18위: 벨기에 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_BE" name="countries" value="belgium">
+                                    <input type="radio" id="country_BE" name="country" value="belgium">
                                     <label for="country_BE">🇧🇪 벨기에</label>
                                 </div>
                                 <!-- 21. RPM 순위 19위: 프랑스 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_FR" name="countries" value="france">
+                                    <input type="radio" id="country_FR" name="country" value="france">
                                     <label for="country_FR">🇫🇷 프랑스</label>
                                 </div>
                                 <!-- 22. RPM 순위 20위: 이탈리아 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_IT" name="countries" value="italy">
+                                    <input type="radio" id="country_IT" name="country" value="italy">
                                     <label for="country_IT">🇮🇹 이탈리아</label>
                                 </div>
                                 <!-- 23. RPM 순위 21위: 스페인 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_ES" name="countries" value="spain">
+                                    <input type="radio" id="country_ES" name="country" value="spain">
                                     <label for="country_ES">🇪🇸 스페인</label>
                                 </div>
                                 <!-- 24. RPM 순위 22위: 체코 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_CZ" name="countries" value="czechrepublic">
+                                    <input type="radio" id="country_CZ" name="country" value="czechrepublic">
                                     <label for="country_CZ">🇨🇿 체코</label>
                                 </div>
                                 <!-- 25. RPM 순위 23위: 이스라엘 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_IL" name="countries" value="israel">
+                                    <input type="radio" id="country_IL" name="country" value="israel">
                                     <label for="country_IL">🇮🇱 이스라엘</label>
                                 </div>
                                 <!-- 26. RPM 순위 24위: 포르투갈 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_PT" name="countries" value="portugal">
+                                    <input type="radio" id="country_PT" name="country" value="portugal">
                                     <label for="country_PT">🇵🇹 포르투갈</label>
                                 </div>
                                 <!-- 27. RPM 순위 25위: 일본 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_JP" name="countries" value="japan">
+                                    <input type="radio" id="country_JP" name="country" value="japan">
                                     <label for="country_JP">🇯🇵 일본</label>
                                 </div>
                                 <!-- 28. RPM 순위 26위: 아랍에미리트 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_AE" name="countries" value="uae">
+                                    <input type="radio" id="country_AE" name="country" value="uae">
                                     <label for="country_AE">🇦🇪 아랍에미리트</label>
                                 </div>
                                 <!-- 29. RPM 순위 27위: 카타르 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_QA" name="countries" value="qatar">
+                                    <input type="radio" id="country_QA" name="country" value="qatar">
                                     <label for="country_QA">🇶🇦 카타르</label>
                                 </div>
                                 <!-- 30. RPM 순위 28위: 쿠웨이트 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_KW" name="countries" value="kuwait">
+                                    <input type="radio" id="country_KW" name="country" value="kuwait">
                                     <label for="country_KW">🇰🇼 쿠웨이트</label>
                                 </div>
                                 <!-- 31. RPM 순위 29위: 사우디아라비아 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_SA" name="countries" value="saudi">
+                                    <input type="radio" id="country_SA" name="country" value="saudi">
                                     <label for="country_SA">🇸🇦 사우디아라비아</label>
                                 </div>
                                 <!-- 32. RPM 순위 30위: 브라질 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_BR" name="countries" value="brazil">
+                                    <input type="radio" id="country_BR" name="country" value="brazil">
                                     <label for="country_BR">🇧🇷 브라질</label>
                                 </div>
                                 <!-- 33. RPM 순위 31위: 폴란드 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_PL" name="countries" value="poland">
+                                    <input type="radio" id="country_PL" name="country" value="poland">
                                     <label for="country_PL">🇵🇱 폴란드</label>
                                 </div>
                                 <!-- 34. RPM 순위 32위: 남아프리카공화국 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_ZA" name="countries" value="southafrica">
+                                    <input type="radio" id="country_ZA" name="country" value="southafrica">
                                     <label for="country_ZA">🇿🇦 남아프리카공화국</label>
                                 </div>
                                 <!-- 35. RPM 순위 33위: 터키 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_TR" name="countries" value="turkey">
+                                    <input type="radio" id="country_TR" name="country" value="turkey">
                                     <label for="country_TR">🇹🇷 터키</label>
                                 </div>
                                 <!-- 36. RPM 순위 35위: 헝가리 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_HU" name="countries" value="hungary">
+                                    <input type="radio" id="country_HU" name="country" value="hungary">
                                     <label for="country_HU">🇭🇺 헝가리</label>
                                 </div>
                                 <!-- 37. RPM 순위 36위: 수리남 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_SR" name="countries" value="suriname">
+                                    <input type="radio" id="country_SR" name="country" value="suriname">
                                     <label for="country_SR">🇸🇷 수리남</label>
                                 </div>
                                 <!-- 38. RPM 순위 37위: 멕시코 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_MX" name="countries" value="mexico">
+                                    <input type="radio" id="country_MX" name="country" value="mexico">
                                     <label for="country_MX">🇲🇽 멕시코</label>
                                 </div>
                                 <!-- 39. RPM 순위 38위: 콜롬비아 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_CO" name="countries" value="colombia">
+                                    <input type="radio" id="country_CO" name="country" value="colombia">
                                     <label for="country_CO">🇨🇴 콜롬비아</label>
                                 </div>
                                 <!-- 40. RPM 순위 39위: 아르헨티나 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_AR" name="countries" value="argentina">
+                                    <input type="radio" id="country_AR" name="country" value="argentina">
                                     <label for="country_AR">🇦🇷 아르헨티나</label>
                                 </div>
                                 <!-- 41. RPM 순위 40위: 모잠비크 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_MZ" name="countries" value="mozambique">
+                                    <input type="radio" id="country_MZ" name="country" value="mozambique">
                                     <label for="country_MZ">🇲🇿 모잠비크</label>
                                 </div>
                                 <!-- 42. RPM 순위 41위: 인도네시아 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_ID" name="countries" value="indonesia">
+                                    <input type="radio" id="country_ID" name="country" value="indonesia">
                                     <label for="country_ID">🇮🇩 인도네시아</label>
                                 </div>
                                 <!-- 43. RPM 순위 42위: 베트남 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_VN" name="countries" value="vietnam">
+                                    <input type="radio" id="country_VN" name="country" value="vietnam">
                                     <label for="country_VN">🇻🇳 베트남</label>
                                 </div>
                                 <!-- 44. RPM 순위 43위: 인도 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_IN" name="countries" value="india">
+                                    <input type="radio" id="country_IN" name="country" value="india">
                                     <label for="country_IN">🇮🇳 인도</label>
                                 </div>
                                 <!-- 45. RPM 순위 44위: 파키스탄 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_PK" name="countries" value="pakistan">
+                                    <input type="radio" id="country_PK" name="country" value="pakistan">
                                     <label for="country_PK">🇵🇰 파키스탄</label>
                                 </div>
                                 <!-- 46. RPM 순위 45위: 방글라데시 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_BD" name="countries" value="bangladesh">
+                                    <input type="radio" id="country_BD" name="country" value="bangladesh">
                                     <label for="country_BD">🇧🇩 방글라데시</label>
                                 </div>
                                 <!-- 47. RPM 순위 46위: 자메이카 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_JM" name="countries" value="jamaica">
+                                    <input type="radio" id="country_JM" name="country" value="jamaica">
                                     <label for="country_JM">🇯🇲 자메이카</label>
                                 </div>
                                 <!-- 48. RPM 순위 47위: 리비아 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_LY" name="countries" value="libya">
+                                    <input type="radio" id="country_LY" name="country" value="libya">
                                     <label for="country_LY">🇱🇾 리비아</label>
                                 </div>
                                 <!-- 49. RPM 순위 48위: 아이슬란드 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_IS" name="countries" value="iceland">
+                                    <input type="radio" id="country_IS" name="country" value="iceland">
                                     <label for="country_IS">🇮🇸 아이슬란드</label>
                                 </div>
                                 <!-- 50. RPM 순위 49위: 스리랑카 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_LK" name="countries" value="srilanka">
+                                    <input type="radio" id="country_LK" name="country" value="srilanka">
                                     <label for="country_LK">🇱🇰 스리랑카</label>
                                 </div>
                                 <!-- 51. RPM 순위 50위: 중국 -->
                                 <div class="category-item">
-                                    <input type="checkbox" id="country_CN" name="countries" value="china">
+                                    <input type="radio" id="country_CN" name="country" value="china">
                                     <label for="country_CN">🇨🇳 중국</label>
                                 </div>
                             </div>
@@ -1789,6 +1859,34 @@
                                 <span id="weekdayCount">0개</span>
                             </label>
                         </div>
+                        <div class="filter-group">
+                            <h4>☀️ 오전시간 (09-12시)</h4>
+                            <label>
+                                <input type="checkbox" id="filterMorningTime" checked>
+                                <span id="morningTimeCount">0개</span>
+                            </label>
+                        </div>
+                        <div class="filter-group">
+                            <h4>🌇 오후시간 (14-18시)</h4>
+                            <label>
+                                <input type="checkbox" id="filterAfternoonTime" checked>
+                                <span id="afternoonTimeCount">0개</span>
+                            </label>
+                        </div>
+                        <div class="filter-group">
+                            <h4>🌃 저녁시간 (20-23시)</h4>
+                            <label>
+                                <input type="checkbox" id="filterEveningTime" checked>
+                                <span id="eveningTimeCount">0개</span>
+                            </label>
+                        </div>
+                        <div class="filter-group">
+                            <h4>🌌 새벽시간 (02-06시)</h4>
+                            <label>
+                                <input type="checkbox" id="filterEarlyMorningTime" checked>
+                                <span id="earlyMorningTimeCount">0개</span>
+                            </label>
+                        </div>
                     </div>
                     <div class="filter-actions">
                         <button id="applyTimezoneFilter" class="apply-filter-btn">필터 적용</button>
@@ -1818,7 +1916,7 @@
                         </select>
                     </div>
                     <button id="downloadExcelBtn" class="excel-download-btn" style="display: none;" title="클릭하면 저장 위치를 선택할 수 있습니다 (Chrome/Edge 86+ 지원)">
-                        📊
+                         📊 
                     </button>
                 </div>
             </div>
@@ -1830,7 +1928,7 @@
                             <th data-sort="thumbnail_url">👍</th>
                             <th data-sort="youtube_channel_name" class="sortable">✨</th>
                             <th data-sort="title" class="sortable">📽️</th>
-                            <th data-sort="primary_category" class="sortable">✂️</th>
+                            <th data-sort="primary_category" class="sortable">️‍🌈</th>
                             <th data-sort="country" class="sortable">🏳️‍🌈</th>
                             <th data-sort="status_date" class="sortable" id="uploadDateHeader">🗓️</th>
                             <th data-sort="korea_time" class="sortable" id="koreaTimeHeader">🏠</th>
@@ -2329,10 +2427,10 @@
             }
         }
 
-        // 동영상 국가 감지 함수 (개선됨)
+        // 동영상 국가 감지 함수 (수정됨 - 검색 국가 우선 표시)
         function detectVideoCountry(video) {
-            // 1. 검색 시 설정된 국가 정보가 있다면 우선 사용
-            if (video.country && video.country !== 'unknown') {
+            // 1. 검색한 국가를 우선적으로 표시 (가장 중요한 변경점)
+            if (typeof primarySearchCountry !== 'undefined' && primarySearchCountry && primarySearchCountry !== 'worldwide') {
                 const countryNames = {
                     'korea': '한국',
                     'usa': '미국',
@@ -2348,50 +2446,74 @@
                     'italy': '이탈리아',
                     'spain': '스페인',
                     'china': '중국',
-                    'worldwide': '전세계'
+                    'newzealand': '뉴질랜드',
+                    'switzerland': '스위스',
+                    'norway': '노르웨이',
+                    'ireland': '아일랜드',
+                    'netherlands': '네덜란드',
+                    'denmark': '덴마크',
+                    'hongkong': '홍콩',
+                    'sweden': '스웨덴',
+                    'finland': '핀란드',
+                    'singapore': '싱가포르',
+                    'austria': '오스트리아',
+                    'luxembourg': '룩셈부르크',
+                    'belgium': '벨기에',
+                    'czechrepublic': '체코',
+                    'israel': '이스라엘',
+                    'portugal': '포르투갈',
+                    'uae': 'UAE',
+                    'qatar': '카타르',
+                    'kuwait': '쿠웨이트',
+                    'saudi': '사우디아라비아',
+                    'poland': '폴란드',
+                    'southafrica': '남아프리카공화국',
+                    'turkey': '터키',
+                    'hungary': '헝가리',
+                    'suriname': '수리남',
+                    'colombia': '콜롬비아',
+                    'argentina': '아르헨티나',
+                    'mozambique': '모잠비크',
+                    'indonesia': '인도네시아',
+                    'vietnam': '베트남',
+                    'pakistan': '파키스탄',
+                    'bangladesh': '방글라데시',
+                    'jamaica': '자메이카',
+                    'libya': '리비아',
+                    'iceland': '아이슬란드',
+                    'srilanka': '스리랑카'
                 };
-                return countryNames[video.country.toLowerCase()] || video.country;
+                
+                const searchedCountryName = countryNames[primarySearchCountry.toLowerCase()];
+                if (searchedCountryName) {
+                    return searchedCountryName;
+                }
             }
             
-            // 2. 채널명이나 제목에서 언어 패턴 분석
-            const koreanPattern = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
-            const japanesePattern = /[ひらがなカタカナ一-龯]/;
-            const chinesePattern = /[\u4e00-\u9fff]/;
-            
-            const title = video.title || '';
-            const channelName = video.youtube_channel_name || '';
-            const fullText = title + ' ' + channelName;
-            
-            if (koreanPattern.test(fullText)) {
-                return '한국';
-            } else if (japanesePattern.test(fullText)) {
-                return '일본';
-            } else if (chinesePattern.test(fullText)) {
-                return '중국';
+            // 2. 전세계 검색인 경우에만 언어 패턴으로 분석
+            if (typeof primarySearchCountry !== 'undefined' && primarySearchCountry === 'worldwide') {
+                // 채널명이나 제목에서 언어 패턴 분석
+                const koreanPattern = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
+                const japanesePattern = /[ひらがなカタカナ一-龯]/;
+                const chinesePattern = /[\u4e00-\u9fff]/;
+                
+                const title = video.title || '';
+                const channelName = video.youtube_channel_name || '';
+                const fullText = title + ' ' + channelName;
+                
+                if (koreanPattern.test(fullText)) {
+                    return '한국';
+                } else if (japanesePattern.test(fullText)) {
+                    return '일본';
+                } else if (chinesePattern.test(fullText)) {
+                    return '중국';
+                }
+                
+                // 언어 패턴으로 구분이 안 되면 '해외' 표시
+                return '해외';
             }
             
-            // 3. 기본값으로 현재 검색 국가 사용
-            if (typeof primarySearchCountry !== 'undefined' && primarySearchCountry) {
-                const countryNames = {
-                    'korea': '한국',
-                    'usa': '미국',
-                    'japan': '일본',
-                    'uk': '영국',
-                    'germany': '독일',
-                    'france': '프랑스',
-                    'canada': '캐나다',
-                    'australia': '호주',
-                    'india': '인도',
-                    'brazil': '브라질',
-                    'mexico': '멕시코',
-                    'italy': '이탈리아',
-                    'spain': '스페인',
-                    'china': '중국',
-                    'worldwide': '전세계'
-                };
-                return countryNames[primarySearchCountry.toLowerCase()] || primarySearchCountry;
-            }
-            
+            // 3. 기본값 (오류 방지)
             return '알 수 없음';
         }
         
@@ -2414,24 +2536,25 @@
             } else {
                 // 다른 국가 동영상인 경우 해당 국가 시간대로 표시
                 const countryTimezones = {
-                    '미국': 'America/New_York',
-                    '일본': 'Asia/Tokyo',
-                    '영국': 'Europe/London',
-                    '독일': 'Europe/Berlin',
-                    '프랑스': 'Europe/Paris',
-                    '캐나다': 'America/Toronto',
-                    '호주': 'Australia/Sydney',
-                    '인도': 'Asia/Kolkata',
-                    '브라질': 'America/Sao_Paulo',
-                    '멕시코': 'America/Mexico_City',
-                    '이탈리아': 'Europe/Rome',
-                    '스페인': 'Europe/Madrid',
-                    '중국': 'Asia/Shanghai'
+                    '미국': { tz: 'America/New_York', abbr: 'EST' },
+                    '일본': { tz: 'Asia/Tokyo', abbr: 'JST' },
+                    '영국': { tz: 'Europe/London', abbr: 'GMT' },
+                    '독일': { tz: 'Europe/Berlin', abbr: 'CET' },
+                    '프랑스': { tz: 'Europe/Paris', abbr: 'CET' },
+                    '캐나다': { tz: 'America/Toronto', abbr: 'EST' },
+                    '호주': { tz: 'Australia/Sydney', abbr: 'AEDT' },
+                    '인도': { tz: 'Asia/Kolkata', abbr: 'IST' },
+                    '브라질': { tz: 'America/Sao_Paulo', abbr: 'BRT' },
+                    '멕시코': { tz: 'America/Mexico_City', abbr: 'CST' },
+                    '이탈리아': { tz: 'Europe/Rome', abbr: 'CET' },
+                    '스페인': { tz: 'Europe/Madrid', abbr: 'CET' },
+                    '중국': { tz: 'Asia/Shanghai', abbr: 'CST' }
                 };
                 
-                const timezone = countryTimezones[countryName] || 'UTC';
+                const tzInfo = countryTimezones[countryName] || { tz: 'UTC', abbr: 'UTC' };
                 const localTime = new Date(result.status_date).toLocaleString('en-CA', {
-                    timeZone: timezone,
+                    timeZone: tzInfo.tz,
+                    weekday: 'short',
                     month: '2-digit',
                     day: '2-digit',
                     hour: '2-digit',
@@ -2439,14 +2562,20 @@
                     hour12: false
                 });
                 
-                const [datePart, timePart] = localTime.split(', ');
+                const [weekdayPart, datePart, timePart] = localTime.split(', ');
                 const timeOnly = timePart ? timePart.substring(0, 5) : '';
+                const weekdayAbbr = weekdayPart ? weekdayPart.toUpperCase() : '';
+                
+                // 새로운 HTML 구조로 시간 표시
+                const timeDisplayHTML = `<span class="time-display"><span class="weekday-bold">${weekdayAbbr}</span> <span class="time-red-bold">${timeOnly}</span> <span class="timezone-bold">${tzInfo.abbr}</span></span>`;
+                
+                console.log('🕰️ 업로드일 HTML 생성:', timeDisplayHTML);
                 
                 uploadDateCell = `
                     <td>
                         <div class="upload-date detailed-time">
                             <div class="date-part">${datePart}</div>
-                            <div class="time-part">${timeOnly}</div>
+                            <div class="time-part">${timeDisplayHTML}</div>
                         </div>
                     </td>
                 `;
@@ -2465,11 +2594,19 @@
             const [koreanDatePart, koreanTimePart] = koreanTime.split(', ');
             const koreanTimeOnly = koreanTimePart ? koreanTimePart.substring(0, 5) : '';
             
+            // 한국시간도 동일한 형식으로 표시 (요일 정보 추가)
+            const koreanDate = new Date(result.status_date);
+            const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+            const koreanDayOfWeek = dayNames[koreanDate.getDay()];
+            const koreaTimeHTML = `<span class="time-display"><span class="weekday-bold">${koreanDayOfWeek}</span> <span class="time-red-bold">${koreanTimeOnly}</span> <span class="timezone-bold">KST</span></span>`;
+            
+            console.log('🕰️ 한국시간 HTML 생성:', koreaTimeHTML);
+            
             const koreaTimeCell = `
                 <td>
                     <div class="upload-date detailed-time">
                         <div class="date-part">${koreanDatePart}</div>
-                        <div class="time-part">${koreanTimeOnly}</div>
+                        <div class="time-part" data-time="${koreanTimeOnly}" data-timezone="KST">${koreaTimeHTML}</div>
                     </div>
                 </td>
             `;
@@ -2696,25 +2833,17 @@
                 countryDisplay.addEventListener('keydown', countryDisplayKeyHandler);
             }
             
-            // 국가 체크박스 이벤트 리스너 추가
-            document.querySelectorAll('input[name="countries"]').forEach(checkbox => {
-                checkbox.addEventListener('change', () => {
+            // 국가 라디오 버튼 이벤트 리스너 추가 (Single Choice)
+            document.querySelectorAll('input[name="country"]').forEach(radio => {
+                radio.addEventListener('change', () => {
                     updateCountryDisplay();
-                    updateSelectAllCountries();
+                    // 드롭다운 자동 닫기
+                    const dropdown = document.getElementById('countryDropdown');
+                    if (dropdown) {
+                        dropdown.classList.remove('show');
+                    }
                 });
             });
-            
-            // 모든 국가 선택 체크박스 이벤트
-            const selectAllCountriesCheckbox = document.getElementById('selectAllCountries');
-            if (selectAllCountriesCheckbox) {
-                selectAllCountriesCheckbox.addEventListener('change', (e) => {
-                    const isChecked = e.target.checked;
-                    document.querySelectorAll('input[name="countries"]').forEach(cb => {
-                        cb.checked = isChecked;
-                    });
-                    updateCountryDisplay();
-                });
-            }
             
             // 모든 카테고리 선택/해제 이벤트 추가
             const selectAllCategoriesCheckbox = document.getElementById('selectAllCategories');
@@ -2881,27 +3010,15 @@
             return 'foreign_korea_multi';
         }
         
-        // 선택된 국가 목록 가져오기 함수
+        // 선택된 국가 가져오기 함수 (Single Choice)
+        function getSelectedCountry() {
+            const selectedRadio = document.querySelector('input[name="country"]:checked');
+            return selectedRadio ? selectedRadio.value : 'korea'; // 기본값: 한국
+        }
+        
+        // 기존 함수명 호환성을 위한 래퍼 함수
         function getSelectedCountries() {
-            const countryCheckboxes = document.querySelectorAll('#countryFilter input[type="checkbox"]:checked');
-            const selectedCountries = [];
-            
-            countryCheckboxes.forEach(checkbox => {
-                const value = checkbox.value;
-                if (value && value !== 'worldwide') {
-                    selectedCountries.push(value);
-                }
-            });
-            
-            // 전세계가 선택되었거나 아무것도 선택되지 않은 경우
-            if (selectedCountries.length === 0) {
-                const worldwideCheckbox = document.querySelector('#countryFilter input[value="worldwide"]:checked');
-                if (worldwideCheckbox) {
-                    selectedCountries.push('worldwide');
-                }
-            }
-            
-            return selectedCountries;
+            return [getSelectedCountry()];
         }
         
         // 시나리오에 따른 테이블 헤더 업데이트
@@ -3405,9 +3522,16 @@
             const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
             const dayOfWeek = dayNames[localDate.getDay()];
             
+            // HTML 구조로 시간 표시 (MON, KST는 black-bold, 14:30만 red-bold)
+            const timeOnlyHTML = `<span class="time-display"><span class="weekday-bold">${dayOfWeek}</span> <span class="time-red-bold">${hours}:${minutes}</span> <span class="timezone-bold">${timezoneAbbr}</span></span>`;
+            
+            // 디버깅용 로그
+            console.log('🕰️ 시간 HTML 생성:', timeOnlyHTML);
+            
             return {
                 dateOnly: `${year}.${month}.${day}`,
-                timeOnly: `${dayOfWeek} ${hours}:${minutes} ${timezoneAbbr}`,
+                timeOnly: timeOnlyHTML,
+                timeOnlyText: `${dayOfWeek} ${hours}:${minutes} ${timezoneAbbr}`, // 텍스트만 필요한 경우
                 fullDateTime: `${year}.${month}.${day} ${dayOfWeek} ${hours}:${minutes} ${timezoneAbbr}`
             };
         }
@@ -3619,20 +3743,17 @@
 
             // 키워드 확인 및 안내 메시지
             const keyword = document.getElementById('keyword').value;
-            // 국가 체크박스 처리 (수정됨)
-            const selectedCountriesForServer = [];
-            document.querySelectorAll('input[name="countries"]:checked').forEach(checkbox => {
-                selectedCountriesForServer.push(checkbox.value);
-            });
+            // 국가 라디오 버튼 처리 (Single Choice)
+            const selectedCountry = getSelectedCountry();
             
-            console.log('🌍 선택된 국가들:', selectedCountriesForServer);
-            searchParams.append('countries', selectedCountriesForServer.join(','));
+            console.log('🌍 선택된 국가:', selectedCountry);
+            searchParams.append('countries', selectedCountry);
 
             // 시간대 필터는 결과내 재검색으로 구현됨 (서버 전송 불필요)
             const isEmptyKeyword = !keyword || !keyword.trim();
             
             console.log('=== 클라이언트 검색 요청 디버그 ===');
-            console.log('🌍 선택된 국가들:', selectedCountriesForServer);
+            console.log('🌍 선택된 국가:', selectedCountry);
             console.log('🔍 입력된 키워드:', keyword || '없음');
             console.log('📋 검색 파라미터:', searchParams.toString());
             console.log('===========================');
@@ -3744,6 +3865,18 @@
                 if (sortColumn === 'status_date') {
                     aVal = new Date(aVal);
                     bVal = new Date(bVal);
+                }
+
+                // 한국시간 정렬 처리
+                if (sortColumn === 'korea_time') {
+                    aVal = new Date(a.status_date);
+                    bVal = new Date(b.status_date);
+                }
+
+                // 국가 정렬 처리
+                if (sortColumn === 'country') {
+                    aVal = detectVideoCountry(a);
+                    bVal = detectVideoCountry(b);
                 }
 
                 // 문자열 값 처리
@@ -4561,43 +4694,20 @@
             }
         }
 
-        // 국가 디스플레이 업데이트 함수
+        // 국가 디스플레이 업데이트 함수 (Single Choice)
         function updateCountryDisplay() {
-            const countryCheckboxes = document.querySelectorAll('input[name="countries"]:checked');
+            const selectedRadio = document.querySelector('input[name="country"]:checked');
             const display = document.getElementById('countryDisplay');
             
-            if (countryCheckboxes.length === 0) {
-                display.textContent = '국가를 선택해주세요';
-            } else if (countryCheckboxes.length === document.querySelectorAll('input[name="countries"]').length) {
-                display.textContent = '모든 국가 선택됨';
-            } else if (countryCheckboxes.length <= 3) {
-                const selectedNames = Array.from(countryCheckboxes).map(cb => {
-                    const label = cb.parentElement.querySelector('label');
-                    return label.textContent;
-                });
-                display.textContent = selectedNames.join(', ');
+            if (selectedRadio) {
+                const label = selectedRadio.parentElement.querySelector('label');
+                display.textContent = label.textContent + ' 선택됨';
             } else {
-                display.textContent = `${countryCheckboxes.length}개 국가 선택됨`;
+                display.textContent = '국가를 선택해주세요';
             }
         }
 
-        // 모든 국가 체크박스 상태 업데이트
-        function updateSelectAllCountries() {
-            const countryCheckboxes = document.querySelectorAll('input[name="countries"]');
-            const checkedCountries = document.querySelectorAll('input[name="countries"]:checked');
-            const selectAllCheckbox = document.getElementById('selectAllCountries');
-            
-            if (checkedCountries.length === 0) {
-                selectAllCheckbox.checked = false;
-                selectAllCheckbox.indeterminate = false;
-            } else if (checkedCountries.length === countryCheckboxes.length) {
-                selectAllCheckbox.checked = true;
-                selectAllCheckbox.indeterminate = false;
-            } else {
-                selectAllCheckbox.checked = false;
-                selectAllCheckbox.indeterminate = true;
-            }
-        }
+        // Single choice에서는 모든 국가 선택 기능이 필요 없으므로 제거됨
 
         // 시간대 필터 초기화
         function initializeTimezoneFilters() {
@@ -4765,7 +4875,8 @@
             const filterCheckboxes = [
                 'filterPrimeTime', 'filterMorningCommute', 'filterLunchTime',
                 'filterEveningCommute', 'filterLateNight', 'filterWorkTime',
-                'filterWeekend', 'filterWeekday'
+                'filterWeekend', 'filterWeekday', 'filterMorningTime',
+                'filterAfternoonTime', 'filterEveningTime', 'filterEarlyMorningTime'
             ];
             
             filterCheckboxes.forEach(id => {
@@ -4804,7 +4915,10 @@
                 'late-night': 0,
                 'work-time': 0, // morning-work + afternoon-work 합계
                 'weekend': 0,
-                'weekday': 0
+                'weekday': 0,
+                'morning-work': 0, // 09-12시
+                'afternoon-work': 0, // 14-18시
+                'early-morning': 0 // 02-06시
             };
             
             results.forEach(video => {
@@ -4838,6 +4952,10 @@
             document.getElementById('workTimeCount').textContent = `${stats['work-time']}개`;
             document.getElementById('weekendCount').textContent = `${stats['weekend']}개`;
             document.getElementById('weekdayCount').textContent = `${stats['weekday']}개`;
+            document.getElementById('morningTimeCount').textContent = `${stats['morning-work']}개`;
+            document.getElementById('afternoonTimeCount').textContent = `${stats['afternoon-work']}개`;
+            document.getElementById('eveningTimeCount').textContent = `${stats['prime-time']}개`;
+            document.getElementById('earlyMorningTimeCount').textContent = `${stats['early-morning']}개`;
             
             // 통계 요약 표시
             const totalVideos = results.length;
@@ -4879,7 +4997,11 @@
                 lateNight: document.getElementById('filterLateNight').checked,
                 workTime: document.getElementById('filterWorkTime').checked,
                 weekend: document.getElementById('filterWeekend').checked,
-                weekday: document.getElementById('filterWeekday').checked
+                weekday: document.getElementById('filterWeekday').checked,
+                morningTime: document.getElementById('filterMorningTime').checked,
+                afternoonTime: document.getElementById('filterAfternoonTime').checked,
+                eveningTime: document.getElementById('filterEveningTime').checked,
+                earlyMorningTime: document.getElementById('filterEarlyMorningTime').checked
             };
         }
         
@@ -4900,6 +5022,12 @@
             if (filters.eveningCommute && category === 'evening-commute') return true;
             if (filters.lateNight && category === 'late-night') return true;
             if (filters.workTime && (category === 'morning-work' || category === 'afternoon-work')) return true;
+            
+            // 새로운 시간대 필터 확인
+            if (filters.morningTime && category === 'morning-work') return true;
+            if (filters.afternoonTime && category === 'afternoon-work') return true;
+            if (filters.eveningTime && category === 'prime-time') return true;
+            if (filters.earlyMorningTime && category === 'early-morning') return true;
             
             // 주말/평일 필터 확인
             if (filters.weekend && analysis.isWeekend) return true;
@@ -4934,7 +5062,8 @@
             const checkboxes = [
                 'filterPrimeTime', 'filterMorningCommute', 'filterLunchTime',
                 'filterEveningCommute', 'filterLateNight', 'filterWorkTime',
-                'filterWeekend', 'filterWeekday'
+                'filterWeekend', 'filterWeekday', 'filterMorningTime',
+                'filterAfternoonTime', 'filterEveningTime', 'filterEarlyMorningTime'
             ];
             
             checkboxes.forEach(id => {
@@ -4953,7 +5082,8 @@
             const checkboxes = [
                 'filterPrimeTime', 'filterMorningCommute', 'filterLunchTime',
                 'filterEveningCommute', 'filterLateNight', 'filterWorkTime',
-                'filterWeekend', 'filterWeekday'
+                'filterWeekend', 'filterWeekday', 'filterMorningTime',
+                'filterAfternoonTime', 'filterEveningTime', 'filterEarlyMorningTime'
             ];
             
             checkboxes.forEach(id => {
@@ -5000,7 +5130,7 @@
                 
                 // 버튼 상태 변경
                 button.disabled = true;
-                button.innerHTML = '📊 ...';
+                button.innerHTML = '[📊]';
                 
                 // 현재 표시된 결과 데이터 가져오기
                 if (!searchResults || searchResults.length === 0) {
@@ -5089,11 +5219,7 @@
             }
         }
 
-        // 선택된 국가 목록 반환 함수
-        function getSelectedCountries() {
-            const countryCheckboxes = document.querySelectorAll('input[name="countries"]:checked');
-            return Array.from(countryCheckboxes).map(cb => cb.value);
-        }
+        // 중복 함수 제거됨 (위에서 이미 정의됨)
 
         // 선택된 카테고리 목록 반환 함수  
         function getSelectedCategories() {
