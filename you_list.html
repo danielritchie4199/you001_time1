@@ -197,8 +197,9 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.15);
             z-index: 1000;
             display: none;
-            max-height: 300px;
+            max-height: 250px;
             overflow-y: auto;
+            padding: 0;
         }
 
         .category-dropdown.show {
@@ -206,13 +207,14 @@
         }
 
         .category-header {
-            padding: 12px 16px;
+            padding: 0;
             background: #f8f9fa;
             border-bottom: 1px solid #e9ecef;
             display: flex;
             align-items: center;
             gap: 8px;
             font-weight: 600;
+            min-height: 0;
         }
 
         .category-header input[type="checkbox"] {
@@ -228,10 +230,11 @@
         .category-options {
             max-height: 250px;
             overflow-y: auto;
+            padding: 0;
         }
 
         .category-item {
-            padding: 10px 16px;
+            padding: 4px 16px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -1644,7 +1647,6 @@
                         <div class="category-display" id="countryDisplay" tabindex="0">대한민국 선택됨</div>
                         <div class="category-dropdown" id="countryDropdown">
                             <div class="category-header">
-                                <span>🌍 국가를 선택하세요 (단일 선택)</span>
                             </div>
                             <div class="category-options">
                                 <!-- 전세계 옵션 추가 -->
