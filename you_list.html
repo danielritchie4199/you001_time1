@@ -411,16 +411,116 @@
             background: #f8f9fa;
             padding: 20px;
             border-bottom: 1px solid #e9ecef;
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto auto;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            gap: 20px;
         }
 
         .results-info {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .datetime-display {
+            position: relative;
+            width: 76px;
+            height: 76px;
+            flex-shrink: 0;
+        }
+
+        .analog-clock {
+            width: 76px;
+            height: 76px;
+            border: 3px solid #8B4513;
+            border-radius: 50%;
+            background: white;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .clock-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: #333;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 4;
+        }
+
+        .clock-numbers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .clock-number {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            text-align: center;
+            line-height: 16px;
+        }
+
+        .clock-number.n12 { top: 2px; left: 50%; transform: translateX(-50%); }
+        .clock-number.n3 { top: 50%; right: 2px; transform: translateY(-50%); }
+        .clock-number.n6 { bottom: 2px; left: 50%; transform: translateX(-50%); }
+        .clock-number.n9 { top: 50%; left: 2px; transform: translateY(-50%); }
+
+        .clock-hand {
+            position: absolute;
+            background: #333;
+            transform-origin: bottom center;
+            border-radius: 2px;
+        }
+
+        .hour-hand {
+            width: 3px;
+            height: 22px;
+            top: 16px;
+            left: 50%;
+            margin-left: -1.5px;
+            z-index: 3;
+        }
+
+        .minute-hand {
+            width: 2px;
+            height: 30px;
+            top: 8px;
+            left: 50%;
+            margin-left: -1px;
+            z-index: 2;
+        }
+
+        .second-hand {
+            width: 1px;
+            height: 32px;
+            top: 6px;
+            left: 50%;
+            margin-left: -0.5px;
+            background: #ff0000;
+            z-index: 1;
+        }
+
+        .search-results-info {
             font-weight: 600;
             color: #495057;
+        }
+
+        .results-count-number {
+            color: red;
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-right: 4px;
         }
 
         .results-controls {
@@ -428,6 +528,16 @@
             align-items: center;
             gap: 20px;
             flex-wrap: wrap;
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        .excel-download-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 80px;
+            flex-shrink: 0;
         }
 
         .pagination-controls {
@@ -450,6 +560,10 @@
             padding: 10px 20px;
             border-radius: 8px;
             font-size: 0.9em;
+            width: 60px;
+            min-width: 60px;
+            max-width: 60px;
+            text-align: center;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -482,64 +596,74 @@
             table-layout: fixed; /* 컬럼 width 고정 */
         }
 
-        /* 각 컬럼의 고정 width 설정 (13개 컬럼) */
+        /* 각 컬럼의 고정 width 설정 (14개 컬럼) */
         .results-table th:nth-child(1),
         .results-table td:nth-child(1) {
-            width: 70px; /* 썸네일 */
+            width: 85px; /* 썸네일 */
         }
         
         .results-table th:nth-child(2),
         .results-table td:nth-child(2) {
-            width: 180px; /* 채널명 */
+            width: 160px; /* 채널명 */
         }
         
         .results-table th:nth-child(3),
         .results-table td:nth-child(3) {
-            width: 350px; /* 영상제목 (가장 넓게) */
+            width: 345px; /* 영상제목 (가장 넓게) */
         }
         
         .results-table th:nth-child(4),
         .results-table td:nth-child(4) {
-            width: 120px; /* 카테고리 */
+            width: 110px; /* 카테고리 */
         }
         
         .results-table th:nth-child(5),
         .results-table td:nth-child(5) {
-            width: 80px; /* 국가 */
+            width: 85px; /* 국가 */
         }
         
         .results-table th:nth-child(6),
         .results-table td:nth-child(6) {
-            width: 130px; /* 업로드일 */
+            width: 100px; /* 업로드일 */
         }
         
         .results-table th:nth-child(7),
         .results-table td:nth-child(7) {
-            width: 130px; /* 한국시간 */
+            width: 120px; /* 한국시간 */
         }
         
         .results-table th:nth-child(8),
         .results-table td:nth-child(8) {
-            width: 100px; /* 조회수 */
+            width: 80px; /* 좋아요 */
         }
         
         .results-table th:nth-child(9),
         .results-table td:nth-child(9) {
-            width: 90px; /* 구독자 */
+            width: 90px; /* 조회수 */
         }
         
         .results-table th:nth-child(10),
         .results-table td:nth-child(10) {
-            width: 60px; /* 링크 */
+            width: 85px; /* 구독자 */
         }
         
         .results-table th:nth-child(11),
         .results-table td:nth-child(11) {
-            width: 90px; /* 재생시간 */
+            width: 85px; /* RPM */
         }
         
         .results-table th:nth-child(12),
         .results-table td:nth-child(12) {
+            width: 50px; /* 동영상 링크 */
+        }
+        
+        .results-table th:nth-child(13),
+        .results-table td:nth-child(13) {
+            width: 85px; /* 재생시간 */
+        }
+        
+        .results-table th:nth-child(14),
+        .results-table td:nth-child(14) {
             width: 60px; /* 썸네일 다운로드 */
         }
         
@@ -567,6 +691,27 @@
             font-size: 0.8em;
             opacity: 0.6;
         }
+
+        /* RPM 컬럼 화살표 강제 표시 - 개선된 버전 */
+        .results-table th[data-sort="estimated_rpm"]::after {
+            content: " ↕" !important;
+            font-size: 0.8em !important;
+            opacity: 0.6 !important;
+            display: inline !important;
+            visibility: visible !important;
+        }
+        
+        .results-table th[data-sort="estimated_rpm"].sort-asc::after {
+            content: " ↑" !important;
+            opacity: 1 !important;
+        }
+        
+        .results-table th[data-sort="estimated_rpm"].sort-desc::after {
+            content: " ↓" !important;
+            opacity: 1 !important;
+        }
+
+
 
         .sort-icon {
             cursor: pointer;
@@ -646,6 +791,11 @@
             transition: color 0.2s ease, font-weight 0.2s ease;
         }
 
+        /* 브랜드 채널 스타일 */
+        .channel-name.brand-channel {
+            color: #A0522D !important; /* 조금 옅은 brown 색상 */
+        }
+
         .channel-link {
             color: #667eea;
             text-decoration: none;
@@ -713,8 +863,18 @@
             font-size: 11px;
         }
 
+        /* 재생시간 백분율 스타일 */
+        .duration-percentage {
+            color: blue;
+            font-weight: bold;
+            font-size: 11px;
+            text-align: center;
+            display: block;
+            margin-top: 2px;
+        }
+
         .like-count {
-            font-weight: 600;
+            font-weight: bold;
             text-align: center;
             display: block;
             font-size: 11px;
@@ -728,6 +888,115 @@
         /* 추정 좋아요 개수 (파란색) */
         .like-count-estimated {
             color: #2196f3;
+        }
+
+        /* RPM 컬럼 스타일 */
+        .rpm-estimate {
+            font-weight: bold;
+            text-align: center;
+            display: block;
+            font-size: 11px;
+            color: brown;
+        }
+
+        /* 카테고리 컬럼 스타일 */
+        .category-name {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .channel-rpm-info {
+            text-align: center;
+        }
+
+        .channel-rpm-info .rpm-estimate {
+            font-size: 13px;
+            color: brown;
+        }
+
+        /* 국가 컬럼 스타일 */
+        .country-name {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .country-rpm-info {
+            text-align: center;
+        }
+
+        .country-rpm-info .rpm-estimate {
+            font-size: 13px;
+            color: brown;
+        }
+
+        /* 조회수 컬럼 스타일 */
+        .view-count {
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .valid-view-count {
+            text-align: center;
+        }
+
+        .valid-view-value {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* 좋아요 컬럼 스타일 */
+        .like-count-container {
+            text-align: center;
+        }
+
+        .like-count-bold {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .like-percentage {
+            text-align: center;
+        }
+
+        .percentage-value {
+            color: blue;
+            font-weight: bold;
+        }
+
+        /* 좋아요 백분율 스타일 */
+        .like-percentage-display {
+            color: blue;
+            font-weight: bold;
+            font-size: 11px;
+            text-align: center;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* RPM 컬럼 스타일 */
+        .rpm-container {
+            text-align: center;
+        }
+
+        .rpm-estimate {
+            font-weight: bold;
+            text-align: center;
+            display: block;
+            font-size: 11px;
+            color: brown;
+            margin-bottom: 4px;
+        }
+
+        .rpm-total {
+            text-align: center;
+        }
+
+        .rpm-total-value {
+            color: red;
+            font-weight: bold;
+            font-size: 11px;
         }
 
         .video-link {
@@ -1112,9 +1381,9 @@
             width: 80px;
         }
         
-        .results-table th:nth-child(11), /* 링크 */
+        .results-table th:nth-child(11), /* RPM */
         .results-table td:nth-child(11) {
-            width: 50px;
+            width: 85px;
         }
         
         .results-table th:nth-child(12), /* 재생시간 */
@@ -1327,7 +1596,7 @@
     <div class="container">
         <div class="header">
             <h1>🎥 YouTube Search</h1>
-            <p>전세계 유튜브 채널에서 원하는 동영상을 찾아봅시다</p>
+            <p>전세계 유튜브 채널에서 원하는 동영상을 찾아봅니다</p>
         </div>
 
         <form class="search-form" id="searchForm">
@@ -1628,6 +1897,10 @@
                                 <div class="category-item">
                                     <input type="checkbox" id="searchChannel" name="searchScope" value="channel">
                                     <label for="searchChannel">채널명</label>
+                                </div>
+                                <div class="category-item">
+                                    <input type="checkbox" id="searchTags" name="searchScope" value="tags">
+                                    <label for="searchTags">태그</label>
                                 </div>
                             </div>
                         </div>
@@ -1968,8 +2241,23 @@
 
             <div class="results-header">
                 <div class="results-info">
-                    <span id="resultsCount">0</span>개의 결과가 검색되었습니다.
-                    <span id="filteredResultsInfo" style="display: none;"> (필터링된 결과: <span id="filteredCount">0</span>개)</span>
+                    <div class="datetime-display">
+                        <div class="analog-clock" id="analogClock">
+                            <div class="clock-numbers">
+                                <div class="clock-number n12">12</div>
+                                <div class="clock-number n3">3</div>
+                                <div class="clock-number n6">6</div>
+                                <div class="clock-number n9">9</div>
+                            </div>
+                            <div class="clock-hand hour-hand" id="hourHand"></div>
+                            <div class="clock-hand minute-hand" id="minuteHand"></div>
+                            <div class="clock-hand second-hand" id="secondHand"></div>
+                            <div class="clock-center"></div>
+                        </div>
+                    </div>
+                    <div class="search-results-info">
+                        <span id="resultsCount" class="results-count-number">0</span><span id="totalResultsInfo" style="display: none;">/<span id="totalCount" class="results-count-number">0</span></span> 개의 결과가 검색되었습니다. <span id="searchKeywordInfo" style="display: none;">(<span id="searchKeyword" class="results-count-number"></span>)</span>
+                    </div>
                 </div>
                 <div class="results-controls">
                     <div class="pagination-controls">
@@ -1985,8 +2273,10 @@
                             <option value="200">200개</option>
                         </select>
                     </div>
+                </div>
+                <div class="excel-download-container">
                     <button id="downloadExcelBtn" class="excel-download-btn" style="display: none;" title="클릭하면 저장 위치를 선택할 수 있습니다 (Chrome/Edge 86+ 지원)">
-                        📊
+                        <span id="excelBtnPrefix"></span><span id="excelBtnIcon">📊</span><span id="excelBtnSuffix"></span>
                     </button>
                 </div>
             </div>
@@ -2001,13 +2291,17 @@
                                 <span data-sort="channel_created_date" class="sort-icon">📅</span>
                             </th>
                             <th data-sort="title" class="sortable">📽️</th>
-                            <th data-sort="primary_category" class="sortable">️‍🌈</th>
+                            <th class="sortable multi-sort">
+                                <span data-sort="primary_category" class="sort-icon">🌈</span>
+                                <span data-sort="channel_playback_rpm" class="sort-icon">💰</span>
+                            </th>
                             <th data-sort="country" class="sortable">🏳️‍🌈</th>
                             <th data-sort="status_date" class="sortable" id="uploadDateHeader">🗓️</th>
                             <th data-sort="korea_time" class="sortable" id="koreaTimeHeader">🏠</th>
-                            <th data-sort="likes" class="sortable" style="color: red;">💛</th>
+                            <th data-sort="likes" class="sortable">💛</th>
                             <th data-sort="daily_view_count" class="sortable">👓</th>
                             <th data-sort="subscriber_count" class="sortable">👪</th>
+                            <th data-sort="estimated_rpm" class="sortable">💰</th>
                             <th data-sort="vod_url">▶️</th>
                             <th data-sort="duration" class="sortable">⏰</th>
                             <th>👍</th>
@@ -2952,8 +3246,47 @@
             return categories[category] || '알 수 없음';
         }
 
+        // 실시간 아날로그 시계 표시 함수
+        function initializeDateTime() {
+            function updateAnalogClock() {
+                const now = new Date();
+                const hours = now.getHours() % 12;
+                const minutes = now.getMinutes();
+                const seconds = now.getSeconds();
+                
+                // 각도 계산 (12시 방향이 0도)
+                const hourAngle = (hours * 30) + (minutes * 0.5); // 시침: 한 시간당 30도 + 분당 0.5도
+                const minuteAngle = minutes * 6; // 분침: 한 분당 6도
+                const secondAngle = seconds * 6; // 초침: 한 초당 6도
+                
+                // 바늘 회전 적용
+                const hourHand = document.getElementById('hourHand');
+                const minuteHand = document.getElementById('minuteHand');
+                const secondHand = document.getElementById('secondHand');
+                
+                if (hourHand) {
+                    hourHand.style.transform = `rotate(${hourAngle}deg)`;
+                }
+                if (minuteHand) {
+                    minuteHand.style.transform = `rotate(${minuteAngle}deg)`;
+                }
+                if (secondHand) {
+                    secondHand.style.transform = `rotate(${secondAngle}deg)`;
+                }
+            }
+            
+            // 즉시 실행
+            updateAnalogClock();
+            
+            // 1초마다 업데이트
+            setInterval(updateAnalogClock, 1000);
+        }
+
         // 통합된 초기화 함수
         function initializeApp() {
+            
+            // 실시간 날짜/시간 표시 기능 초기화
+            initializeDateTime();
             
             // 동영상 길이 체크박스 이벤트 리스너 추가
             const videoLengthCheckboxes = [
@@ -3459,6 +3792,27 @@
             
             // 5단계: 기본 fallback - 한글이 있으면 한국 영상 (기존 로직)
             return koreanRegex.test(channelName) || koreanRegex.test(title);
+        }
+        
+        // 브랜드 채널 감지 함수
+        function isBrandChannel(result) {
+            const channelName = result.youtube_channel_name || '';
+            const subscriberCount = parseInt(result.subscriber_count) || 0;
+            
+            // 구독자 수가 100만 이상이면 브랜드 채널로 판별
+            if (subscriberCount >= 1000000) {
+                return true;
+            }
+            
+            // 특정 키워드가 포함된 경우 브랜드 채널로 판별
+            const brandKeywords = [
+                'official', 'entertainment', 'music', 'news', 'media',
+                'tv', 'channel', 'network', 'studios', 'productions',
+                '공식', '엔터테인먼트', '뮤직', '뉴스', '미디어'
+            ];
+            
+            const lowerChannelName = channelName.toLowerCase();
+            return brandKeywords.some(keyword => lowerChannelName.includes(keyword));
         }
         
         // 영상의 국가 정보 감지 함수
@@ -4052,10 +4406,14 @@
                     bVal = parseInt(b.duration_seconds) || 0;
                 }
 
-                // 좋아요 수 처리
+                // 좋아요 수 처리 (유효 조회수에 대한 백분율 기준)
                 if (sortColumn === 'likes') {
-                    aVal = getLikeCount(a).count;
-                    bVal = getLikeCount(b).count;
+                    const aLikes = getLikeCount(a).count;
+                    const bLikes = getLikeCount(b).count;
+                    const aValidViews = Math.round(a.daily_view_count * 0.85);
+                    const bValidViews = Math.round(b.daily_view_count * 0.85);
+                    aVal = aValidViews > 0 ? (aLikes / aValidViews) * 100 : 0;
+                    bVal = bValidViews > 0 ? (bLikes / bValidViews) * 100 : 0;
                 }
 
                 // 날짜 값 처리
@@ -4080,6 +4438,20 @@
                 if (sortColumn === 'channel_created_date') {
                     aVal = a.channel_created_date ? new Date(a.channel_created_date) : new Date(0);
                     bVal = b.channel_created_date ? new Date(b.channel_created_date) : new Date(0);
+                }
+
+                // RPM 정렬 처리 (재생+광고 RPM 합산값 기준)
+                if (sortColumn === 'estimated_rpm') {
+                    const aRpm = parseFloat(a.estimated_rpm) || 0;
+                    const bRpm = parseFloat(b.estimated_rpm) || 0;
+                    aVal = aRpm + (aRpm * 0.85);
+                    bVal = bRpm + (bRpm * 0.85);
+                }
+
+                // 채널 재생누적 RPM 정렬 처리
+                if (sortColumn === 'channel_playback_rpm') {
+                    aVal = parseFloat(a.channel_playback_rpm) || 0;
+                    bVal = parseFloat(b.channel_playback_rpm) || 0;
                 }
 
                 // 문자열 값 처리
@@ -4109,7 +4481,7 @@
                 // 모든 시나리오에서 12개 컬럼 사용 (국가 컬럼 추가로 인해)
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="13" class="no-results">
+                        <td colspan="14" class="no-results">
                             <h3>검색 결과가 없습니다</h3>
                             <p>다른 검색 조건으로 시도해보세요.</p>
                         </td>
@@ -4138,7 +4510,7 @@
                     </td>
                     <td>
                         <a href="https://www.youtube.com/channel/${result.youtube_channel_id}" target="_blank" class="channel-link" title="${result.youtube_channel_name} 채널 홈으로 이동">
-                            <div class="channel-name">
+                            <div class="channel-name${isBrandChannel(result) ? ' brand-channel' : ''}">
                                 ${result.youtube_channel_name}
                                 <div class="channel-created-date">
                                     📅 ${formatChannelCreatedDate(result.channel_created_date)}
@@ -4151,9 +4523,17 @@
                             ${result.title}
                         </div>
                     </td>
-                    <td>${result.primary_category}</td>
                     <td>
-                        <span class="country-name">${countryName}</span>
+                        <div class="category-name">${result.primary_category}</div>
+                        <div class="channel-rpm-info">
+                            <span class="rpm-estimate" title="채널 전체 재생누적 RPM: $${result.channel_playback_rpm || '0.00'} | 채널 전체 광고누적 RPM: $${result.channel_ad_rpm || '0.00'}">$${result.channel_playback_rpm || '0.00'} | $${result.channel_ad_rpm || '0.00'}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="country-name">${countryName}</div>
+                        <div class="country-rpm-info">
+                            <span class="rpm-estimate">${Math.round(((result.channel_playback_rpm || 0) + (result.channel_ad_rpm || 0)) * 100) / 100}</span>
+                        </div>
                     </td>
                     ${uploadDateCell}
                     ${koreaTimeCell}
@@ -4161,14 +4541,34 @@
                         ${(() => {
                             const likeData = getLikeCount(result);
                             const colorClass = likeData.isEstimated ? 'like-count-estimated' : 'like-count-actual';
-                            return `<span class="like-count ${colorClass}">${likeData.count.toLocaleString()}</span>`;
+                            const validViewCount = Math.round(result.daily_view_count * 0.85);
+                            const percentage = validViewCount > 0 ? Math.round((likeData.count / validViewCount) * 100 * 100) / 100 : 0;
+                            return `
+                                <div class="like-count-container">
+                                    <div class="like-count ${colorClass} like-count-bold">${likeData.count.toLocaleString()}</div>
+                                    <div class="like-percentage">
+                                        <span class="percentage-value">${percentage}%</span>
+                                    </div>
+                                </div>
+                            `;
                         })()}
                     </td>
                     <td>
-                        <span class="view-count">${viewCount}</span>
+                        <div class="view-count">${viewCount}</div>
+                        <div class="valid-view-count">
+                            <span class="valid-view-value">${Math.round(result.daily_view_count * 0.85).toLocaleString()}</span>
+                        </div>
                     </td>
                     <td>
                         <span class="subscriber-count">${subscriberCount}</span>
+                    </td>
+                    <td>
+                        <div class="rpm-container">
+                            <div class="rpm-estimate" title="재생기반 RPM: $${result.estimated_rpm || '0.00'} | 광고 RPM: $${Math.round((result.estimated_rpm || 0) * 0.85 * 100) / 100}">$${result.estimated_rpm || '0.00'} | $${Math.round((result.estimated_rpm || 0) * 0.85 * 100) / 100}</div>
+                            <div class="rpm-total">
+                                <span class="rpm-total-value">${Math.round(((result.estimated_rpm || 0) + (result.estimated_rpm || 0) * 0.85) * 100) / 100}</span>
+                            </div>
+                        </div>
                     </td>
                     <td>
                         <a href="javascript:void(0)" onclick="openVideoWithCopy('${result.vod_url}')" class="video-link" title="동영상 열기 + URL 복사">
@@ -4177,6 +4577,12 @@
                     </td>
                     <td>
                         <span class="duration-time" title="${result.duration_seconds}초">${formattedDuration}</span>
+                        ${(() => {
+                            // 평균 시청시간 = 전체 재생시간의 45%로 추정
+                            const avgWatchTimeSeconds = Math.round((result.duration_seconds || 0) * 0.45);
+                            const percentage = result.duration_seconds > 0 ? Math.round((avgWatchTimeSeconds / result.duration_seconds) * 100) : 0;
+                            return `<div class="duration-percentage">${percentage}%</div>`;
+                        })()}
                     </td>
                     <td>
                         <button class="download-btn" onclick="downloadThumbnail('${result.thumbnail_url}', '${result.youtube_channel_name}')" title="클릭하면 저장 위치를 선택할 수 있습니다">
@@ -4390,6 +4796,8 @@
                 const optimizedResults = searchResults.map(result => {
                     // 국가 정보 감지 (실시간 처리)
                     const countryInfo = detectVideoCountry(result);
+                    // 브랜드 채널 감지
+                    const isBrand = isBrandChannel(result);
                     
                     return {
                     youtube_channel_name: result.youtube_channel_name,
@@ -4410,7 +4818,8 @@
                     video_length_category: result.video_length_category,
                         primary_category: result.primary_category,
                         tags: result.tags || '',
-                        country: countryInfo // 국가 정보 추가
+                        country: countryInfo, // 국가 정보 추가
+                        brand: isBrand ? 1 : 0 // 브랜드 채널 여부 (1: 브랜드, 0: 일반)
                     };
                 });
 
@@ -5333,16 +5742,28 @@
         // 필터링된 결과 표시 업데이트
         function updateFilteredResultsDisplay() {
             // 결과 개수 업데이트
-            document.getElementById('resultsCount').textContent = allSearchResults.length;
-            
-            const filteredInfo = document.getElementById('filteredResultsInfo');
-            const filteredCount = document.getElementById('filteredCount');
+            const totalResultsInfo = document.getElementById('totalResultsInfo');
+            const totalCount = document.getElementById('totalCount');
+            const searchKeywordInfo = document.getElementById('searchKeywordInfo');
+            const searchKeyword = document.getElementById('searchKeyword');
             
             if (filteredResults.length !== allSearchResults.length) {
-                filteredCount.textContent = filteredResults.length;
-                filteredInfo.style.display = 'inline';
+                document.getElementById('resultsCount').textContent = filteredResults.length;
+                totalCount.textContent = allSearchResults.length;
+                totalResultsInfo.style.display = 'inline';
+                
+                // 검색어 표시
+                const currentKeyword = document.getElementById('keyword').value || '';
+                if (currentKeyword.trim()) {
+                    searchKeyword.textContent = currentKeyword;
+                    searchKeywordInfo.style.display = 'inline';
+                } else {
+                    searchKeywordInfo.style.display = 'none';
+                }
             } else {
-                filteredInfo.style.display = 'none';
+                document.getElementById('resultsCount').textContent = allSearchResults.length;
+                totalResultsInfo.style.display = 'none';
+                searchKeywordInfo.style.display = 'none';
             }
             
             // 필터링된 결과로 searchResults 업데이트 후 렌더링
@@ -5361,7 +5782,8 @@
                 
                 // 버튼 상태 변경
                 button.disabled = true;
-                button.innerHTML = '[📊]';
+                document.getElementById('excelBtnPrefix').textContent = '[';
+                document.getElementById('excelBtnSuffix').textContent = ']';
                 
                 // 현재 표시된 결과 데이터 가져오기
                 if (!searchResults || searchResults.length === 0) {
@@ -5451,7 +5873,8 @@
                 const button = document.getElementById('downloadExcelBtn');
                 if (button) {
                     button.disabled = false;
-                    button.innerHTML = '📊';
+                    document.getElementById('excelBtnPrefix').textContent = '';
+                    document.getElementById('excelBtnSuffix').textContent = '';
                 }
             }
         }

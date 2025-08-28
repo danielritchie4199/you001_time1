@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1540px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -3672,29 +3672,6 @@
             });
             
             console.log('✅ 시간대 필터 초기화 완료:', allTimezoneCheckboxes.length + '개 체크박스');
-        }ked;
-                    }
-                });
-                
-                updateSelectAllTimezone();
-                updateTimezoneGroupCheckboxes();
-            });
-
-            // 개별 시간대 체크박스 변경 시 상태 업데이트
-            const timezoneCheckboxes = [
-                'timezoneKrGolden', 'timezoneGlobalSweet', 'timezoneShortsPeak', 'timezoneKrLunch',
-                'timezoneUsEast', 'timezoneKrNight', 'timezoneKrMorning', 'timezoneWeekend', 'timezoneJpPrime'
-            ];
-            
-            timezoneCheckboxes.forEach(id => {
-                const checkbox = document.getElementById(id);
-                if (checkbox) {
-                    checkbox.addEventListener('change', () => {
-                        updateSelectAllTimezone();
-                        updateTimezoneGroupCheckboxes();
-                    });
-                }
-            });
         }
 
         // 시간대 "모두 선택" 상태 업데이트

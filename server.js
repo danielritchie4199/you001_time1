@@ -133,14 +133,21 @@ class ApiKeyManager {
     };
   }
   
-  // 할당량 초과 처리 - 개선된 로직
+  // 할당량 초과 처리 - 개선된 로직 (suspended 키 처리 포함)
   markKeyAsQuotaExceeded(currentKey, errorMessage = '') {
     if (!currentKey) return null;
     
     console.log(`❌ ${currentKey.name} 오류 발생: ${errorMessage}`);
     
+    // API 키 일시정지(suspended) 처리 - 우회 처리
+    if (errorMessage.includes('suspended') || errorMessage.includes('has been suspended')) {
+      console.log(`🚨 ${currentKey.name} API 키 일시정지 감지 - 다른 키로 우회`);
+      console.log(`🔄 일시적 문제일 수 있으므로 다른 키 사용 후 재시도`);
+      // 영구 비활성화하지 않고 단순히 다른 키로 전환만 함
+      return this.getNextKeyRoundRobin();
+    }
     // 할당량 관련 오류인지 확인
-    if (errorMessage.includes('quota') || errorMessage.includes('quotaExceeded') || 
+    else if (errorMessage.includes('quota') || errorMessage.includes('quotaExceeded') || 
         errorMessage.includes('dailyLimitExceeded') || errorMessage.includes('rateLimitExceeded')) {
       currentKey.quotaExceeded = true;
       console.log(`🚫 ${currentKey.name} 할당량 초과로 비활성화됨`);
@@ -811,8 +818,35 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
     const isEmptyKeyword = !keyword || !keyword.trim();
     
     if (!isEmptyKeyword) {
-      searchParams.q = keyword.trim();
-      console.log(`키워드 검색: "${keyword.trim()}"`);
+      // 검색 범위 처리
+      let searchQuery = keyword.trim();
+      
+      // searchScope가 문자열로 들어오는 경우 배열로 변환
+      let searchScopes = [];
+      if (typeof searchScope === 'string') {
+        searchScopes = searchScope.includes(',') ? searchScope.split(',').map(s => s.trim()) : [searchScope];
+      } else if (Array.isArray(searchScope)) {
+        searchScopes = searchScope;
+      } else {
+        searchScopes = ['title']; // 기본값
+      }
+      
+      // 태그 검색인 경우 별도 처리
+      if (searchScopes.includes('tags')) {
+        // 태그 검색: YouTube에서는 태그가 공개되지 않으므로 일반 검색으로 처리
+        searchQuery = keyword.trim();
+        console.log(`태그 검색 (일반 검색으로 처리): "${searchQuery}"`);
+      } else if (searchScopes.includes('channel')) {
+        // 채널명 검색
+        searchQuery = keyword.trim();
+        console.log(`채널명 포함 검색: "${searchQuery}"`);
+      } else {
+        // 기본 제목 검색
+        searchQuery = keyword.trim();
+        console.log(`제목 검색: "${searchQuery}"`);
+      }
+      
+      searchParams.q = searchQuery;
     } else {
       // 키워드가 없을 때는 국가별 인기 동영상 검색
       console.log('키워드 없음: 국가별 인기 동영상 검색');
@@ -953,11 +987,25 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
         } catch (apiError) {
           console.error(`YouTube API 오류 (${currentApiKey.name}):`, apiError.message);
            
+           // API 키 일시정지(suspended) 오류인 경우 즉시 다른 키로 우회
+           if (apiError.message.includes('suspended') || apiError.message.includes('has been suspended')) {
+             console.log(`🚨 ${currentApiKey.name} 일시정지 감지 - 다른 키로 즉시 우회`);
+             retryCount++;
+             continue; // 즉시 다음 키로 재시도
+           }
+           // Permission Deny 오류인 경우 감지 및 우회
+           else if (apiError.message.includes('permission') || apiError.message.includes('denied') || 
+                    apiError.message.includes('forbidden') || apiError.code === 403) {
+             console.log(`🚫 ${currentApiKey.name} PERMISSION DENY 감지 - API 키 권한 문제`);
+             console.log(`📝 오류 상세: ${apiError.message}`);
+             retryCount++;
+             continue; // 즉시 다음 키로 재시도
+           }
            // 할당량 초과 오류인 경우 다음 키로 전환
-           if (apiError.message.includes('quota') || apiError.message.includes('quotaExceeded')) {
+           else if (apiError.message.includes('quota') || apiError.message.includes('quotaExceeded')) {
              console.log(`🚫 ${currentApiKey.name} 할당량 초과 감지`);
              
-             const newApiKey = apiKeyManager.markKeyAsQuotaExceeded(currentApiKey);
+             const newApiKey = apiKeyManager.markKeyAsQuotaExceeded(currentApiKey, apiError.message);
              if (newApiKey) {
                console.log(`🔄 ${newApiKey.name}로 재시도합니다... (재시도 ${retryCount + 1}/${maxRetries})`);
                retryCount++;
@@ -1148,6 +1196,11 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
         const channelCreatedDate = await getChannelCreatedDate(video.snippet.channelId);
         console.log(`  🗓️ 채널 개설일: ${channelCreatedDate || '조회 안됨'}`);
 
+        // 채널 설명 정보 가져오기
+        console.log(`  📝 채널 설명 조회 중: ${video.snippet.channelId}`);
+        const channelDescription = await getChannelDescription(video.snippet.channelId);
+        console.log(`  📄 채널 설명: ${channelDescription ? '조회됨' : '조회 안됨'}`);
+
         // 실제 좋아요 개수 가져오기 (있으면 사용, 없으면 null)
         const actualLikeCount = video.statistics.likeCount ? parseInt(video.statistics.likeCount) : null;
 
@@ -1160,6 +1213,7 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
                         video.snippet.thumbnails.default?.url,
           status: 'active',
           youtube_channel_id: video.snippet.channelId,
+          youtube_channel_description: channelDescription,  // 채널 설명 추가
           primary_category: await getCategoryName(video.snippet.categoryId),
           status_date: video.snippet.publishedAt,
           daily_view_count: viewCount,
@@ -1170,10 +1224,28 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
           video_id: video.id,
           title: video.snippet.title,
           description: video.snippet.description,
+          video_tags: video.snippet.tags || [],  // 비디오 태그 정보 추가
           duration: video.contentDetails.duration,
           duration_seconds: durationInSeconds,
-          video_length_category: videoLengthCategory
+          video_length_category: videoLengthCategory,
+          country: primaryCountry  // 검색된 국가 정보 추가
         };
+
+        // RPM 추정값 계산 및 추가 (Phase 1 & 2 적용)
+        result.estimated_rpm = calculateFreeRPM(result);
+
+        // Analytics 추정 데이터 계산 및 추가
+        const analyticsData = calculateEstimatedAnalytics(result);
+        result.analytics_view_count = analyticsData.views;
+        result.estimated_watch_time = analyticsData.estimatedMinutesWatched;
+        result.avg_watch_time = analyticsData.averageViewDuration;
+        result.estimated_new_subscribers = analyticsData.subscribersGained;
+        result.estimated_ad_impressions = analyticsData.adImpressions;
+        result.estimated_total_revenue = analyticsData.estimatedRevenue;
+        result.estimated_ad_revenue = analyticsData.estimatedAdRevenue;
+        result.estimated_premium_revenue = analyticsData.estimatedRedPartnerRevenue;
+        result.playbackBasedCpm = analyticsData.playbackBasedCpm;
+        result.adCpm = analyticsData.adCpm;
 
          // 중복 제거 후 결과 추가
          searchResults.push(result);
@@ -1195,6 +1267,38 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
 
          // 조회수 기준 내림차순 정렬
      searchResults.sort((a, b) => b.daily_view_count - a.daily_view_count);
+
+     // 채널별 누적 RPM 값 계산 및 각 결과에 추가
+     const channelAccumulations = {};
+     searchResults.forEach(result => {
+       const channelId = result.youtube_channel_id || result.youtube_channel_name || 'unknown';
+       
+       if (!channelAccumulations[channelId]) {
+         channelAccumulations[channelId] = {
+           totalPlaybackRpm: 0,
+           totalAdRpm: 0,
+           videoCount: 0
+         };
+       }
+       
+       const acc = channelAccumulations[channelId];
+       acc.totalPlaybackRpm += parseFloat(result.estimated_rpm || 0);
+       acc.totalAdRpm += parseFloat(result.estimated_rpm || 0) * 0.85;
+       acc.videoCount++;
+     });
+
+     // 각 결과에 채널별 누적 RPM 값 추가
+     searchResults.forEach(result => {
+       const channelId = result.youtube_channel_id || result.youtube_channel_name || 'unknown';
+       const acc = channelAccumulations[channelId];
+       if (acc) {
+         result.channel_playback_rpm = Math.round(acc.totalPlaybackRpm * 100) / 100;
+         result.channel_ad_rpm = Math.round(acc.totalAdRpm * 100) / 100;
+       } else {
+         result.channel_playback_rpm = 0;
+         result.channel_ad_rpm = 0;
+       }
+     });
 
      // 메모리 누수 방지를 위한 메모리 정리
      try {
@@ -1339,24 +1443,94 @@ app.post('/api/download-excel', async (req, res) => {
       });
     }
 
-    // Excel용 데이터 변환
+    // 채널별 누적 값 계산
+    const channelAccumulations = {};
+    
+    // 각 채널별로 누적 값 계산
+    searchResults.forEach(result => {
+      const channelId = result.youtube_channel_id || result.youtube_channel_name || 'unknown';
+      
+      if (!channelAccumulations[channelId]) {
+        channelAccumulations[channelId] = {
+          totalPlaybackCpm: 0,
+          totalAdCpm: 0,
+          totalPlaybackRpm: 0,
+          totalAdRpm: 0,
+          videoCount: 0
+        };
+      }
+      
+      const acc = channelAccumulations[channelId];
+      acc.totalPlaybackCpm += parseFloat(result.playbackBasedCpm || 0);
+      acc.totalAdCpm += parseFloat(result.adCpm || 0);
+      acc.totalPlaybackRpm += parseFloat(result.estimated_rpm || 0);
+      acc.totalAdRpm += parseFloat(result.estimated_rpm || 0) * 0.85;
+      acc.videoCount++;
+    });
+
+    // Excel용 데이터 변환 
     const excelData = searchResults.map((result, index) => {
       return {
         '순번': index + 1,
-        '채널명': result.youtube_channel_name || '',
+        '가입일': result.channel_created_date ? new Date(result.channel_created_date).toLocaleDateString('ko-KR') : '',
         '채널 ID': result.youtube_channel_id || '',
+        '채널명': result.youtube_channel_name || '',
+        '채널설명': result.youtube_channel_description || '',
+        '태그': Array.isArray(result.video_tags) ? result.video_tags.join(', ') : (result.video_tags || ''),
         '동영상 제목': result.title || '',
+        '동영상 설명': result.description || '',
         '카테고리': result.primary_category || '',
         '국가': result.country || '',
         '업로드일': result.status_date ? new Date(result.status_date).toLocaleDateString('ko-KR') : '',
         '조회수': parseInt(result.daily_view_count || 0).toLocaleString(),
+        '좋아요개수(유효 조회수에 대한 조회수 백분율(%))': (() => {
+          const likeCount = result.actual_like_count || Math.round((result.daily_view_count || 0) * 0.01);
+          const validViewCount = Math.round((result.daily_view_count || 0) * 0.85);
+          const percentage = validViewCount > 0 ? Math.round((likeCount / validViewCount) * 100 * 100) / 100 : 0;
+          return `${likeCount.toLocaleString()}(${percentage}%)`;
+        })(),
         '구독자': formatSubscriberCountForExcel(result.subscriber_count || 0),
         'URL': result.vod_url || '',
         '시간(초)': result.duration_seconds || 0,
         '시간(형식)': formatDurationForExcel(result.duration_seconds),
         '동영상 길이': formatVideoLengthForExcel(result.video_length_category) || '',
         '상태': result.status || '',
-        '썸네일 URL': result.thumbnail_url || ''
+        '썸네일 URL': result.thumbnail_url || '',
+        // Analytics 추정 컬럼들 (썸네일 URL 오른쪽)
+        'Analytics 조회수': result.analytics_view_count ? parseInt(result.analytics_view_count).toLocaleString() : '0',
+        '추정 시청시간(분)': result.estimated_watch_time ? Math.round(result.estimated_watch_time * 100) / 100 : '0.00',
+        '평균 시청시간(초)': result.avg_watch_time ? Math.round(result.avg_watch_time) : '0',
+        '신규 구독자 수': result.estimated_new_subscribers ? Math.round(result.estimated_new_subscribers) : '0',
+        '광고 노출 수': result.estimated_ad_impressions ? Math.round(result.estimated_ad_impressions).toLocaleString() : '0',
+        '추정 총수익($)': result.estimated_total_revenue ? `$${Math.round(result.estimated_total_revenue * 100) / 100}` : '$0.00',
+        '추정 광고수익($)': result.estimated_ad_revenue ? `$${Math.round(result.estimated_ad_revenue * 100) / 100}` : '$0.00',
+        '추정 Premium수익($)': result.estimated_premium_revenue ? `$${Math.round(result.estimated_premium_revenue * 100) / 100}` : '$0.00',
+        '재생기반 CPM($)': result.playbackBasedCpm ? `$${Math.round(result.playbackBasedCpm * 100) / 100}` : '$0.00',
+        '광고 CPM($)': result.adCpm ? `$${Math.round(result.adCpm * 100) / 100}` : '$0.00',
+        // 추가 RPM 컬럼들 (맨 마지막)
+        '재생기반 RPM($)': result.estimated_rpm ? `$${result.estimated_rpm}` : '$0.00',
+        '광고 RPM($)': result.estimated_rpm ? `$${Math.round(result.estimated_rpm * 0.85 * 100) / 100}` : '$0.00',
+        // 채널 전체 누적 값 컬럼들
+        '재생누적 CPM($)': (() => {
+          const channelId = result.youtube_channel_id || result.youtube_channel_name || 'unknown';
+          const acc = channelAccumulations[channelId];
+          return acc ? `$${Math.round(acc.totalPlaybackCpm * 100) / 100}` : '$0.00';
+        })(),
+        '광고누적 CPM($)': (() => {
+          const channelId = result.youtube_channel_id || result.youtube_channel_name || 'unknown';
+          const acc = channelAccumulations[channelId];
+          return acc ? `$${Math.round(acc.totalAdCpm * 100) / 100}` : '$0.00';
+        })(),
+        '재생누적 RPM($)': (() => {
+          const channelId = result.youtube_channel_id || result.youtube_channel_name || 'unknown';
+          const acc = channelAccumulations[channelId];
+          return acc ? `$${Math.round(acc.totalPlaybackRpm * 100) / 100}` : '$0.00';
+        })(),
+        '광고누적 RPM($)': (() => {
+          const channelId = result.youtube_channel_id || result.youtube_channel_name || 'unknown';
+          const acc = channelAccumulations[channelId];
+          return acc ? `$${Math.round(acc.totalAdRpm * 100) / 100}` : '$0.00';
+        })()
       };
     });
 
@@ -1364,23 +1538,47 @@ app.post('/api/download-excel', async (req, res) => {
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(excelData);
 
-    // 컬럼 너비 자동 조정
+    // 컬럼 너비 자동 조정 (39개 컬럼)
     const columnWidths = [
       { wch: 6 },  // 순번
-      { wch: 25 }, // 채널명
+      { wch: 12 }, // 가입일
       { wch: 20 }, // 채널 ID
+      { wch: 25 }, // 채널명
+      { wch: 50 }, // 채널설명
+      { wch: 30 }, // 태그
       { wch: 40 }, // 동영상 제목
+      { wch: 50 }, // 동영상 설명
       { wch: 15 }, // 카테고리
       { wch: 12 }, // 국가
       { wch: 12 }, // 업로드일
       { wch: 12 }, // 조회수
+      { wch: 35 }, // 좋아요개수(유효 조회수에 대한 조회수 백분율(%))
       { wch: 12 }, // 구독자
       { wch: 50 }, // URL
       { wch: 8 },  // 시간(초)
       { wch: 10 }, // 시간(형식)
       { wch: 12 }, // 동영상 길이
       { wch: 10 }, // 상태
-      { wch: 50 }  // 썸네일 URL
+      { wch: 50 }, // 썸네일 URL
+      // Analytics 컬럼들
+      { wch: 15 }, // Analytics 조회수
+      { wch: 18 }, // 추정 시청시간(분)
+      { wch: 18 }, // 평균 시청시간(초)
+      { wch: 15 }, // 신규 구독자 수
+      { wch: 15 }, // 광고 노출 수
+      { wch: 18 }, // 추정 총수익($)
+      { wch: 18 }, // 추정 광고수익($)
+      { wch: 20 }, // 추정 Premium수익($)
+      { wch: 18 }, // 재생기반 CPM($)
+      { wch: 15 }, // 광고 CPM($)
+      // RPM 컬럼들
+      { wch: 18 }, // 재생기반 RPM($)
+      { wch: 15 }, // 광고 RPM($)
+      // 채널 전체 누적 값 컬럼들
+      { wch: 18 }, // 재생누적 CPM($)
+      { wch: 18 }, // 광고누적 CPM($)
+      { wch: 18 }, // 재생누적 RPM($)
+      { wch: 18 }  // 광고누적 RPM($)
     ];
     worksheet['!cols'] = columnWidths;
 
@@ -1690,25 +1888,433 @@ function matchesVideoLength(videoLengthCategory, selectedLengths) {
   return selectedLengths.includes(videoLengthCategory);
 }
 
-// 채널 개설일 가져오기 (새 기능)
+// 채널 개설일 가져오기 (새 기능) - 디버깅 강화
 async function getChannelCreatedDate(channelId) {
   try {
     const youtubeInstance = apiKeyManager.getYouTubeInstance();
     const currentKey = youtubeInstance.currentKey;
+    
+    console.log(`🔍 채널 개설일 API 호출: ${channelId} (키: ${currentKey.name})`);
+    
+    // snippet과 contentDetails를 모두 요청하여 더 많은 정보 확인
     const channelResponse = await youtubeInstance.youtube.channels.list({
-      part: 'snippet',
+      part: 'snippet,contentDetails,statistics,status',
       id: channelId
     });
+    
+    console.log(`📡 API 응답 상태: ${channelResponse.status}`);
+    console.log(`📦 응답 데이터:`, {
+      itemsCount: channelResponse.data.items?.length || 0,
+      channelId: channelId,
+      hasSnippet: !!channelResponse.data.items?.[0]?.snippet,
+      publishedAt: channelResponse.data.items?.[0]?.snippet?.publishedAt,
+      channelTitle: channelResponse.data.items?.[0]?.snippet?.title,
+      hasContentDetails: !!channelResponse.data.items?.[0]?.contentDetails,
+      hasStatistics: !!channelResponse.data.items?.[0]?.statistics,
+      hasStatus: !!channelResponse.data.items?.[0]?.status
+    });
+    
+    // 전체 snippet 정보 출력 (디버깅용)
+    if (channelResponse.data.items?.[0]?.snippet) {
+      console.log(`🔍 전체 snippet 정보:`, JSON.stringify(channelResponse.data.items[0].snippet, null, 2));
+    }
 
     if (channelResponse.data.items && channelResponse.data.items.length > 0) {
       const publishedAt = channelResponse.data.items[0].snippet.publishedAt;
-      return publishedAt;
+      
+      // 유효한 날짜인지 검증 (1970.01.01 방지)
+      if (publishedAt) {
+        const dateObj = new Date(publishedAt);
+        const year = dateObj.getFullYear();
+        
+        // 1980년 이전 날짜는 유효하지 않다고 판단 (YouTube는 2005년 창립)
+        if (year >= 1980 && !isNaN(dateObj.getTime())) {
+          return publishedAt;
+        } else {
+          console.log(`⚠️ 유효하지 않은 채널 개설일 감지: ${publishedAt} (${channelId})`);
+          return null;
+        }
+      }
     }
     
     return null;
   } catch (error) {
-    console.error(`채널 개설일 조회 오류 (${channelId}):`, error.message);
+    console.error(`❌ 채널 개설일 조회 오류 (${channelId}):`, error.message);
+    console.error(`🔍 오류 상세 정보:`, {
+      errorCode: error.code,
+      errorStatus: error.status,
+      errorDetails: error.errors?.[0]?.reason,
+      channelId: channelId
+    });
+    
+    // suspended 키인 경우 다른 키로 재시도
+    if (error.message.includes('suspended') || error.message.includes('has been suspended')) {
+      console.log(`🚨 채널 개설일 조회 중 suspended 키 감지, 다른 키로 재시도: ${channelId}`);
+      try {
+        const youtubeInstance = apiKeyManager.getYouTubeInstance();
+        const channelResponse = await youtubeInstance.youtube.channels.list({
+          part: 'snippet,contentDetails,statistics,status',
+          id: channelId
+        });
+        
+        if (channelResponse.data.items && channelResponse.data.items.length > 0) {
+          const publishedAt = channelResponse.data.items[0].snippet.publishedAt;
+          
+          // 유효한 날짜인지 검증 (재시도에서도 동일하게 적용)
+          if (publishedAt) {
+            const dateObj = new Date(publishedAt);
+            const year = dateObj.getFullYear();
+            
+            if (year >= 1980 && !isNaN(dateObj.getTime())) {
+              return publishedAt;
+            } else {
+              console.log(`⚠️ 재시도에서도 유효하지 않은 채널 개설일: ${publishedAt} (${channelId})`);
+            }
+          }
+        }
+      } catch (retryError) {
+        console.error(`채널 개설일 재시도 실패 (${channelId}):`, retryError.message);
+      }
+    }
+    // Permission Deny 오류인 경우 다른 키로 재시도
+    else if (error.message.includes('permission') || error.message.includes('denied') || 
+             error.message.includes('forbidden') || error.code === 403) {
+      console.log(`🚫 채널 개설일 조회 중 PERMISSION DENY 감지: ${channelId}`);
+      console.log(`📝 권한 오류 상세: ${error.message}`);
+      try {
+        const youtubeInstance = apiKeyManager.getYouTubeInstance();
+        const channelResponse = await youtubeInstance.youtube.channels.list({
+          part: 'snippet,contentDetails,statistics,status',
+          id: channelId
+        });
+        
+        if (channelResponse.data.items && channelResponse.data.items.length > 0) {
+          const publishedAt = channelResponse.data.items[0].snippet.publishedAt;
+          
+          if (publishedAt) {
+            const dateObj = new Date(publishedAt);
+            const year = dateObj.getFullYear();
+            
+            if (year >= 1980 && !isNaN(dateObj.getTime())) {
+              console.log(`✅ Permission Deny 우회 성공 - 채널 개설일 조회됨: ${channelId}`);
+              return publishedAt;
+            }
+          }
+        }
+      } catch (retryError) {
+        console.error(`채널 개설일 Permission Deny 재시도 실패 (${channelId}):`, retryError.message);
+      }
+    }
+    
     return null;
+  }
+}
+
+// 채널 설명 가져오기
+async function getChannelDescription(channelId) {
+  try {
+    const youtubeInstance = apiKeyManager.getYouTubeInstance();
+    
+    const channelResponse = await youtubeInstance.youtube.channels.list({
+      part: 'snippet',
+      id: channelId
+    });
+    
+    if (channelResponse.data.items && channelResponse.data.items.length > 0) {
+      const description = channelResponse.data.items[0].snippet.description;
+      return description || '';
+    }
+    
+    return '';
+  } catch (error) {
+    console.error(`채널 설명 조회 오류 (${channelId}):`, error.message);
+    return '';
+  }
+}
+
+// 무료 RPM 추정 로직 (Phase 1 & 2 통합)
+function calculateFreeRPM(videoData) {
+  try {
+    // 1. 기본 국가별 RPM 테이블 (USD 기준)
+    const baseRPM = {
+      'US': 3.5, 'KR': 2.8, 'JP': 3.2, 'DE': 3.0, 'GB': 3.8,
+      'CA': 3.3, 'AU': 3.6, 'FR': 2.9, 'IT': 2.4, 'ES': 2.1,
+      'NL': 3.1, 'SE': 3.4, 'NO': 4.2, 'DK': 3.3, 'FI': 3.0,
+      'BR': 1.8, 'MX': 1.9, 'AR': 1.5, 'IN': 1.2, 'ID': 1.1,
+      'TH': 1.4, 'VN': 1.0, 'PH': 1.3, 'MY': 1.6, 'SG': 2.8,
+      'worldwide': 2.5
+    };
+
+    // 2. 카테고리별 배율 (Phase 2 세분화 - 40개 카테고리)
+    const categoryMultiplier = {
+      // 기본 카테고리
+      'News & Politics': 1.5, 'Education': 1.3, 'Science & Technology': 1.4,
+      'Finance': 1.8, 'Business': 1.6, 'Autos & Vehicles': 1.2,
+      'Travel & Events': 1.1, 'Howto & Style': 1.0, 'People & Blogs': 0.9,
+      'Entertainment': 0.8, 'Music': 0.7, 'Gaming': 0.9,
+      'Sports': 1.0, 'Film & Animation': 0.8, 'Comedy': 0.8,
+      'Pets & Animals': 0.9, 'Nonprofits & Activism': 0.7,
+      
+      // 세부 카테고리 추가 (Phase 2)
+      'Tech Reviews': 1.6, 'Crypto & Investment': 2.0, 'Real Estate': 1.7,
+      'Online Learning': 1.4, 'Programming Tutorial': 1.5, 'Medical & Health': 1.3,
+      'Luxury Cars': 1.4, 'Electric Vehicles': 1.3, 'Travel Vlog': 1.0,
+      'Beauty & Makeup': 1.1, 'Fashion': 1.0, 'Fitness': 1.1,
+      'ASMR': 0.6, 'Kids Content': 0.5, 'Music Cover': 0.6,
+      'Esports': 1.1, 'Mobile Games': 0.8, 'PC Games': 0.9,
+      'Cooking': 1.0, 'DIY': 1.1, 'Art & Crafts': 0.9,
+      'Language Learning': 1.3, 'Stock Trading': 1.9, 'Insurance': 1.9,
+      'Cryptocurrency': 2.0, 'Personal Finance': 1.7, 'Business Strategy': 1.6,
+      'Marketing': 1.5, 'Productivity': 1.4, 'Self Development': 1.2,
+      'Documentary': 1.2, 'True Crime': 1.0, 'History': 1.1,
+      'Philosophy': 1.0, 'Psychology': 1.2, 'Motivation': 1.1
+    };
+
+    const country = videoData.country || 'worldwide';
+    const category = videoData.primary_category || 'Entertainment';
+    const views = parseInt(videoData.daily_view_count) || 0;
+
+    // 기본 RPM 계산
+    let rpm = baseRPM[country] || baseRPM['worldwide'];
+    rpm *= categoryMultiplier[category] || 1.0;
+
+    // 3. 조회수 기반 가중치
+    let viewMultiplier = 1.0;
+    if (views < 10000) viewMultiplier = 0.7;          // 마이크로
+    else if (views < 100000) viewMultiplier = 0.85;   // 스몰
+    else if (views < 1000000) viewMultiplier = 1.0;   // 미디엄
+    else if (views < 10000000) viewMultiplier = 1.15; // 라지
+    else viewMultiplier = 1.3;                        // 메가
+
+    // Phase 1-1. 시청 시간 가중치 추가
+    const durationSeconds = parseInt(videoData.duration_seconds) || 0;
+    let durationMultiplier = 1.0;
+    if (durationSeconds < 60) durationMultiplier = 0.8;        // Shorts (낮은 RPM)
+    else if (durationSeconds < 300) durationMultiplier = 1.0;  // 5분 미만 (표준)
+    else if (durationSeconds < 600) durationMultiplier = 1.15; // 5-10분 (최적)
+    else if (durationSeconds < 1200) durationMultiplier = 1.25; // 10-20분 (높은 RPM)
+    else durationMultiplier = 1.1;                             // 20분 이상 (약간 감소)
+
+    // 4. 채널 성숙도 (채널 생성일 기반)
+    let ageMultiplier = 1.0;
+    if (videoData.channel_created_date) {
+      const channelAge = (Date.now() - new Date(videoData.channel_created_date)) / (365 * 24 * 60 * 60 * 1000);
+      ageMultiplier = Math.min(1.2, 0.8 + (channelAge * 0.1));
+    }
+
+    // Phase 1-2. 구독자 비율 분석 추가
+    const subscriberCount = parseInt(videoData.subscriber_count) || 0;
+    let subscriberMultiplier = 1.0;
+    if (views > 0 && subscriberCount > 0) {
+      const viewToSubscriberRatio = views / subscriberCount;
+      if (viewToSubscriberRatio < 0.1) subscriberMultiplier = 0.85;       // 낮은 도달률
+      else if (viewToSubscriberRatio < 0.5) subscriberMultiplier = 1.0;   // 표준 도달률
+      else if (viewToSubscriberRatio < 2.0) subscriberMultiplier = 1.15;  // 높은 도달률
+      else if (viewToSubscriberRatio < 10.0) subscriberMultiplier = 1.3;  // 바이럴 콘텐츠
+      else subscriberMultiplier = 1.45;                                   // 슈퍼 바이럴
+    }
+
+    // Phase 1-3. 계절성 패턴 반영 추가
+    const currentMonth = new Date().getMonth() + 1; // 1-12월
+    let seasonalMultiplier = 1.0;
+    if (currentMonth >= 10 && currentMonth <= 12) seasonalMultiplier = 1.25; // Q4 최고 (광고비 성수기)
+    else if (currentMonth >= 1 && currentMonth <= 3) seasonalMultiplier = 1.15; // Q1 높음
+    else if (currentMonth >= 4 && currentMonth <= 6) seasonalMultiplier = 1.05; // Q2 보통
+    else seasonalMultiplier = 0.9; // Q3 낮음 (여름철 광고비 감소)
+
+    // Phase 2. 참여도 점수 개선 (좋아요 기반 추정)
+    let engagementMultiplier = 1.0;
+    if (videoData.actual_like_count && views > 0) {
+      const likeRate = videoData.actual_like_count / views;
+      // 좋아요 비율에 따른 가중치 (0.8 ~ 1.2 범위)
+      engagementMultiplier = 0.8 + Math.min(0.4, likeRate * 400); // 1% 좋아요율 = 최대 가중치
+    }
+
+    // 7. 최종 RPM 계산 (Phase 1 & 2 모든 요소 포함)
+    const finalRPM = rpm * viewMultiplier * durationMultiplier * ageMultiplier * 
+                     subscriberMultiplier * seasonalMultiplier * engagementMultiplier;
+
+    return Math.round(finalRPM * 100) / 100; // 소수점 2자리
+
+  } catch (error) {
+    console.error('RPM 계산 오류:', error);
+    return 2.5; // 기본값
+  }
+}
+
+// Analytics 추정 계산 메인 함수
+function calculateEstimatedAnalytics(videoData) {
+  try {
+    const estimatedRPM = calculateFreeRPM(videoData);
+    const views = parseInt(videoData.daily_view_count) || 0;
+    const duration = parseInt(videoData.duration_seconds) || 0;
+    const subscriberCount = parseInt(videoData.subscriber_count) || 0;
+    
+    return {
+      views: views, // 실제 조회수 (공개 데이터)
+      estimatedMinutesWatched: calculateEstimatedWatchTime(views, duration, videoData),
+      averageViewDuration: calculateAverageViewDuration(duration, videoData),
+      subscribersGained: calculateSubscribersGained(views, subscriberCount, videoData),
+      adImpressions: calculateAdImpressions(views, videoData),
+      estimatedRevenue: Math.round((views * estimatedRPM / 1000) * 100) / 100,
+      estimatedAdRevenue: Math.round((views * estimatedRPM / 1000) * 0.85 * 100) / 100,
+      estimatedRedPartnerRevenue: Math.round((views * estimatedRPM / 1000) * 0.15 * 100) / 100,
+      playbackBasedCpm: calculatePlaybackCPM(estimatedRPM, videoData),
+      adCpm: calculateAdCPM(estimatedRPM, videoData)
+    };
+  } catch (error) {
+    console.log('Analytics 추정 계산 오류:', error.message);
+    return {
+      views: 0, estimatedMinutesWatched: 0, averageViewDuration: 0,
+      subscribersGained: 0, adImpressions: 0, estimatedRevenue: 0,
+      estimatedAdRevenue: 0, estimatedRedPartnerRevenue: 0,
+      playbackBasedCpm: 0, adCpm: 0
+    };
+  }
+}
+
+// 추정 시청 시간 계산 (분 단위)
+function calculateEstimatedWatchTime(views, duration, videoData) {
+  try {
+    const avgViewDuration = calculateAverageViewDuration(duration, videoData);
+    const totalWatchSeconds = views * avgViewDuration;
+    return Math.round(totalWatchSeconds / 60); // 분 단위로 변환
+  } catch (error) {
+    return 0;
+  }
+}
+
+// 평균 시청 시간 계산 (초 단위)
+function calculateAverageViewDuration(duration, videoData) {
+  try {
+    const category = videoData.primary_category || 'Entertainment';
+    
+    // 카테고리별 완시청률 패턴
+    const retentionRates = {
+      'Finance': 0.65, 'Business': 0.60, 'News & Politics': 0.55,
+      'Science & Technology': 0.58, 'Education': 0.62, 'Howto & Style': 0.52,
+      'Gaming': 0.48, 'Entertainment': 0.45, 'Music': 0.35,
+      'Comedy': 0.42, 'Sports': 0.50, 'ASMR': 0.70, 'Kids Content': 0.40
+    };
+    
+    // 동영상 길이별 완시청률 조정
+    let durationMultiplier = 1.0;
+    if (duration < 60) durationMultiplier = 0.9;        // Shorts
+    else if (duration < 300) durationMultiplier = 1.0;  // 5분 미만
+    else if (duration < 600) durationMultiplier = 0.85; // 5-10분
+    else if (duration < 1200) durationMultiplier = 0.7; // 10-20분
+    else durationMultiplier = 0.6;                      // 20분 이상
+    
+    const baseRetention = retentionRates[category] || 0.45;
+    const finalRetention = baseRetention * durationMultiplier;
+    
+    return Math.round(duration * finalRetention);
+  } catch (error) {
+    return Math.round(duration * 0.45); // 기본 45% 완시청률
+  }
+}
+
+// 신규 구독자 수 추정
+function calculateSubscribersGained(views, subscriberCount, videoData) {
+  try {
+    const category = videoData.primary_category || 'Entertainment';
+    
+    // 카테고리별 구독 전환율
+    const conversionRates = {
+      'Education': 0.008, 'Howto & Style': 0.007, 'Science & Technology': 0.006,
+      'Finance': 0.005, 'Business': 0.005, 'Gaming': 0.004,
+      'Entertainment': 0.003, 'Music': 0.002, 'Comedy': 0.003,
+      'ASMR': 0.009, 'Kids Content': 0.001
+    };
+    
+    // 채널 크기별 구독 전환율 조정
+    let sizeMultiplier = 1.0;
+    if (subscriberCount < 1000) sizeMultiplier = 1.5;      // 소형 채널
+    else if (subscriberCount < 10000) sizeMultiplier = 1.2; // 중소형 채널
+    else if (subscriberCount < 100000) sizeMultiplier = 1.0; // 중형 채널
+    else if (subscriberCount < 1000000) sizeMultiplier = 0.8; // 대형 채널
+    else sizeMultiplier = 0.6;                              // 메가 채널
+    
+    const baseConversion = conversionRates[category] || 0.003;
+    const finalConversion = baseConversion * sizeMultiplier;
+    
+    return Math.round(views * finalConversion);
+  } catch (error) {
+    return Math.round(views * 0.003); // 기본 0.3% 전환율
+  }
+}
+
+// 광고 노출 수 추정
+function calculateAdImpressions(views, videoData) {
+  try {
+    const category = videoData.primary_category || 'Entertainment';
+    const duration = parseInt(videoData.duration_seconds) || 0;
+    
+    // 카테고리별 광고 노출률
+    const adRates = {
+      'Finance': 0.95, 'Business': 0.92, 'News & Politics': 0.90,
+      'Science & Technology': 0.88, 'Education': 0.85, 'Howto & Style': 0.82,
+      'Gaming': 0.75, 'Entertainment': 0.80, 'Music': 0.70,
+      'Comedy': 0.78, 'ASMR': 0.60, 'Kids Content': 0.40
+    };
+    
+    // 동영상 길이별 광고 개수
+    let adsPerView = 1.0;
+    if (duration < 60) adsPerView = 0.8;        // Shorts
+    else if (duration < 300) adsPerView = 1.0;  // 5분 미만
+    else if (duration < 600) adsPerView = 1.5;  // 5-10분
+    else if (duration < 1200) adsPerView = 2.0; // 10-20분
+    else adsPerView = 2.5;                      // 20분 이상
+    
+    const adRate = adRates[category] || 0.80;
+    const totalAds = views * adRate * adsPerView;
+    
+    return Math.round(totalAds);
+  } catch (error) {
+    return Math.round(views * 0.80); // 기본 80% 광고 노출률
+  }
+}
+
+// 재생 기반 CPM 계산
+function calculatePlaybackCPM(estimatedRPM, videoData) {
+  try {
+    const duration = parseInt(videoData.duration_seconds) || 0;
+    
+    // 재생 시간별 CPM 배율 (CPM이 RPM보다 높아야 함)
+    let playbackMultiplier = 1.35; // 기본 35% 높음
+    if (duration < 60) playbackMultiplier = 1.25;       // Shorts
+    else if (duration < 300) playbackMultiplier = 1.35; // 5분 미만
+    else if (duration < 600) playbackMultiplier = 1.45; // 5-10분
+    else if (duration < 1200) playbackMultiplier = 1.55; // 10-20분
+    else playbackMultiplier = 1.6;                      // 20분 이상
+    
+    const playbackCPM = estimatedRPM * playbackMultiplier;
+    return Math.round(playbackCPM * 100) / 100;
+  } catch (error) {
+    return (estimatedRPM || 2.5) * 1.35;
+  }
+}
+
+// 광고 CPM 계산
+function calculateAdCPM(estimatedRPM, videoData) {
+  try {
+    const category = videoData.primary_category || 'Entertainment';
+    
+    // 카테고리별 광고 CPM 배율 (CPM이 RPM보다 높아야 함)
+    const adMultipliers = {
+      'Finance': 2.1, 'Business': 1.9, 'Insurance': 2.3,
+      'Real Estate': 2.0, 'Crypto & Investment': 2.2,
+      'Science & Technology': 1.7, 'Education': 1.6,
+      'Gaming': 1.4, 'Entertainment': 1.5, 'Music': 1.3,
+      'ASMR': 1.2, 'Kids Content': 1.1
+    };
+    
+    const adMultiplier = adMultipliers[category] || 1.5;
+    const adCPM = estimatedRPM * adMultiplier;
+    
+    return Math.round(adCPM * 100) / 100;
+  } catch (error) {
+    return (estimatedRPM || 2.5) * 1.5;
   }
 }
 
@@ -1730,6 +2336,26 @@ async function getChannelSubscriberCount(channelId) {
     return 0;
   } catch (error) {
     console.error(`채널 구독자 수 조회 오류 (${channelId}):`, error.message);
+    
+    // suspended 키인 경우 다른 키로 재시도
+    if (error.message.includes('suspended') || error.message.includes('has been suspended')) {
+      console.log(`🚨 채널 구독자 수 조회 중 suspended 키 감지, 다른 키로 재시도: ${channelId}`);
+      try {
+        const youtubeInstance = apiKeyManager.getYouTubeInstance();
+        const channelResponse = await youtubeInstance.youtube.channels.list({
+          part: 'statistics',
+          id: channelId
+        });
+        
+        if (channelResponse.data.items && channelResponse.data.items.length > 0) {
+          const subscriberCount = channelResponse.data.items[0].statistics.subscriberCount;
+          return parseInt(subscriberCount) || 0;
+        }
+      } catch (retryError) {
+        console.error(`채널 구독자 수 재시도 실패 (${channelId}):`, retryError.message);
+      }
+    }
+    
     return 0;
   }
 }
