@@ -645,6 +645,7 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
       searchScope = 'title',  // 검색 범위: title, channel, 또는 분리된 문자열
       maxViews,
       minViews = 100000,
+      minAvgWatchRate,        // 최소평균시청률 필터 추가
       uploadPeriod,
       startDate,
       endDate,
@@ -661,6 +662,7 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
     console.log('검색 파라미터:', req.query);
     console.log('선택된 국가(단수):', country);
     console.log('선택된 국가들(복수):', countries);
+    console.log('📊 최소평균시청률 필터:', minAvgWatchRate ? `${minAvgWatchRate}% 이상` : '비활성화');
     
     // 다중 국가 처리 로직 개선
     let selectedCountries;
@@ -1186,6 +1188,33 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
            continue;
          }
 
+        // 최소평균시청률 필터링 추가 (개선된 로직)
+        let shouldSkipVideo = false; // 필터링 플래그 추가
+        
+        if (minAvgWatchRate && parseFloat(minAvgWatchRate) > 0) {
+          // 카테고리 정보 미리 가져오기
+          const categoryName = await getCategoryName(video.snippet.categoryId);
+          const avgWatchTime = calculateAverageViewDuration(durationInSeconds, { primary_category: categoryName });
+          const avgWatchRatePercentage = durationInSeconds > 0 ? (avgWatchTime / durationInSeconds) * 100 : 0;
+          
+          console.log(`  📊 평균시청률 계산: ${avgWatchTime}초 / ${durationInSeconds}초 = ${avgWatchRatePercentage.toFixed(2)}%`);
+          console.log(`  🎯 필터 기준: ${minAvgWatchRate}% 이상`);
+          
+          // 필터 조건: 계산된 평균시청률이 입력값보다 낮으면 제외
+          if (avgWatchRatePercentage < parseFloat(minAvgWatchRate)) {
+            console.log(`  ❌ 최소평균시청률 미달로 제외: ${avgWatchRatePercentage.toFixed(2)}% < ${minAvgWatchRate}%`);
+            shouldSkipVideo = true; // 플래그 설정
+          } else {
+            console.log(`  ✅ 최소평균시청률 조건 통과: ${avgWatchRatePercentage.toFixed(2)}% >= ${minAvgWatchRate}%`);
+          }
+        }
+        
+        // 필터링된 비디오는 건너뛰기
+        if (shouldSkipVideo) {
+          console.log(`  🚫 필터링으로 인해 비디오 제외함`);
+          continue;
+        }
+
         // 채널 구독자 수 정보 가져오기
         console.log(`  📡 채널 구독자 수 조회 중: ${video.snippet.channelId}`);
         const subscriberCount = await getChannelSubscriberCount(video.snippet.channelId);
@@ -1247,10 +1276,28 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
         result.playbackBasedCpm = analyticsData.playbackBasedCpm;
         result.adCpm = analyticsData.adCpm;
 
-         // 중복 제거 후 결과 추가
+         // 중복 제거 후 결과 추가 - 최종 필터링 검증 추가
+         console.log(`  🔍 최종 검증: 결과 추가 전 필터링 재확인`);
+         
+         // 최소평균시청률 필터 최종 재검증 (이중 안전장치)
+         if (minAvgWatchRate && parseFloat(minAvgWatchRate) > 0) {
+           const categoryName = result.primary_category;
+           const avgWatchTime = calculateAverageViewDuration(durationInSeconds, { primary_category: categoryName });
+           const finalAvgWatchRatePercentage = durationInSeconds > 0 ? (avgWatchTime / durationInSeconds) * 100 : 0;
+           
+           console.log(`  🔄 최종 재검증: ${finalAvgWatchRatePercentage.toFixed(2)}% vs ${minAvgWatchRate}%`);
+           
+           if (finalAvgWatchRatePercentage < parseFloat(minAvgWatchRate)) {
+             console.log(`  🚫 최종 검증 실패: ${finalAvgWatchRatePercentage.toFixed(2)}% < ${minAvgWatchRate}% - 결과 추가 안함`);
+             continue; // 여기서 확실히 제외
+           } else {
+             console.log(`  ✅ 최종 검증 통과: ${finalAvgWatchRatePercentage.toFixed(2)}% >= ${minAvgWatchRate}% - 결과 추가함`);
+           }
+         }
+         
          searchResults.push(result);
          processedVideoIds.add(video.id); // 처리된 ID 기록
-         console.log(`  ✅ 결과 추가 완료: ${searchResults.length}번째`);
+         console.log(`  ✅ 결과 추가 완료: ${searchResults.length}번째 (최종 승인됨)`);
          
          if (searchResults.length >= finalMaxResults) {
            console.log(`  🎯 요청된 결과 수 달성: ${finalMaxResults}개`);
@@ -1484,7 +1531,8 @@ app.post('/api/download-excel', async (req, res) => {
         '국가': result.country || '',
         '업로드일': result.status_date ? new Date(result.status_date).toLocaleDateString('ko-KR') : '',
         '조회수': parseInt(result.daily_view_count || 0).toLocaleString(),
-        '좋아요개수(유효 조회수에 대한 조회수 백분율(%))': (() => {
+        '유효조회수': Math.round((result.daily_view_count || 0) * 0.85).toLocaleString(),
+        '좋아요개수(유효 조회수에 대한 좋아요 백분율(%))': (() => {
           const likeCount = result.actual_like_count || Math.round((result.daily_view_count || 0) * 0.01);
           const validViewCount = Math.round((result.daily_view_count || 0) * 0.85);
           const percentage = validViewCount > 0 ? Math.round((likeCount / validViewCount) * 100 * 100) / 100 : 0;
@@ -1554,7 +1602,8 @@ app.post('/api/download-excel', async (req, res) => {
       { wch: 12 }, // 국가
       { wch: 12 }, // 업로드일
       { wch: 12 }, // 조회수
-      { wch: 35 }, // 좋아요개수(유효 조회수에 대한 조회수 백분율(%))
+      { wch: 12 }, // 유효조회수
+      { wch: 35 }, // 좋아요개수(유효 조회수에 대한 좋아요 백분율(%))
       { wch: 12 }, // 구독자
       { wch: 50 }, // URL
       { wch: 8 },  // 시간(초)
