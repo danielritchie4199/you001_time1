@@ -1473,6 +1473,7 @@ app.post('/api/download-excel', async (req, res) => {
       return {
         '순번': index + 1,
         '가입일': result.channel_created_date ? new Date(result.channel_created_date).toLocaleDateString('ko-KR') : '',
+        '브랜드': isBrandChannel(result) ? 1 : 0,
         '채널 ID': result.youtube_channel_id || '',
         '채널명': result.youtube_channel_name || '',
         '채널설명': result.youtube_channel_description || '',
@@ -1538,10 +1539,11 @@ app.post('/api/download-excel', async (req, res) => {
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(excelData);
 
-    // 컬럼 너비 자동 조정 (39개 컬럼)
+    // 컬럼 너비 자동 조정 (40개 컬럼)
     const columnWidths = [
       { wch: 6 },  // 순번
       { wch: 12 }, // 가입일
+      { wch: 8 },  // 브랜드
       { wch: 20 }, // 채널 ID
       { wch: 25 }, // 채널명
       { wch: 50 }, // 채널설명
@@ -1886,6 +1888,27 @@ function getVideoLengthCategory(durationInSeconds) {
 function matchesVideoLength(videoLengthCategory, selectedLengths) {
   if (!selectedLengths || selectedLengths.length === 0) return true;
   return selectedLengths.includes(videoLengthCategory);
+}
+
+// 브랜드 채널 감지 함수
+function isBrandChannel(result) {
+  const channelName = result.youtube_channel_name || '';
+  const subscriberCount = parseInt(result.subscriber_count) || 0;
+  
+  // 구독자 수가 100만 이상이면 브랜드 채널로 판별
+  if (subscriberCount >= 1000000) {
+    return true;
+  }
+  
+  // 특정 키워드가 포함된 경우 브랜드 채널로 판별
+  const brandKeywords = [
+    'official', 'entertainment', 'music', 'news', 'media',
+    'tv', 'channel', 'network', 'studios', 'productions',
+    '공식', '엔터테인먼트', '뮤직', '뉴스', '미디어'
+  ];
+  
+  const lowerChannelName = channelName.toLowerCase();
+  return brandKeywords.some(keyword => lowerChannelName.includes(keyword));
 }
 
 // 채널 개설일 가져오기 (새 기능) - 디버깅 강화
