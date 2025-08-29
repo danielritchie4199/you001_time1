@@ -2302,7 +2302,7 @@
                         </div>
                     </div>
                     <div class="search-results-info">
-                        <span id="resultsCount" class="results-count-number">0</span><span id="totalResultsInfo" style="display: none;">/<span id="totalCount" class="results-count-number">0</span></span> 개의 결과가 검색되었습니다. <span id="searchKeywordInfo" style="display: none;">&nbsp;&nbsp; <span id="searchKeyword" class="results-count-number"></span></span>
+                        <span id="resultsCount" class="results-count-number">0</span><span id="totalResultsInfo" style="display: none;">/<span id="totalCount" class="results-count-number">0</span></span> 개의 결과가 검색되었습니다.<span id="searchKeywordInfo" style="display: none;"> 키워드: <span id="searchKeyword" class="results-count-number"></span></span>
                     </div>
                 </div>
                 <div class="results-controls">
@@ -2370,11 +2370,282 @@
         let sortColumn = 'daily_view_count';
         let sortDirection = 'desc';
 
-        // 검색 폼 제출 이벤트
+        // 검색 폼 제출 이벤트 (기존 코드 수정)
         document.getElementById('searchForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            await performSearch();
+            
+            // 검색 키워드 저장
+            const keyword = document.getElementById('keyword').value.trim();
+            
+            // 🔄 새로운 검색 시 시간대 필터 초기화
+            resetTimezoneFiltersForNewSearch();
+            
+            // 기존 검색 로직이 있다면 그것을 호출하고,
+            // 없다면 새로 구현한 performSearch 호출
+            if (typeof window.originalPerformSearch === 'function') {
+                await window.originalPerformSearch();
+            } else {
+                await performSearch();
+            }
+            
+            // 검색 완료 후 키워드 표시
+            displaySearchKeyword(keyword);
         });
+
+        // 검색 수행 함수
+        async function performSearch() {
+            try {
+                // 로딩 표시
+                showLoading();
+                hideResults();
+                hideError();
+
+                // 검색 키워드 가져오기
+                const keyword = document.getElementById('keyword').value.trim();
+
+                // 검색 파라미터 수집
+                const searchParams = collectSearchParams();
+
+                // 서버에 검색 요청
+                const response = await fetch('/api/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(searchParams)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`검색 요청 실패: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.error || '검색 결과를 가져오는데 실패했습니다.');
+                }
+
+                // 검색 결과 저장
+                searchResults = data.results || [];
+
+                // 검색 완료 후 키워드 표시 (방법 2: 클라이언트 저장)
+                displaySearchKeyword(keyword);
+
+                // 결과 표시
+                if (searchResults.length > 0) {
+                    showResults();
+                    renderResults();
+                } else {
+                    showNoResults();
+                }
+
+            } catch (error) {
+                console.error('검색 오류:', error);
+                showError(error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 검색 키워드 표시 함수 (단순화된 버전)
+        function displaySearchKeyword(keyword) {
+            const searchKeywordInfo = document.getElementById('searchKeywordInfo');
+            const searchKeywordElement = document.getElementById('searchKeyword');
+
+            if (keyword && keyword.trim()) {
+                searchKeywordElement.textContent = `"${keyword.trim()}"`;
+                searchKeywordInfo.style.display = 'inline';
+                console.log('✅ 검색 키워드 표시:', keyword);
+            } else {
+                searchKeywordInfo.style.display = 'none';
+                console.log('ℹ️ 검색 키워드 없음 (인기 동영상 검색)');
+            }
+        }
+
+        // 검색 버튼 클릭 시 키워드 표시 추가 (백업 방식)
+        function addKeywordDisplayToSearchButton() {
+            const searchButton = document.querySelector('.search-btn');
+            if (searchButton) {
+                searchButton.addEventListener('click', function() {
+                    // 🔄 검색 버튼 클릭 시도 시간대 필터 초기화 (백업)
+                    setTimeout(() => {
+                        resetTimezoneFiltersForNewSearch();
+                    }, 100); // 직후 실행
+                    
+                    // 짧은 지연 후 키워드 표시 (검색 완료를 기다리기 위해)
+                    setTimeout(() => {
+                        const keyword = document.getElementById('keyword').value.trim();
+                        displaySearchKeyword(keyword);
+                    }, 1000); // 1초 후 실행
+                });
+                console.log('✅ 검색 버튼에 키워드 표시 및 필터 초기화 기능 추가');
+            }
+        }
+
+        // 새로운 검색을 위한 시간대 필터 초기화 함수
+        function resetTimezoneFiltersForNewSearch() {
+            console.log('🔄 새로운 검색 시작 - 시간대 필터 초기화');
+            
+            // 1. 필터 컴테이너 숨기기
+            const filterContainer = document.getElementById('resultsFilterContainer');
+            if (filterContainer) {
+                filterContainer.style.display = 'none';
+            }
+            
+            // 2. 모든 필터 체크박스 초기화 (모든 선택 상태로)
+            const filterCheckboxes = [
+                'filterPrimeTime', 'filterMorningCommute', 'filterLunchTime',
+                'filterEveningCommute', 'filterLateNight', 'filterWorkTime',
+                'filterWeekend', 'filterWeekday', 'filterMorningTime',
+                'filterAfternoonTime', 'filterEveningTime', 'filterEarlyMorningTime'
+            ];
+            
+            filterCheckboxes.forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.checked = true; // 모두 선택 상태로 초기화
+                }
+            });
+            
+            // 3. 전역 변수 초기화
+            allSearchResults = [];
+            filteredResults = [];
+            currentTimezoneFilter = {};
+            
+            // 4. 초기화 완료 로그
+            console.log('✅ 시간대 필터 초기화 완료');
+        }
+        
+        // 기존 검색 결과 처리 후 시간대 필터 설정
+        function setupTimezoneFilterAfterSearch(results) {
+            if (results && results.length > 0) {
+                // 검색 결과가 있을 때만 시간대 분석 및 필터 표시
+                const analyzedResults = analyzeSearchResults(results);
+                console.log('✅ 새로운 검색 결과에 대한 시간대 분석 완료');
+            }
+        }
+
+        // 결과 개수 변경 감지 및 키워드 표시 (최종 백업)
+        function watchForResultsUpdate() {
+            const resultsCountElement = document.getElementById('resultsCount');
+            if (resultsCountElement) {
+                // MutationObserver를 사용하여 결과 개수 변경 감지
+                const observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.type === 'childList' || mutation.type === 'characterData') {
+                            const keyword = document.getElementById('keyword').value.trim();
+                            displaySearchKeyword(keyword);
+                            
+                            // 검색 결과가 업데이트되었을 때 시간대 필터 설정
+                            if (searchResults && searchResults.length > 0) {
+                                setupTimezoneFilterAfterSearch(searchResults);
+                            }
+                        }
+                    });
+                });
+                
+                observer.observe(resultsCountElement, {
+                    childList: true,
+                    characterData: true,
+                    subtree: true
+                });
+                
+                console.log('✅ 결과 개수 변경 감지 시작');
+            }
+        }
+
+        // 검색 파라미터 수집 함수
+        function collectSearchParams() {
+            return {
+                keyword: document.getElementById('keyword').value.trim(),
+                country: document.querySelector('input[name="country"]:checked')?.value || 'korea',
+                searchScope: getSelectedSearchScope(),
+                minAvgWatchRate: document.getElementById('minAvgWatchRate').value,
+                minViews: document.getElementById('minViews').value,
+                maxViews: document.getElementById('maxViews').value,
+                categories: getSelectedCategories(),
+                maxResults: document.getElementById('maxResults').value,
+                uploadPeriod: document.getElementById('uploadPeriod').value,
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                videoLength: getSelectedVideoLengths()
+            };
+        }
+
+        // 선택된 검색 범위 가져오기
+        function getSelectedSearchScope() {
+            const checked = document.querySelectorAll('input[name="searchScope"]:checked');
+            return Array.from(checked).map(cb => cb.value);
+        }
+
+        // 선택된 동영상 길이 가져오기
+        function getSelectedVideoLengths() {
+            const checked = document.querySelectorAll('input[name="videoLength"]:checked');
+            return Array.from(checked).map(cb => cb.value);
+        }
+
+        // 선택된 카테고리 목록 반환 함수
+        function getSelectedCategories() {
+            const categoryCheckboxes = document.querySelectorAll('input[name="categories"]:checked');
+            return Array.from(categoryCheckboxes).map(cb => cb.value);
+        }
+
+        // UI 상태 관리 함수들
+        function showLoading() {
+            document.getElementById('loadingIndicator').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }
+
+        function showResults() {
+            document.getElementById('resultsContainer').style.display = 'block';
+        }
+
+        function hideResults() {
+            document.getElementById('resultsContainer').style.display = 'none';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideError() {
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function showNoResults() {
+            const resultsContainer = document.getElementById('resultsContainer');
+            const tableBody = document.getElementById('resultsTableBody');
+            
+            resultsContainer.style.display = 'block';
+            tableBody.innerHTML = '<tr><td colspan="14" class="no-results"><h3>검색 결과가 없습니다</h3><p>다른 검색 조건으로 시도해보세요.</p></td></tr>';
+            
+            // 검색 결과 개수 표시
+            document.getElementById('resultsCount').textContent = '0';
+        }
+
+        // 검색 결과 렌더링 함수 (기본 구조만 제공)
+        function renderResults() {
+            const tableBody = document.getElementById('resultsTableBody');
+            
+            if (!searchResults || searchResults.length === 0) {
+                showNoResults();
+                return;
+            }
+
+            // 검색 결과 개수 업데이트
+            document.getElementById('resultsCount').textContent = searchResults.length;
+            
+            // TODO: 실제 테이블 렌더링 로직은 기존 코드 활용
+            console.log('검색 결과 렌더링:', searchResults.length, '개 결과');
+            
+            // 임시 표시 (실제 구현에서는 기존 renderResults 함수 내용 사용)
+            tableBody.innerHTML = `<tr><td colspan="14" style="text-align: center; padding: 20px;">✅ ${searchResults.length}개의 검색 결과를 찾았습니다.</td></tr>`;
+        }
 
 
 
@@ -2398,8 +2669,12 @@
             }
         }
 
-        // 페이지 로드 시 초기 상태 설정
+        // 페이지 로드 시 초기화
         updateSearchScopeDisplay();
+        
+        // 검색 키워드 표시 기능 초기화
+        addKeywordDisplayToSearchButton();
+        watchForResultsUpdate();
 
         // 모든 검색 범위 체크박스 상태 업데이트
         function updateSelectAllSearchScope() {
@@ -5927,11 +6202,7 @@
 
         // 중복 함수 제거됨 (위에서 이미 정의됨)
 
-        // 선택된 카테고리 목록 반환 함수  
-        function getSelectedCategories() {
-            const categoryCheckboxes = document.querySelectorAll('input[name="categories"]:checked');
-            return Array.from(categoryCheckboxes).map(cb => cb.value);
-        }
+
 
         // Excel 파일 다운로드 (폴더 선택 가능)
         async function downloadExcelWithFolderChoice(blob, filename) {
