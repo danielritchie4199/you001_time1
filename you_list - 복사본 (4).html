@@ -2665,13 +2665,7 @@
                     const label = cb.parentElement.querySelector('label');
                     return label.textContent;
                 });
-                
-                // 두 개 이상 선택 시 또는 문자열이 길 때 개수로 표시
-                if (searchScopeCheckboxes.length >= 2 || selectedNames.join(', ').length > 15) {
-                    display.textContent = `${searchScopeCheckboxes.length}개 선택됨`;
-                } else {
-                    display.textContent = selectedNames.join(', ') + ' 선택됨';
-                }
+                display.textContent = selectedNames.join(', ') + ' 선택됨';
             }
         }
 
@@ -3699,27 +3693,6 @@
                     dropdown.classList.toggle('show');
                 });
             }
-            
-            // "모든 범위" 체크박스 이벤트
-            const selectAllSearchScope = document.getElementById('selectAllSearchScope');
-            if (selectAllSearchScope) {
-                selectAllSearchScope.addEventListener('change', (e) => {
-                    const searchScopeCheckboxes = document.querySelectorAll('input[name="searchScope"]');
-                    searchScopeCheckboxes.forEach(checkbox => {
-                        checkbox.checked = e.target.checked;
-                    });
-                    updateSearchScopeDisplay();
-                    updateSelectAllSearchScope();
-                });
-            }
-            
-            // 개별 검색 범위 체크박스 이벤트
-            document.querySelectorAll('input[name="searchScope"]').forEach(checkbox => {
-                checkbox.addEventListener('change', () => {
-                    updateSearchScopeDisplay();
-                    updateSelectAllSearchScope();
-                });
-            });
             
             // 시간대 필터 초기화
             initializeTimezoneFilter();

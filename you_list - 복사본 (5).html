@@ -2666,8 +2666,8 @@
                     return label.textContent;
                 });
                 
-                // 두 개 이상 선택 시 또는 문자열이 길 때 개수로 표시
-                if (searchScopeCheckboxes.length >= 2 || selectedNames.join(', ').length > 15) {
+                // width가 좁을 때 개수 표시 (카테고리 필터와 동일한 로직)
+                if (selectedNames.join(', ').length > 20) {
                     display.textContent = `${searchScopeCheckboxes.length}개 선택됨`;
                 } else {
                     display.textContent = selectedNames.join(', ') + ' 선택됨';
