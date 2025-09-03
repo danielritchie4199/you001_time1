@@ -2016,8 +2016,8 @@ function parseDuration(duration) {
 // 동영상 길이 분류 함수
 function getVideoLengthCategory(durationInSeconds) {
   if (durationInSeconds < 60) return 'short1';       // 1분 미만
-  if (durationInSeconds < 120) return 'short2';      // 1분 이상 2분 미만
-  if (durationInSeconds < 600) return 'mid1';        // 2분 이상 10분 미만
+  if (durationInSeconds < 240) return 'short2';      // 1분 이상 4분 미만
+  if (durationInSeconds < 600) return 'mid1';        // 4분 이상 10분 미만
   if (durationInSeconds < 1200) return 'mid2';       // 10분 이상 20분 미만
   if (durationInSeconds < 1800) return 'long1';      // 20분 이상 30분 미만
   if (durationInSeconds < 2400) return 'long2';      // 30분 이상 40분 미만
