@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>투두리스트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-6 space-y-4">
+        <h1 class="text-3xl font-bold text-center text-gray-800">나의 투두리스트</h1>
+        
+        <div class="flex space-x-2">
+            <input type="text" id="todoInput" class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200" placeholder="새로운 할 일을 입력하세요...">
+            <button id="addButton" class="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-md">추가</button>
+        </div>
+        
+        <ul id="todoList" class="space-y-2">
+            <!-- 투두 아이템들이 여기에 추가됩니다 -->
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const todoInput = document.getElementById('todoInput');
+            const addButton = document.getElementById('addButton');
+            const todoList = document.getElementById('todoList');
+
+            // 로컬 스토리지에서 투두 아이템 불러오기
+            function loadTodos() {
+                const todos = JSON.parse(localStorage.getItem('todos') || '[]');
+                todos.forEach(todo => addTodoToDOM(todo.text, todo.completed));
+            }
+
+            // 투두 아이템 로컬 스토리지에 저장하기
+            function saveTodos() {
+                const todos = [];
+                todoList.querySelectorAll('li').forEach(item => {
+                    todos.push({
+                        text: item.querySelector('span').textContent,
+                        completed: item.classList.contains('line-through')
+                    });
+                });
+                localStorage.setItem('todos', JSON.stringify(todos));
+            }
+
+            // 투두 아이템을 DOM에 추가하는 함수
+            function addTodoToDOM(text, completed = false) {
+                const li = document.createElement('li');
+                li.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm transition-transform duration-200 hover:scale-[1.01]';
+                if (completed) {
+                    li.classList.add('line-through', 'opacity-60');
+                }
+
+                // 투두 텍스트
+                const span = document.createElement('span');
+                span.textContent = text;
+                span.className = 'flex-1 cursor-pointer select-none';
+                span.addEventListener('click', () => {
+                    li.classList.toggle('line-through');
+                    li.classList.toggle('opacity-60');
+                    saveTodos();
+                });
+
+                // 삭제 버튼
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = '삭제';
+                deleteButton.className = 'ml-4 p-2 text-sm bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200';
+                deleteButton.addEventListener('click', () => {
+                    li.remove();
+                    saveTodos();
+                });
+
+                li.appendChild(span);
+                li.appendChild(deleteButton);
+                todoList.appendChild(li);
+            }
+
+            // '추가' 버튼 클릭 이벤트
+            addButton.addEventListener('click', () => {
+                const text = todoInput.value.trim();
+                if (text) {
+                    addTodoToDOM(text);
+                    todoInput.value = ''; // 입력창 비우기
+                    saveTodos();
+                }
+            });
+
+            // Enter 키 이벤트
+            todoInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addButton.click();
+                }
+            });
+
+            // 페이지 로드 시 투두 아이템 불러오기
+            loadTodos();
+        });
+    </script>
+
+</body>
+</html>

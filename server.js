@@ -638,6 +638,18 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
   const searchStartTime = Date.now(); // 검색 시작 시간 기록
   
   try {
+    // 필터링 통계를 위한 카운터 추가 (함수 시작 부분에 정의)
+    const filterStats = {
+      totalProcessed: 0,
+      duplicateSkipped: 0,
+      categoryFiltered: 0,
+      minViewsFiltered: 0,
+      maxViewsFiltered: 0,
+      videoLengthFiltered: 0,
+      minAvgWatchRateFiltered: 0,
+      finalAccepted: 0
+    };
+    
     const {
       country = 'worldwide',  // 기본값을 전세계로 변경
       countries = '',         // 다중 국가 선택 파라미터 추가
@@ -1138,14 +1150,16 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
         throw new Error('MAX_RETRIES_EXCEEDED: 비디오 상세정보 조회 실패');
       }
 
-             // 검색 결과 처리 (중복 제거) - 디버깅 로그 추가
-       console.log(`📋 비디오 상세정보 처리 시작: ${videoDetails.data.items.length}개 동영상`);
+                         // 검색 결과 처리 (중복 제거) - 디버깅 로그 추가
+            console.log(`📋 비디오 상세정보 처리 시작: ${videoDetails.data.items.length}개 동영상`);
        
        for (const video of videoDetails.data.items) {
-         console.log(`\n🎬 처리 중: ${video.snippet.title.substring(0, 50)}...`);
+         filterStats.totalProcessed++;
+         console.log(`\n🎬 처리 중 (${filterStats.totalProcessed}/${videoDetails.data.items.length}): ${video.snippet.title.substring(0, 50)}...`);
          
          // 중복 비디오 ID 체크
          if (processedVideoIds.has(video.id)) {
+           filterStats.duplicateSkipped++;
            console.log(`  ❌ 중복 동영상 건너뛰기: ${video.id}`);
            continue;
          }
@@ -1164,16 +1178,19 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
          }
          
          if (selectedCategories.length > 0 && !selectedCategories.includes(video.snippet.categoryId)) {
+           filterStats.categoryFiltered++;
            console.log(`  ❌ 카테고리 필터링: ${video.snippet.categoryId} 제외 (선택: ${selectedCategories.join(',')})`);
            continue;
          }
          
          // 조회수 필터링
          if (minViews && viewCount < parseInt(minViews)) {
+           filterStats.minViewsFiltered++;
            console.log(`  ❌ 최소 조회수 미달: ${viewCount.toLocaleString()} < ${parseInt(minViews).toLocaleString()}`);
            continue;
          }
          if (maxViews && viewCount > parseInt(maxViews)) {
+           filterStats.maxViewsFiltered++;
            console.log(`  ❌ 최대 조회수 초과: ${viewCount.toLocaleString()} > ${parseInt(maxViews).toLocaleString()}`);
            continue;
          }
@@ -1184,6 +1201,7 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
          console.log(`  ⏱️ 동영상 길이: ${durationInSeconds}초 (${videoLengthCategory})`);
          
          if (!matchesVideoLength(videoLengthCategory, selectedVideoLengths)) {
+           filterStats.videoLengthFiltered++;
            console.log(`  ❌ 동영상 길이 필터링: ${videoLengthCategory} 제외 (선택: ${selectedVideoLengths.join(',') || '모든 길이'})`);
            continue;
          }
@@ -1192,16 +1210,17 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
         let shouldSkipVideo = false; // 필터링 플래그 추가
         
         if (minAvgWatchRate && parseFloat(minAvgWatchRate) > 0) {
-          // 카테고리 정보 미리 가져오기
+          // 카테고리별 정교한 계산 방식 사용
           const categoryName = await getCategoryName(video.snippet.categoryId);
           const avgWatchTime = calculateAverageViewDuration(durationInSeconds, { primary_category: categoryName });
           const avgWatchRatePercentage = durationInSeconds > 0 ? (avgWatchTime / durationInSeconds) * 100 : 0;
           
-          console.log(`  📊 평균시청률 계산: ${avgWatchTime}초 / ${durationInSeconds}초 = ${avgWatchRatePercentage.toFixed(2)}%`);
+          console.log(`  📊 평균시청률 계산 (카테고리: ${categoryName}): ${avgWatchTime}초 / ${durationInSeconds}초 = ${avgWatchRatePercentage.toFixed(2)}%`);
           console.log(`  🎯 필터 기준: ${minAvgWatchRate}% 이상`);
           
           // 필터 조건: 계산된 평균시청률이 입력값보다 낮으면 제외
           if (avgWatchRatePercentage < parseFloat(minAvgWatchRate)) {
+            filterStats.minAvgWatchRateFiltered++;
             console.log(`  ❌ 최소평균시청률 미달로 제외: ${avgWatchRatePercentage.toFixed(2)}% < ${minAvgWatchRate}%`);
             shouldSkipVideo = true; // 플래그 설정
           } else {
@@ -1230,8 +1249,37 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
         const channelDescription = await getChannelDescription(video.snippet.channelId);
         console.log(`  📄 채널 설명: ${channelDescription ? '조회됨' : '조회 안됨'}`);
 
+        // 채널 국적 정보 가져오기
+        console.log(`  🌍 채널 국적 조회 중: ${video.snippet.channelId}`);
+        const channelCountry = await getChannelCountry(video.snippet.channelId);
+        console.log(`  🏳️ 채널 국적: ${channelCountry}`);
+
         // 실제 좋아요 개수 가져오기 (있으면 사용, 없으면 null)
         const actualLikeCount = video.statistics.likeCount ? parseInt(video.statistics.likeCount) : null;
+
+        // 평균시청률 계산 (서버에서 UI로 전달할 값)
+        const categoryName = await getCategoryName(video.snippet.categoryId);
+        const avgWatchTime = calculateAverageViewDuration(durationInSeconds, { primary_category: categoryName });
+        const avgWatchRatePercentage = durationInSeconds > 0 ? Math.round((avgWatchTime / durationInSeconds) * 100) : 0;
+
+        // 추가 계산값들 (클라이언트 계산을 서버로 이동)
+        // 1. 유효조회수 (구독자 수 기반)
+        let validRate = 0.85; // 기본값
+        if (subscriberCount > 1000000) validRate = 0.90;
+        else if (subscriberCount > 100000) validRate = 0.88;
+        else if (subscriberCount > 10000) validRate = 0.85;
+        else if (subscriberCount > 1000) validRate = 0.82;
+        else validRate = 0.80;
+        const validViewCount = Math.round(viewCount * validRate);
+
+        // 2. 유효조회수 백분율 (소수점 둘째자리까지)
+        const validViewPercentage = viewCount > 0 ? ((validViewCount / viewCount) * 100).toFixed(2) : "0.00";
+
+        // 3. 좋아요 개수 및 백분율 계산
+        const likeData = calculateLikeCount(video, viewCount, subscriberCount, actualLikeCount);
+        const likeCount = likeData.count;
+        const isLikeEstimated = likeData.isEstimated;
+        const likePercentage = validViewCount > 0 ? Math.round((likeCount / validViewCount) * 100 * 100) / 100 : 0;
 
         const result = {
           youtube_channel_name: video.snippet.channelTitle,
@@ -1243,7 +1291,7 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
           status: 'active',
           youtube_channel_id: video.snippet.channelId,
           youtube_channel_description: channelDescription,  // 채널 설명 추가
-          primary_category: await getCategoryName(video.snippet.categoryId),
+          primary_category: categoryName,
           status_date: video.snippet.publishedAt,
           daily_view_count: viewCount,
           subscriber_count: subscriberCount,
@@ -1257,7 +1305,16 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
           duration: video.contentDetails.duration,
           duration_seconds: durationInSeconds,
           video_length_category: videoLengthCategory,
-          country: primaryCountry  // 검색된 국가 정보 추가
+          country: primaryCountry,  // 검색 필터 국가 정보
+          channel_country: channelCountry,  // 채널의 실제 국적 정보 추가
+          avg_watch_rate_percentage: avgWatchRatePercentage,  // 서버에서 계산된 평균시청률
+          avg_watch_time: avgWatchTime,  // 평균 시청시간 (초)
+          avg_watch_rate_percentage_for_sort: avgWatchRatePercentage,  // duration-percentage 정렬용
+          valid_view_count: validViewCount,  // 유효조회수 (구독자 수 기반)
+          valid_view_percentage: validViewPercentage,  // 유효조회수 백분율
+          like_count: likeCount,  // 좋아요 개수 (실제 또는 추정)
+          is_like_estimated: isLikeEstimated,  // 좋아요 추정 여부
+          like_percentage: likePercentage  // 좋아요 백분율
         };
 
         // RPM 추정값 계산 및 추가 (Phase 1 & 2 적용)
@@ -1275,6 +1332,12 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
         result.estimated_premium_revenue = analyticsData.estimatedRedPartnerRevenue;
         result.playbackBasedCpm = analyticsData.playbackBasedCpm;
         result.adCpm = analyticsData.adCpm;
+
+        // 4. RPM 관련 계산들
+        result.ad_rpm = Math.round((result.estimated_rpm || 0) * 0.85 * 100) / 100;  // 광고 RPM
+        result.total_rpm = Math.round(((result.estimated_rpm || 0) + result.ad_rpm) * 100) / 100;  // 총 RPM
+
+        // 5. 채널 RPM 합계는 나중에 계산 (channel_playback_rpm과 channel_ad_rpm 계산 후)
 
          // 중복 제거 후 결과 추가 - 최종 필터링 검증 추가
          console.log(`  🔍 최종 검증: 결과 추가 전 필터링 재확인`);
@@ -1295,6 +1358,7 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
            }
          }
          
+         filterStats.finalAccepted++;
          searchResults.push(result);
          processedVideoIds.add(video.id); // 처리된 ID 기록
          console.log(`  ✅ 결과 추가 완료: ${searchResults.length}번째 (최종 승인됨)`);
@@ -1345,6 +1409,9 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
          result.channel_playback_rpm = 0;
          result.channel_ad_rpm = 0;
        }
+       
+       // 채널 RPM 합계 계산 (channel_playback_rpm과 channel_ad_rpm 계산 완료 후)
+       result.channel_total_rpm = Math.round(((result.channel_playback_rpm || 0) + (result.channel_ad_rpm || 0)) * 100) / 100;
      });
 
      // 메모리 누수 방지를 위한 메모리 정리
@@ -1358,12 +1425,34 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
        console.warn('메모리 정리 오류:', memError.message);
      }
 
-     // 중복 제거 통계
+     // 필터링 통계 요약 출력 추가
+     console.log(`\n📊 필터링 결과 요약:`);
+     console.log(`- 총 검색된 영상: ${filterStats.totalProcessed}개`);
+     if (filterStats.duplicateSkipped > 0) {
+       console.log(`- 중복 제외: ${filterStats.duplicateSkipped}개`);
+     }
+     if (filterStats.categoryFiltered > 0) {
+       console.log(`- 카테고리 조건으로 제외: ${filterStats.categoryFiltered}개`);
+     }
+     if (filterStats.minViewsFiltered > 0) {
+       console.log(`- 최소 조회수 조건으로 제외: ${filterStats.minViewsFiltered}개`);
+     }
+     if (filterStats.maxViewsFiltered > 0) {
+       console.log(`- 최대 조회수 조건으로 제외: ${filterStats.maxViewsFiltered}개`);
+     }
+     if (filterStats.videoLengthFiltered > 0) {
+       console.log(`- 동영상 길이 조건으로 제외: ${filterStats.videoLengthFiltered}개`);
+     }
+     if (filterStats.minAvgWatchRateFiltered > 0) {
+       console.log(`- 최소평균시청률(${minAvgWatchRate}%) 조건으로 제외: ${filterStats.minAvgWatchRateFiltered}개`);
+     }
+     console.log(`- 최종 결과: ${filterStats.finalAccepted}개`);
+     
+     // 기존 중복 제거 통계
      const totalProcessed = processedVideoIds.size + searchResults.length;
      const duplicatesRemoved = totalProcessed - searchResults.length;
      
-     console.log(`검색 완료: ${searchResults.length}개 결과`);
-     console.log(`🔄 중복 제거: ${duplicatesRemoved}개 중복 동영상 제거됨`);
+     console.log(`\n검색 완료: ${searchResults.length}개 결과`);
      console.log(`📊 API 사용량: 검색 API ${Math.ceil(searchResults.length / 50)}회 + 상세정보 API ${Math.ceil(searchResults.length / 50)}회 (${finalMaxResults}건 요청 중 ${searchResults.length}건 결과)`);
      
      // API 키 사용 통계 출력
@@ -1472,6 +1561,10 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
 
 // 썸네일 다운로드 API는 아래에 개선된 버전이 있습니다.
 
+
+
+
+
 // Excel 다운로드 API
 app.post('/api/download-excel', async (req, res) => {
   try {
@@ -1521,6 +1614,8 @@ app.post('/api/download-excel', async (req, res) => {
         '순번': index + 1,
         '가입일': result.channel_created_date ? new Date(result.channel_created_date).toLocaleDateString('ko-KR') : '',
         '브랜드': isBrandChannel(result) ? 1 : 0,
+        '국적': result.channel_country || '',
+        '국가': result.country || '',
         '채널 ID': result.youtube_channel_id || '',
         '채널명': result.youtube_channel_name || '',
         '채널설명': result.youtube_channel_description || '',
@@ -1528,7 +1623,6 @@ app.post('/api/download-excel', async (req, res) => {
         '동영상 제목': result.title || '',
         '동영상 설명': result.description || '',
         '카테고리': result.primary_category || '',
-        '국가': result.country || '',
         '업로드일': result.status_date ? new Date(result.status_date).toLocaleDateString('ko-KR') : '',
         '조회수': parseInt(result.daily_view_count || 0).toLocaleString(),
         '유효조회수': Math.round((result.daily_view_count || 0) * 0.85).toLocaleString(),
@@ -1960,6 +2054,34 @@ function isBrandChannel(result) {
   return brandKeywords.some(keyword => lowerChannelName.includes(keyword));
 }
 
+// 채널 국적 정보 가져오기
+async function getChannelCountry(channelId) {
+  try {
+    const youtubeInstance = apiKeyManager.getYouTubeInstance();
+    const channelResponse = await youtubeInstance.youtube.channels.list({
+      part: 'snippet,brandingSettings',
+      id: channelId
+    });
+    
+    if (channelResponse.data.items && channelResponse.data.items.length > 0) {
+      const channelData = channelResponse.data.items[0];
+      
+      // 국적 정보 추출 (snippet.country 또는 brandingSettings.channel.country)
+      let channelCountry = channelData.snippet.country || 
+                          channelData.brandingSettings?.channel?.country || 
+                          'unknown';
+      
+      console.log(`🌍 채널 국적: ${channelCountry} (${channelId})`);
+      return channelCountry;
+    }
+    
+    return 'unknown';
+  } catch (error) {
+    console.error(`❌ 채널 국적 조회 오류 (${channelId}):`, error.message);
+    return 'unknown';
+  }
+}
+
 // 채널 개설일 가져오기 (새 기능) - 디버깅 강화
 async function getChannelCreatedDate(channelId) {
   try {
@@ -1992,21 +2114,24 @@ async function getChannelCreatedDate(channelId) {
     }
 
     if (channelResponse.data.items && channelResponse.data.items.length > 0) {
-      const publishedAt = channelResponse.data.items[0].snippet.publishedAt;
+      const channelData = channelResponse.data.items[0];
+      const publishedAt = channelData.snippet.publishedAt;
       
       // 유효한 날짜인지 검증 (1970.01.01 방지)
+      let validCreatedDate = null;
       if (publishedAt) {
         const dateObj = new Date(publishedAt);
         const year = dateObj.getFullYear();
         
         // 1980년 이전 날짜는 유효하지 않다고 판단 (YouTube는 2005년 창립)
         if (year >= 1980 && !isNaN(dateObj.getTime())) {
-          return publishedAt;
+          validCreatedDate = publishedAt;
         } else {
           console.log(`⚠️ 유효하지 않은 채널 개설일 감지: ${publishedAt} (${channelId})`);
-          return null;
         }
       }
+      
+      return validCreatedDate;
     }
     
     return null;
@@ -2543,6 +2668,321 @@ console.log('🔧 안전한 파일명 생성:', { original: filename, safe: safe
     }
   }
 });
+
+// =================== 인기검색어 분석 API ===================
+
+// 불용어 리스트 정의
+const STOPWORDS = {
+  korean: [
+    // 조사
+    '이', '가', '을', '를', '에', '에서', '으로', '로', '와', '과', '의', '도', '만', '까지', '부터', '보다', '처럼', '같이', '에게', '한테', '께',
+    // 어미 및 조동사
+    '하다', '되다', '있다', '없다', '같다', '다른', '그런', '이런', '저런', '어떤', '무슨', '아무', '모든', '온갖',
+    // 대명사 및 지시사
+    '그', '이', '저', '것', '거', '수', '때', '곳', '말', '일', '점', '등', '및', '또는', '혹은', '그리고', '하지만', '그런데',
+    // 숫자 및 단위
+    '하나', '둘', '셋', '넷', '다섯', '개', '명', '번', '차', '회', '년', '월', '일', '시', '분', '초',
+    // YouTube 특화 불용어
+    '동영상', '영상', '비디오', '채널', '구독', '좋아요', '댓글', '조회수', '재생', '업로드', '다운로드',
+    '1부', '2부', '3부', '4부', '5부', '상편', '하편', '전편', '후편', '완결', '시즌', '에피소드',
+    // 일반적인 형용사/부사
+    '매우', '정말', '진짜', '너무', '아주', '완전', '엄청', '대박', '최고', '최신', '신규', '새로운'
+  ],
+  english: [
+    // 관사
+    'a', 'an', 'the',
+    // 전치사
+    'in', 'on', 'at', 'by', 'for', 'with', 'without', 'to', 'from', 'of', 'about', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'up', 'down', 'out', 'off', 'over', 'under', 'again', 'further', 'then', 'once',
+    // 접속사
+    'and', 'or', 'but', 'so', 'because', 'if', 'when', 'while', 'where', 'why', 'how', 'what', 'which', 'who', 'whom', 'whose',
+    // 대명사
+    'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them', 'my', 'your', 'his', 'her', 'its', 'our', 'their', 'mine', 'yours', 'hers', 'ours', 'theirs',
+    // 지시사
+    'this', 'that', 'these', 'those', 'here', 'there', 'now', 'then',
+    // be동사, 조동사
+    'be', 'am', 'is', 'are', 'was', 'were', 'being', 'been', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'will', 'would', 'could', 'should', 'may', 'might', 'must', 'can',
+    // YouTube 특화 불용어
+    'video', 'youtube', 'channel', 'subscribe', 'like', 'comment', 'view', 'watch', 'play', 'playlist', 'shorts', 'live', 'stream', 'upload', 'download',
+    'part', 'ep', 'episode', 'season', 'series', 'full', 'complete', 'official', 'new', 'latest', 'update', 'review', 'reaction',
+    // 일반적인 형용사/부사
+    'very', 'really', 'quite', 'pretty', 'much', 'many', 'most', 'more', 'less', 'few', 'little', 'big', 'small', 'large', 'great', 'good', 'bad', 'best', 'worst', 'better', 'worse', 'first', 'last', 'next', 'previous', 'other', 'another', 'some', 'any', 'no', 'not'
+  ],
+  years: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+  common: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'vs', 'v']
+};
+
+// 구두점 및 특수문자 정규식
+const PUNCTUATION_REGEX = /[.,!?;:'""`()[\]{}#@$%^&*+=|\\\/~\-_<>""''„"«»]/g;
+const EMOJI_REGEX = /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu;
+
+// 키워드 정제 함수
+function cleanKeyword(keyword) {
+  if (!keyword || typeof keyword !== 'string') return '';
+  
+  // 소문자 변환
+  let cleaned = keyword.toLowerCase().trim();
+  
+  // 구두점 및 이모지 제거
+  cleaned = cleaned.replace(PUNCTUATION_REGEX, ' ');
+  cleaned = cleaned.replace(EMOJI_REGEX, ' ');
+  
+  // 여러 공백을 하나로 정리
+  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+  
+  return cleaned;
+}
+
+// 불용어 필터링 함수
+function filterStopwords(keywords) {
+  const allStopwords = new Set([
+    ...STOPWORDS.korean,
+    ...STOPWORDS.english,
+    ...STOPWORDS.years,
+    ...STOPWORDS.common
+  ]);
+  
+  return keywords.filter(keyword => {
+    const cleaned = cleanKeyword(keyword);
+    
+    // 빈 문자열, 숫자만 있는 문자열, 한 글자 문자열 제거
+    if (!cleaned || cleaned.length <= 1 || /^\d+$/.test(cleaned)) {
+      return false;
+    }
+    
+    // 불용어 체크
+    if (allStopwords.has(cleaned)) {
+      return false;
+    }
+    
+    // 단어별로 체크 (복합어 처리)
+    const words = cleaned.split(' ');
+    const meaningfulWords = words.filter(word => 
+      word.length > 1 && !allStopwords.has(word) && !/^\d+$/.test(word)
+    );
+    
+    return meaningfulWords.length > 0;
+  });
+}
+
+// 키워드 추출 및 빈도 분석 함수
+function extractKeywords(videos, requestedCount) {
+  const keywordFreq = new Map();
+  
+  videos.forEach(video => {
+    // 제목에서 키워드 추출
+    if (video.title) {
+      const titleWords = video.title.split(/[\s\-_|:]+/);
+      const cleanedTitle = filterStopwords(titleWords);
+      
+      cleanedTitle.forEach(word => {
+        const cleaned = cleanKeyword(word);
+        if (cleaned && cleaned.length > 1) {
+          keywordFreq.set(cleaned, (keywordFreq.get(cleaned) || 0) + 3); // 제목은 가중치 3
+        }
+      });
+    }
+    
+    // 태그에서 키워드 추출
+    if (video.video_tags && Array.isArray(video.video_tags)) {
+      const cleanedTags = filterStopwords(video.video_tags);
+      
+      cleanedTags.forEach(tag => {
+        const cleaned = cleanKeyword(tag);
+        if (cleaned && cleaned.length > 1) {
+          keywordFreq.set(cleaned, (keywordFreq.get(cleaned) || 0) + 2); // 태그는 가중치 2
+        }
+      });
+    }
+    
+    // 설명에서 키워드 추출 (처음 100자만)
+    if (video.description) {
+      const descWords = video.description.substring(0, 100).split(/[\s\-_|:]+/);
+      const cleanedDesc = filterStopwords(descWords);
+      
+      cleanedDesc.forEach(word => {
+        const cleaned = cleanKeyword(word);
+        if (cleaned && cleaned.length > 1) {
+          keywordFreq.set(cleaned, (keywordFreq.get(cleaned) || 0) + 1); // 설명은 가중치 1
+        }
+      });
+    }
+  });
+  
+  // 빈도순으로 정렬하여 상위 키워드 반환
+  const sortedKeywords = Array.from(keywordFreq.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, requestedCount)
+    .map(([word, frequency]) => ({ word, frequency }));
+  
+  return sortedKeywords;
+}
+
+// 인기검색어 분석 API 엔드포인트
+app.post('/api/trending-keywords', async (req, res) => {
+  try {
+    const { count = 50, videoCount = 250 } = req.body;
+    
+    console.log(`🔥 인기검색어 분석 시작: ${count}개 키워드, ${videoCount}개 동영상 분석`);
+    
+    // YouTube API로 인기 동영상 수집
+    const videos = await fetchTrendingVideos(videoCount);
+    
+    if (!videos || videos.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: '인기 동영상을 찾을 수 없습니다.',
+        keywords: [],
+        videoCount: 0
+      });
+    }
+    
+    console.log(`📊 ${videos.length}개 동영상에서 키워드 추출 중...`);
+    
+    // 키워드 추출 및 분석
+    const keywords = extractKeywords(videos, count);
+    
+    console.log(`✅ ${keywords.length}개 인기 키워드 추출 완료`);
+    console.log('상위 10개 키워드:', keywords.slice(0, 10).map(k => `${k.word}(${k.frequency})`).join(', '));
+    
+    res.json({
+      success: true,
+      keywords: keywords,
+      videoCount: videos.length,
+      analysisInfo: `${videos.length}개 동영상에서 ${keywords.length}개 키워드 분석 완료`,
+      timestamp: new Date().toISOString()
+    });
+    
+  } catch (error) {
+    console.error('인기검색어 분석 오류:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      keywords: [],
+      videoCount: 0
+    });
+  }
+});
+
+// YouTube 인기 동영상 수집 함수
+async function fetchTrendingVideos(maxResults = 250) {
+  try {
+    const youtubeInstance = apiKeyManager.getYouTubeInstance();
+    
+    // YouTube 트렌딩 동영상 검색 (지역별로 다양하게)
+    const regions = ['KR', 'US', 'GB', 'JP', 'DE', 'FR']; // 주요 국가들
+    const allVideos = [];
+    const videosPerRegion = Math.ceil(maxResults / regions.length);
+    
+    for (const region of regions) {
+      try {
+        console.log(`🌍 ${region} 지역의 인기 동영상 수집 중... (${videosPerRegion}개)`);
+        
+        const response = await youtubeInstance.youtube.videos.list({
+          part: 'snippet,statistics,contentDetails',
+          chart: 'mostPopular',
+          regionCode: region,
+          maxResults: Math.min(videosPerRegion, 50), // API 제한 고려
+          order: 'viewCount'
+        });
+        
+        if (response.data.items) {
+          const regionVideos = response.data.items.map(video => ({
+            video_id: video.id,
+            title: video.snippet.title,
+            description: video.snippet.description || '',
+            video_tags: video.snippet.tags || [],
+            youtube_channel_name: video.snippet.channelTitle,
+            youtube_channel_id: video.snippet.channelId,
+            daily_view_count: parseInt(video.statistics.viewCount) || 0,
+            region: region
+          }));
+          
+          allVideos.push(...regionVideos);
+          console.log(`✅ ${region}: ${regionVideos.length}개 동영상 수집`);
+        }
+        
+        // API 호출 제한 고려한 딜레이
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+      } catch (regionError) {
+        console.error(`${region} 지역 동영상 수집 오류:`, regionError.message);
+        // 특정 지역 오류는 무시하고 계속 진행
+      }
+    }
+    
+    // 조회수 기준으로 정렬하고 중복 제거
+    const uniqueVideos = Array.from(
+      new Map(allVideos.map(v => [v.video_id, v])).values()
+    ).sort((a, b) => b.daily_view_count - a.daily_view_count);
+    
+    console.log(`🎯 총 ${uniqueVideos.length}개의 고유 인기 동영상 수집 완료`);
+    
+    return uniqueVideos.slice(0, maxResults);
+    
+  } catch (error) {
+    console.error('YouTube 인기 동영상 수집 오류:', error);
+    throw new Error(`YouTube API 오류: ${error.message}`);
+  }
+}
+
+// 좋아요 개수 계산 함수 (실제 데이터 우선, 없으면 추정)
+function calculateLikeCount(video, viewCount, subscriberCount, actualLikeCount) {
+  // 실제 좋아요 개수가 있으면 우선 사용
+  if (actualLikeCount !== null && actualLikeCount !== undefined) {
+    return {
+      count: actualLikeCount,
+      isEstimated: false
+    };
+  }
+  
+  // 실제 데이터가 없으면 추정값 생성
+  return {
+    count: generateEstimatedLikeCount(video, viewCount, subscriberCount),
+    isEstimated: true
+  };
+}
+
+// 좋아요 개수 추정 함수 (실제 데이터가 없는 경우에만 사용)
+function generateEstimatedLikeCount(video, viewCount, subscriberCount) {
+  // 동영상별로 일관된 시드값 생성 (video_id, 채널명, 제목 조합)
+  const seedString = (video.id || '') + (video.snippet.channelTitle || '') + (video.snippet.title || '');
+  const seed = generateSeedFromString(seedString);
+  
+  if (viewCount === 0) return Math.floor(seededRandom(seed) * 1000);
+  
+  // 채널 구독자 수에 따른 좋아요 비율 조정
+  let likeRatio = 0.05; // 기본 5%
+  
+  // 구독자가 많은 채널일수록 좋아요 비율이 약간 높음
+  if (subscriberCount > 1000000) likeRatio = 0.06; // 100만 이상: 6%
+  else if (subscriberCount > 100000) likeRatio = 0.055; // 10만 이상: 5.5%
+  else if (subscriberCount > 10000) likeRatio = 0.05; // 1만 이상: 5%
+  else likeRatio = 0.04; // 그 외: 4%
+  
+  // 고정된 랜덤 요소 추가 (±30%)
+  const randomFactor = 0.7 + seededRandom(seed + 1) * 0.6;
+  const estimatedLikes = Math.floor(viewCount * likeRatio * randomFactor);
+  
+  return estimatedLikes;
+}
+
+// 문자열로부터 시드값 생성
+function generateSeedFromString(str) {
+  let hash = 0;
+  if (!str || str.length === 0) return hash;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // 32bit integer로 변환
+  }
+  return Math.abs(hash);
+}
+
+// 시드값 기반 고정 랜덤 함수
+function seededRandom(seed) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
 
 // 서버 시작
 app.listen(PORT, () => {

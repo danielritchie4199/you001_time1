@@ -45,47 +45,6 @@
         .header p {
             font-size: 1.1em;
             opacity: 0.9;
-            margin-bottom: 20px;
-        }
-
-        .header-search {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .header-search input {
-            width: 200px;      /* 숫자 10자리 정도 입력할 수 있는 크기 */
-            text-align: center; /* 좌우 정렬 center */
-            padding: 12px 20px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1em;
-            outline: none;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .header-search button {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .header-search button:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: rgba(255,255,255,0.5);
-            transform: translateY(-1px);
         }
 
         .search-form {
@@ -96,23 +55,33 @@
             margin-bottom: 30px;
         }
 
+        /* CACHE BUST: 20250102-001 */ 
         .form-grid {
-            display: grid;
-            grid-template-columns: 2fr 2.5fr 1.2fr 1fr 1.8fr;
-            grid-template-rows: auto auto;
-            gap: 20px;
+            display: grid !important;
+            grid-template-columns: 1.8fr 2.3fr 1.1fr 2.8fr 3.1fr !important;
+            grid-template-rows: auto auto !important;
+            gap: 20px !important;
             margin-bottom: 20px;
+            min-height: 100px; /* Force reflow */
         }
+
+        /* 첫 번째 줄 필드들 위치 지정 */
+        .form-group:nth-child(1) { grid-column: 1 !important; } /* 국가 선택 */
+        .form-group:nth-child(2) { grid-column: 2 !important; } /* 검색 키워드 */
+        .form-group:nth-child(3) { grid-column: 3 !important; } /* 검색 범위 */
+        .form-group:nth-child(4) { grid-column: 4 !important; } /* 최소평균시청률 */
+        .form-group:nth-child(5) { grid-column: 5 !important; } /* 조회수 */
 
         /* 두 번째 줄 필드들 위치 지정 */
         .form-group.second-row {
             grid-row: 2;
         }
 
-        .form-group.second-row:nth-child(6) { grid-column: 1; } /* 카테고리 */
-        .form-group.second-row:nth-child(7) { grid-column: 2; } /* 검색 결과 수 */
-        .form-group.second-row:nth-child(8) { grid-column: 3; } /* 업로드 기간 */
-        .form-group.second-row:nth-child(9) { grid-column: 4 / 6; } /* 업로드 연도 (2칸 차지) */
+        .form-group.second-row:nth-child(6) { grid-column: 1 !important; } /* 카테고리 */
+        .form-group.second-row:nth-child(7) { grid-column: 2 !important; } /* 검색 결과 수 */
+        .form-group.second-row:nth-child(8) { grid-column: 3 !important; } /* 업로드 기간 */
+        .form-group.second-row:nth-child(9) { grid-column: 4 !important; } /* 업로드 연도 */
+        .form-group.second-row:nth-child(10) { grid-column: 5 !important; } /* 인기 검색어 */
 
         .form-group {
             display: flex;
@@ -756,66 +725,6 @@
             opacity: 0.6;
         }
 
-        /* 조회수 컬럼 정렬 상태 표시 */
-        .view-sort-state::after {
-            font-size: 0.7em;
-            margin-left: 3px;
-        }
-        .view-sort-state.total-desc::after { content: " 전체↓"; color: #007bff; }
-        .view-sort-state.total-asc::after { content: " 전체↑"; color: #007bff; }
-        .view-sort-state.valid-desc::after { content: " 유효↓"; color: #28a745; }
-        .view-sort-state.valid-asc::after { content: " 유효↑"; color: #28a745; }
-
-        /* 구독자수 컬럼 정렬 상태 표시 */
-        .subscriber-sort-state::after {
-            font-size: 0.7em;
-            margin-left: 3px;
-        }
-        .subscriber-sort-state.sub-desc::after { content: " 구독↓"; color: #007bff; }
-        .subscriber-sort-state.sub-asc::after { content: " 구독↑"; color: #007bff; }
-        .subscriber-sort-state.rate-desc::after { content: " 비율↓"; color: #007bff; }
-        .subscriber-sort-state.rate-asc::after { content: " 비율↑"; color: #007bff; }
-
-        /* 좋아요 컬럼 정렬 상태 표시 */
-        .likes-sort-state::after {
-            font-size: 0.7em;
-            margin-left: 3px;
-        }
-        .likes-sort-state.count-desc::after { content: " 개수↓"; color: #007bff; }
-        .likes-sort-state.count-asc::after { content: " 개수↑"; color: #007bff; }
-        .likes-sort-state.percent-desc::after { content: " 백분율↓"; color: #007bff; }
-        .likes-sort-state.percent-asc::after { content: " 백분율↑"; color: #007bff; }
-
-        /* 국가 컬럼 정렬 상태 표시 */
-        .country-sort-state::after {
-            font-size: 0.7em;
-            margin-left: 3px;
-        }
-        .country-sort-state.name-desc::after { content: " 국가↓"; color: #007bff; }
-        .country-sort-state.name-asc::after { content: " 국가↑"; color: #007bff; }
-        .country-sort-state.rpm-desc::after { content: " RPM↓"; color: #007bff; }
-        .country-sort-state.rpm-asc::after { content: " RPM↑"; color: #007bff; }
-
-        /* RPM 컬럼 정렬 상태 표시 */
-        .rpm-sort-state::after {
-            font-size: 0.7em;
-            margin-left: 3px;
-        }
-        .rpm-sort-state.estimate-desc::after { content: " 추정↓"; color: #007bff; }
-        .rpm-sort-state.estimate-asc::after { content: " 추정↑"; color: #007bff; }
-        .rpm-sort-state.total-desc::after { content: " 합계↓"; color: #007bff; }
-        .rpm-sort-state.total-asc::after { content: " 합계↑"; color: #007bff; }
-
-        /* 재생시간 컬럼 정렬 상태 표시 */
-        .duration-sort-state::after {
-            font-size: 0.7em;
-            margin-left: 3px;
-        }
-        .duration-sort-state.time-desc::after { content: " 시간↓"; color: #007bff; }
-        .duration-sort-state.time-asc::after { content: " 시간↑"; color: #007bff; }
-        .duration-sort-state.percent-desc::after { content: " 비율↓"; color: #007bff; }
-        .duration-sort-state.percent-asc::after { content: " 비율↑"; color: #007bff; }
-
         /* RPM 컬럼 화살표 강제 표시 - 개선된 버전 */
         .results-table th[data-sort="estimated_rpm"]::after {
             content: " ↕" !important;
@@ -991,7 +900,7 @@
         .duration-percentage {
             color: blue;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 11px;
             text-align: center;
             display: block;
             margin-top: 2px;
@@ -1001,7 +910,7 @@
             font-weight: bold;
             text-align: center;
             display: block;
-            font-size: 15px;
+            font-size: 11px;
         }
 
         /* 실제 좋아요 개수 (빨간색) */
@@ -1070,14 +979,6 @@
             font-weight: bold;
         }
 
-        .subscriber-view-rate {
-            color: #007bff;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 4px;
-            font-size: calc(1em - 1px);
-        }
-
         /* 좋아요 컬럼 스타일 */
         .like-count-container {
             text-align: center;
@@ -1128,7 +1029,7 @@
         .rpm-total-value {
             color: red;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 11px;
         }
 
         .video-link {
@@ -1242,17 +1143,26 @@
 
         @media (max-width: 1024px) {
             .form-grid {
-                grid-template-columns: 1fr 1fr 1fr;
-                grid-template-rows: auto auto auto;
+                grid-template-columns: 1.8fr 2.3fr 1.1fr 2.8fr 3.1fr !important;
+                grid-template-rows: auto auto !important;
                 gap: 15px;
             }
             
-            .form-group.second-row:nth-child(6) { grid-column: 1; grid-row: 2; }
-            .form-group.second-row:nth-child(7) { grid-column: 2; grid-row: 2; }
-            .form-group.second-row:nth-child(8) { grid-column: 3; grid-row: 2; }
-            .form-group.second-row:nth-child(9) { grid-column: 1 / 4; grid-row: 3; }
+            /* 첫 번째 줄 */
+            .form-group:nth-child(1) { grid-column: 1 !important; grid-row: 1; }
+            .form-group:nth-child(2) { grid-column: 2 !important; grid-row: 1; }
+            .form-group:nth-child(3) { grid-column: 3 !important; grid-row: 1; }
+            .form-group:nth-child(4) { grid-column: 4 !important; grid-row: 1; }
+            .form-group:nth-child(5) { grid-column: 5 !important; grid-row: 1; }
+            
+            /* 두 번째 줄 */
+            .form-group.second-row:nth-child(6) { grid-column: 1 !important; grid-row: 2; }
+            .form-group.second-row:nth-child(7) { grid-column: 2 !important; grid-row: 2; }
+            .form-group.second-row:nth-child(8) { grid-column: 3 !important; grid-row: 2; }
+            .form-group.second-row:nth-child(9) { grid-column: 4 !important; grid-row: 2; }
+            .form-group.second-row:nth-child(10) { grid-column: 5 !important; grid-row: 2; }
         }
-        
+
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -1264,7 +1174,7 @@
             
             .form-grid {
                 grid-template-columns: 1fr;
-                grid-template-rows: repeat(9, auto);
+                grid-template-rows: repeat(10, auto);
             }
             
             .form-group.second-row {
@@ -1742,7 +1652,44 @@
             }
         }
 
-        /* 인기검색어 모달창 스타일 */
+        /* 인기 검색어 관련 스타일 */
+        .trending-search-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trending-search-btn:hover {
+            background: #5a6fd8;
+        }
+
+        /* 인기 검색어 입력 컨테이너 */
+        .trending-input-container {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .trending-count-input {
+            width: 70px;
+            text-align: center;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* 인기 검색어 모달창 스타일 */
         .trending-modal {
             display: none;
             position: fixed;
@@ -1751,33 +1698,25 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            backdrop-filter: blur(3px);
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .trending-modal-content {
             background-color: white;
             margin: 5% auto;
             padding: 0;
-            border-radius: 20px;
+            border: none;
+            border-radius: 10px;
             width: 80%;
             max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: modalFadeIn 0.3s ease-out;
-        }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .trending-modal-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 20px 30px;
-            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1785,94 +1724,140 @@
 
         .trending-modal-header h3 {
             margin: 0;
-            font-size: 1.5em;
-            font-weight: 600;
+            font-size: 20px;
+        }
+
+        .trending-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .trending-controls label {
+            font-size: 14px;
+        }
+
+        .trending-controls select {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .analyze-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 6px 12px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .analyze-btn:hover {
+            background: #218838;
         }
 
         .trending-modal-close {
-            background: none;
-            border: none;
             color: white;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
+            line-height: 1;
         }
 
         .trending-modal-close:hover {
-            background-color: rgba(255,255,255,0.2);
-            transform: rotate(90deg);
+            color: #f0f0f0;
         }
 
         .trending-modal-body {
-            padding: 30px;
+            padding: 20px;
+            max-height: 60vh;
+            overflow-y: auto;
         }
 
+        /* 키워드 컨테이너 스타일 */
         .trending-keywords-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .keyword-tag {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 20px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: #495057;
+            user-select: none;
+        }
+
+        .keyword-tag:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .keyword-tag.selected {
+            background: #667eea;
+            color: white;
+            border-color: #5a6fd8;
+        }
+
+        .keyword-rank {
+            background: #6c757d;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-right: 8px;
+        }
+
+        /* 액션 버튼 스타일 */
+        .trending-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
             margin-top: 20px;
         }
 
-        .trending-keyword-item {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border: 2px solid #dee2e6;
-            border-radius: 25px;
-            padding: 12px 20px;
-            text-align: center;
+        .apply-keywords-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
         }
 
-        .trending-keyword-item:hover {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            border-color: #2196f3;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
+        .apply-keywords-btn:hover {
+            background: #0056b3;
         }
 
-        .trending-keyword-item.selected {
-            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-            border-color: #4caf50;
+        .clear-selection-btn {
+            background: #6c757d;
             color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
         }
 
-        .trending-keyword-item .rank {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #ff5722;
-            color: white;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            font-size: 12px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .clear-selection-btn:hover {
+            background: #545b62;
         }
 
-        .trending-loading {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-
-        .trending-loading .spinner {
+        /* 로딩 스피너 */
+        .loading-spinner {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #667eea;
             border-radius: 50%;
@@ -1886,40 +1871,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        .trending-info {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-
-        .trending-apply-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .trending-apply-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        .trending-apply-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
     </style>
 </head>
 <body>
@@ -1927,16 +1878,12 @@
         <div class="header">
             <h1>🎥 YouTube Search</h1>
             <p>전세계 유튜브 채널에서 원하는 동영상을 찾아봅니다</p>
-            <div class="header-search">
-                <input type="number" id="headerKeyword" placeholder="인기 검색어 개수" min="10" max="1000">
-                <button type="button" onclick="performHeaderSearch()">🔍</button>
-            </div>
         </div>
 
         <form class="search-form" id="searchForm">
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="country">국가 선택 (50개국 글로벌 커버리지)</label>
+                    <label for="country">국가 선택 (50개국)</label>
                     <div class="category-selector">
                         <div class="category-display" id="countryDisplay" tabindex="0">대한민국 선택됨</div>
                         <div class="category-dropdown" id="countryDropdown">
@@ -2385,6 +2332,14 @@
                     </div>
                 </div>
 
+                <div class="form-group second-row">
+                    <label for="trendingKeywords">인기 검색어</label>
+                    <div class="trending-input-container">
+                        <input type="number" id="trendingCount" name="trendingCount" value="30" min="10" max="100" step="10" placeholder="개수" class="trending-count-input">
+                        <button type="button" id="searchTrendingBtn" class="trending-search-btn" title="인기 검색어 검색">🔍</button>
+                    </div>
+                </div>
+
             </div>
 
             <!-- 동영상 길이 선택 (별도 섹션으로 분리하여 넓은 공간 확보) -->
@@ -2661,199 +2616,6 @@
         let itemsPerPage = 30;
         let sortColumn = 'daily_view_count';
         let sortDirection = 'desc';
-        
-        // 4단계 토글 상태 변수들
-        let viewCountSortState = -1;
-        let subscriberSortState = -1;
-        let likesSortState = -1;
-        let countrySortState = -1;
-        let rpmSortState = -1;
-        let durationSortState = -1;
-
-        // 헤더 검색 함수 (인기검색어 분석)
-        function performHeaderSearch() {
-            const count = document.getElementById('headerKeyword').value.trim();
-            const countNum = parseInt(count);
-            
-            // 입력 검증
-            if (!count || isNaN(countNum) || countNum < 10 || countNum > 1000) {
-                alert('인기검색어 개수를 10~1000 사이의 숫자로 입력해주세요.');
-                return;
-            }
-            
-            // 모달창 표시 및 분석 시작
-            showTrendingModal();
-            fetchTrendingKeywords(countNum);
-        }
-
-        // 인기검색어 모달창 표시
-        function showTrendingModal() {
-            document.getElementById('trendingKeywordsModal').style.display = 'block';
-            // 모달창 상태 초기화
-            document.getElementById('trendingLoadingContainer').style.display = 'block';
-            document.getElementById('trendingKeywordsContainer').style.display = 'none';
-            document.getElementById('trendingApplyBtn').disabled = true;
-            document.getElementById('selectedCount').textContent = '0';
-            selectedKeywords.clear();
-        }
-
-        // 인기검색어 모달창 숨기기
-        function hideTrendingModal() {
-            document.getElementById('trendingKeywordsModal').style.display = 'none';
-        }
-
-        // 선택된 키워드 저장용 Set
-        let selectedKeywords = new Set();
-
-        // 인기검색어 데이터 가져오기
-        async function fetchTrendingKeywords(count) {
-            try {
-                updateProgress('YouTube에서 인기 동영상 수집 중...', 10);
-                
-                const response = await fetch('/api/trending-keywords', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        count: count,
-                        videoCount: count * 5  // 동영상은 키워드 개수의 5배
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`서버 오류: ${response.status}`);
-                }
-
-                updateProgress('키워드 분석 중...', 70);
-
-                const data = await response.json();
-                
-                updateProgress('결과 정리 중...', 90);
-                
-                // 분석 정보 업데이트
-                document.getElementById('trendingAnalysisInfo').textContent = 
-                    `${data.videoCount}개 동영상에서 ${data.keywords.length}개 키워드 추출 완료`;
-
-                // 키워드 표시
-                displayTrendingKeywords(data.keywords);
-                
-                updateProgress('완료!', 100);
-                
-                setTimeout(() => {
-                    document.getElementById('trendingLoadingContainer').style.display = 'none';
-                    document.getElementById('trendingKeywordsContainer').style.display = 'grid';
-                }, 500);
-
-            } catch (error) {
-                console.error('인기검색어 분석 오류:', error);
-                document.getElementById('trendingLoadingContainer').innerHTML = `
-                    <div style="color: #f44336; padding: 20px;">
-                        <h4>⚠️ 분석 중 오류가 발생했습니다</h4>
-                        <p>${error.message}</p>
-                        <p>잠시 후 다시 시도해주세요.</p>
-                    </div>
-                `;
-            }
-        }
-
-        // 진행률 업데이트
-        function updateProgress(message, percent) {
-            document.getElementById('trendingProgress').textContent = `${message} (${percent}%)`;
-        }
-
-        // 키워드 표시
-        function displayTrendingKeywords(keywords) {
-            const container = document.getElementById('trendingKeywordsContainer');
-            container.innerHTML = '';
-
-            keywords.forEach((keyword, index) => {
-                const keywordElement = document.createElement('div');
-                keywordElement.className = 'trending-keyword-item';
-                keywordElement.innerHTML = `
-                    <span class="rank">${index + 1}</span>
-                    <div>${keyword.word}</div>
-                    <small>(${keyword.frequency}회)</small>
-                `;
-                
-                keywordElement.addEventListener('click', () => {
-                    toggleKeywordSelection(keywordElement, keyword.word);
-                });
-                
-                container.appendChild(keywordElement);
-            });
-        }
-
-        // 키워드 선택/해제 토글
-        function toggleKeywordSelection(element, keyword) {
-            if (element.classList.contains('selected')) {
-                element.classList.remove('selected');
-                selectedKeywords.delete(keyword);
-            } else {
-                element.classList.add('selected');
-                selectedKeywords.add(keyword);
-            }
-            
-            // 선택된 키워드 수 업데이트
-            const count = selectedKeywords.size;
-            document.getElementById('selectedCount').textContent = count;
-            document.getElementById('trendingApplyBtn').disabled = count === 0;
-        }
-
-        // 선택된 키워드를 검색어 필드에 적용
-        function applySelectedKeywords() {
-            if (selectedKeywords.size === 0) {
-                alert('선택된 키워드가 없습니다.');
-                return;
-            }
-
-            const keywordArray = Array.from(selectedKeywords);
-            const keywordString = keywordArray.join(' ');
-            
-            // 메인 검색 폼의 키워드 필드에 값 설정
-            const mainKeywordField = document.getElementById('keyword');
-            if (mainKeywordField) {
-                mainKeywordField.value = keywordString;
-            }
-            
-            // 모달창 닫기
-            hideTrendingModal();
-            
-            // 성공 메시지
-            alert(`${keywordArray.length}개의 키워드가 검색어 필드에 적용되었습니다: ${keywordString}`);
-        }
-
-        // 헤더 검색창에서 엔터키 이벤트 처리 및 모달창 이벤트 설정
-        document.addEventListener('DOMContentLoaded', function() {
-            const headerKeywordInput = document.getElementById('headerKeyword');
-            if (headerKeywordInput) {
-                headerKeywordInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        performHeaderSearch();
-                    }
-                });
-            }
-
-            // 모달창 외부 클릭시 닫기
-            const modal = document.getElementById('trendingKeywordsModal');
-            if (modal) {
-                modal.addEventListener('click', function(e) {
-                    if (e.target.id === 'trendingKeywordsModal') {
-                        hideTrendingModal();
-                    }
-                });
-            }
-
-            // ESC 키로 모달창 닫기
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    const modal = document.getElementById('trendingKeywordsModal');
-                    if (modal && modal.style.display === 'block') {
-                        hideTrendingModal();
-                    }
-                }
-            });
-        });
 
         // 검색 폼 제출 이벤트 (기존 코드 수정)
         document.getElementById('searchForm').addEventListener('submit', async (e) => {
@@ -2870,7 +2632,7 @@
             if (typeof window.originalPerformSearch === 'function') {
                 await window.originalPerformSearch();
             } else {
-                await performSearch();
+            await performSearch();
             }
             
             // 검색 완료 후 키워드 표시
@@ -2880,6 +2642,9 @@
         // 검색 수행 함수
         async function performSearch() {
             try {
+                // 새로운 검색 시 시간대 필터 초기화
+                resetTimezoneFiltersForNewSearch();
+                
                 // 로딩 표시
                 showLoading();
                 hideResults();
@@ -2994,10 +2759,21 @@
             
             // 3. 전역 변수 초기화
             allSearchResults = [];
+            originalSearchResults = [];
             filteredResults = [];
             currentTimezoneFilter = {};
             
-            // 4. 초기화 완료 로그
+            // 4. 검색 결과 표시 초기화
+            const totalResultsInfo = document.getElementById('totalResultsInfo');
+            const searchKeywordInfo = document.getElementById('searchKeywordInfo');
+            if (totalResultsInfo) {
+                totalResultsInfo.style.display = 'none';
+            }
+            if (searchKeywordInfo) {
+                searchKeywordInfo.style.display = 'none';
+            }
+            
+            // 5. 초기화 완료 로그
             console.log('✅ 시간대 필터 초기화 완료');
         }
         
@@ -3155,7 +2931,7 @@
                 if (searchScopeCheckboxes.length >= 2 || selectedNames.join(', ').length > 15) {
                     display.textContent = `${searchScopeCheckboxes.length}개 선택됨`;
                 } else {
-                    display.textContent = selectedNames.join(', ') + ' 선택됨';
+                display.textContent = selectedNames.join(', ') + ' 선택됨';
                 }
             }
         }
@@ -3601,7 +3377,68 @@
             }
         }
         
+        // 좋아요 개수 처리 함수 (실제 데이터 우선, 없으면 추정)
+        function getLikeCount(video) {
+            // 실제 좋아요 개수가 있으면 우선 사용
+            if (video.actual_like_count !== null && video.actual_like_count !== undefined) {
+                return {
+                    count: video.actual_like_count,
+                    isEstimated: false
+                };
+            }
+            
+            // 실제 데이터가 없으면 추정값 생성
+            return {
+                count: generateEstimatedLikeCount(video),
+                isEstimated: true
+            };
+        }
 
+        // 좋아요 개수 추정 함수 (실제 데이터가 없는 경우에만 사용)
+        function generateEstimatedLikeCount(video) {
+            // 조회수를 기반으로 좋아요 개수 추정 (일반적으로 조회수의 3-8%)
+            const viewCount = parseInt(video.daily_view_count || 0);
+            
+            // 동영상별로 일관된 시드값 생성 (video_id, 채널명, 제목 조합)
+            const seedString = (video.vod_url || '') + (video.youtube_channel_name || '') + (video.title || '');
+            const seed = generateSeedFromString(seedString);
+            
+            if (viewCount === 0) return Math.floor(seededRandom(seed) * 1000);
+            
+            // 채널 구독자 수에 따른 좋아요 비율 조정
+            const subscriberCount = parseInt(video.subscriber_count || 0);
+            let likeRatio = 0.05; // 기본 5%
+            
+            // 구독자가 많은 채널일수록 좋아요 비율이 약간 높음
+            if (subscriberCount > 1000000) likeRatio = 0.06; // 100만 이상: 6%
+            else if (subscriberCount > 100000) likeRatio = 0.055; // 10만 이상: 5.5%
+            else if (subscriberCount > 10000) likeRatio = 0.05; // 1만 이상: 5%
+            else likeRatio = 0.04; // 그 외: 4%
+            
+            // 고정된 랜덤 요소 추가 (±30%)
+            const randomFactor = 0.7 + seededRandom(seed + 1) * 0.6;
+            const estimatedLikes = Math.floor(viewCount * likeRatio * randomFactor);
+            
+            return estimatedLikes;
+        }
+
+        // 문자열로부터 시드값 생성
+        function generateSeedFromString(str) {
+            let hash = 0;
+            if (!str || str.length === 0) return hash;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // 32bit integer로 변환
+            }
+            return Math.abs(hash);
+        }
+
+        // 시드값 기반 고정 랜덤 함수
+        function seededRandom(seed) {
+            const x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
 
         // 개별 동영상 길이 체크박스 변경 시 "모두 선택" 상태 업데이트
         function updateSelectAllVideoLength() {
@@ -4148,292 +3985,10 @@
             // 시간대 필터 초기화
             initializeTimezoneFilter();
             
-            // 조회수 컬럼 4단계 순환 토글 상태 변수
-            let viewCountSortState = 0; // 0: 전체조회수↓, 1: 전체조회수↑, 2: 유효조회수↓, 3: 유효조회수↑
-
-            // 구독자수 컬럼 4단계 순환 토글 상태 변수
-            let subscriberSortState = -1; // -1: 초기상태, 0: 구독자수↓, 1: 구독자수↑, 2: 유효조회수백분률↓, 3: 유효조회수백분률↑
-
-            // 조회수 컬럼 정렬 상태 시각적 표시 함수
-            function updateViewCountSortDisplay(headerElement, state) {
-                // 기존 클래스 제거
-                headerElement.classList.remove('view-sort-state', 'total-desc', 'total-asc', 'valid-desc', 'valid-asc');
-                
-                // 새로운 클래스 추가
-                headerElement.classList.add('view-sort-state');
-                switch(state) {
-                    case 0: headerElement.classList.add('total-desc'); break;
-                    case 1: headerElement.classList.add('total-asc'); break;
-                    case 2: headerElement.classList.add('valid-desc'); break;
-                    case 3: headerElement.classList.add('valid-asc'); break;
-                }
-            }
-
-            // 구독자수 컬럼 정렬 상태 시각적 표시 함수
-            function updateSubscriberSortDisplay(headerElement, state) {
-                // 기존 클래스 제거
-                headerElement.classList.remove('subscriber-sort-state', 'sub-desc', 'sub-asc', 'rate-desc', 'rate-asc');
-                
-                // 새로운 클래스 추가
-                headerElement.classList.add('subscriber-sort-state');
-                switch(state) {
-                    case 0: headerElement.classList.add('sub-desc'); break;
-                    case 1: headerElement.classList.add('sub-asc'); break;
-                    case 2: headerElement.classList.add('rate-desc'); break;
-                    case 3: headerElement.classList.add('rate-asc'); break;
-                }
-            }
-
-            // 좋아요 컬럼 정렬 상태 시각적 표시 함수
-            function updateLikesSortDisplay(headerElement, state) {
-                // 기존 클래스 제거
-                headerElement.classList.remove('likes-sort-state', 'count-desc', 'count-asc', 'percent-desc', 'percent-asc');
-                
-                // 새로운 클래스 추가
-                headerElement.classList.add('likes-sort-state');
-                switch(state) {
-                    case 0: headerElement.classList.add('count-desc'); break;
-                    case 1: headerElement.classList.add('count-asc'); break;
-                    case 2: headerElement.classList.add('percent-desc'); break;
-                    case 3: headerElement.classList.add('percent-asc'); break;
-                }
-            }
-
-            // 국가 컬럼 정렬 상태 시각적 표시 함수
-            function updateCountrySortDisplay(headerElement, state) {
-                // 기존 클래스 제거
-                headerElement.classList.remove('country-sort-state', 'name-desc', 'name-asc', 'rpm-desc', 'rpm-asc');
-                
-                // 새로운 클래스 추가
-                headerElement.classList.add('country-sort-state');
-                switch(state) {
-                    case 0: headerElement.classList.add('name-desc'); break;
-                    case 1: headerElement.classList.add('name-asc'); break;
-                    case 2: headerElement.classList.add('rpm-desc'); break;
-                    case 3: headerElement.classList.add('rpm-asc'); break;
-                }
-            }
-
-            // RPM 컬럼 정렬 상태 시각적 표시 함수
-            function updateRpmSortDisplay(headerElement, state) {
-                // 기존 클래스 제거
-                headerElement.classList.remove('rpm-sort-state', 'estimate-desc', 'estimate-asc', 'total-desc', 'total-asc');
-                
-                // 새로운 클래스 추가
-                headerElement.classList.add('rpm-sort-state');
-                switch(state) {
-                    case 0: headerElement.classList.add('estimate-desc'); break;
-                    case 1: headerElement.classList.add('estimate-asc'); break;
-                    case 2: headerElement.classList.add('total-desc'); break;
-                    case 3: headerElement.classList.add('total-asc'); break;
-                }
-            }
-
-            // 재생시간 컬럼 정렬 상태 시각적 표시 함수
-            function updateDurationSortDisplay(headerElement, state) {
-                // 기존 클래스 제거
-                headerElement.classList.remove('duration-sort-state', 'time-desc', 'time-asc', 'percent-desc', 'percent-asc');
-                
-                // 새로운 클래스 추가
-                headerElement.classList.add('duration-sort-state');
-                switch(state) {
-                    case 0: headerElement.classList.add('time-desc'); break;
-                    case 1: headerElement.classList.add('time-asc'); break;
-                    case 2: headerElement.classList.add('percent-desc'); break;
-                    case 3: headerElement.classList.add('percent-asc'); break;
-                }
-            }
-
             // 테이블 헤더 클릭 이벤트 (정렬)
             document.querySelectorAll('.results-table th.sortable').forEach(th => {
-                // 조회수 컬럼 특별 처리
-                if (th.dataset.sort === 'daily_view_count') {
-                    th.addEventListener('click', () => {
-                        // 4단계 순환 토글
-                        viewCountSortState = (viewCountSortState + 1) % 4;
-                        
-                        switch(viewCountSortState) {
-                            case 0: // 전체조회수 내림차순
-                                sortColumn = 'daily_view_count';
-                                sortDirection = 'desc';
-                                break;
-                            case 1: // 전체조회수 오름차순
-                                sortColumn = 'daily_view_count';
-                                sortDirection = 'asc';
-                                break;
-                            case 2: // 유효조회수 내림차순
-                                sortColumn = 'valid_view_count';
-                                sortDirection = 'desc';
-                                break;
-                            case 3: // 유효조회수 오름차순
-                                sortColumn = 'valid_view_count';
-                                sortDirection = 'asc';
-                                break;
-                        }
-                        
-                        console.log(`조회수 정렬 상태: ${viewCountSortState}, 컬럼: ${sortColumn}, 방향: ${sortDirection}`);
-                        updateViewCountSortDisplay(th, viewCountSortState);
-                        sortResults();
-                        renderResults();
-                    });
-                }
-                // 구독자수 컬럼 특별 처리
-                else if (th.dataset.sort === 'subscriber_count') {
-                    th.addEventListener('click', () => {
-                        // 4단계 순환 토글
-                        subscriberSortState = (subscriberSortState + 1) % 4;
-                        
-                        switch(subscriberSortState) {
-                            case 0: // 구독자수 내림차순
-                                sortColumn = 'subscriber_count';
-                                sortDirection = 'desc';
-                                break;
-                            case 1: // 구독자수 오름차순
-                                sortColumn = 'subscriber_count';
-                                sortDirection = 'asc';
-                                break;
-                            case 2: // 유효조회수백분률 내림차순
-                                sortColumn = 'valid_view_rate';
-                                sortDirection = 'desc';
-                                break;
-                            case 3: // 유효조회수백분률 오름차순
-                                sortColumn = 'valid_view_rate';
-                                sortDirection = 'asc';
-                                break;
-                        }
-                        
-                        console.log(`구독자수 정렬 상태: ${subscriberSortState}, 컬럼: ${sortColumn}, 방향: ${sortDirection}`);
-                        updateSubscriberSortDisplay(th, subscriberSortState);
-                        sortResults();
-                        renderResults();
-                    });
-                }
-                // 좋아요 컬럼 특별 처리
-                else if (th.dataset.sort === 'likes') {
-                    th.addEventListener('click', () => {
-                        // 4단계 순환 토글
-                        likesSortState = (likesSortState + 1) % 4;
-                        
-                        switch(likesSortState) {
-                            case 0: // 좋아요개수 내림차순
-                                sortColumn = 'like_count';
-                                sortDirection = 'desc';
-                                break;
-                            case 1: // 좋아요개수 오름차순
-                                sortColumn = 'like_count';
-                                sortDirection = 'asc';
-                                break;
-                            case 2: // 좋아요백분율 내림차순
-                                sortColumn = 'like_percentage';
-                                sortDirection = 'desc';
-                                break;
-                            case 3: // 좋아요백분율 오름차순
-                                sortColumn = 'like_percentage';
-                                sortDirection = 'asc';
-                                break;
-                        }
-                        
-                        console.log(`좋아요 정렬 상태: ${likesSortState}, 컬럼: ${sortColumn}, 방향: ${sortDirection}`);
-                        updateLikesSortDisplay(th, likesSortState);
-                        sortResults();
-                        renderResults();
-                    });
-                }
-                // 국가 컬럼 특별 처리
-                else if (th.dataset.sort === 'country') {
-                    th.addEventListener('click', () => {
-                        // 4단계 순환 토글
-                        countrySortState = (countrySortState + 1) % 4;
-                        
-                        switch(countrySortState) {
-                            case 0: // 국가이름 내림차순
-                                sortColumn = 'country_name';
-                                sortDirection = 'desc';
-                                break;
-                            case 1: // 국가이름 오름차순
-                                sortColumn = 'country_name';
-                                sortDirection = 'asc';
-                                break;
-                            case 2: // channel_total_rpm 내림차순
-                                sortColumn = 'channel_total_rpm';
-                                sortDirection = 'desc';
-                                break;
-                            case 3: // channel_total_rpm 오름차순
-                                sortColumn = 'channel_total_rpm';
-                                sortDirection = 'asc';
-                                break;
-                        }
-                        
-                        console.log(`국가 정렬 상태: ${countrySortState}, 컬럼: ${sortColumn}, 방향: ${sortDirection}`);
-                        updateCountrySortDisplay(th, countrySortState);
-                        sortResults();
-                        renderResults();
-                    });
-                }
-                // RPM 컬럼 특별 처리
-                else if (th.dataset.sort === 'estimated_rpm') {
-                    th.addEventListener('click', () => {
-                        // 4단계 순환 토글
-                        rpmSortState = (rpmSortState + 1) % 4;
-                        
-                        switch(rpmSortState) {
-                            case 0: // rpm-estimate 내림차순
-                                sortColumn = 'rpm_estimate';
-                                sortDirection = 'desc';
-                                break;
-                            case 1: // rpm-estimate 오름차순
-                                sortColumn = 'rpm_estimate';
-                                sortDirection = 'asc';
-                                break;
-                            case 2: // rpm-total-value 내림차순
-                                sortColumn = 'rpm_total_value';
-                                sortDirection = 'desc';
-                                break;
-                            case 3: // rpm-total-value 오름차순
-                                sortColumn = 'rpm_total_value';
-                                sortDirection = 'asc';
-                                break;
-                        }
-                        
-                        console.log(`RPM 정렬 상태: ${rpmSortState}, 컬럼: ${sortColumn}, 방향: ${sortDirection}`);
-                        updateRpmSortDisplay(th, rpmSortState);
-                        sortResults();
-                        renderResults();
-                    });
-                }
-                // 재생시간 컬럼 특별 처리
-                else if (th.dataset.sort === 'duration') {
-                    th.addEventListener('click', () => {
-                        // 4단계 순환 토글
-                        durationSortState = (durationSortState + 1) % 4;
-                        
-                        switch(durationSortState) {
-                            case 0: // duration-time 내림차순
-                                sortColumn = 'duration_time';
-                                sortDirection = 'desc';
-                                break;
-                            case 1: // duration-time 오름차순
-                                sortColumn = 'duration_time';
-                                sortDirection = 'asc';
-                                break;
-                            case 2: // duration-percentage 내림차순
-                                sortColumn = 'duration_percentage';
-                                sortDirection = 'desc';
-                                break;
-                            case 3: // duration-percentage 오름차순
-                                sortColumn = 'duration_percentage';
-                                sortDirection = 'asc';
-                                break;
-                        }
-                        
-                        console.log(`재생시간 정렬 상태: ${durationSortState}, 컬럼: ${sortColumn}, 방향: ${sortDirection}`);
-                        updateDurationSortDisplay(th, durationSortState);
-                        sortResults();
-                        renderResults();
-                    });
-                }
-                // 기존 방식: 다른 컬럼들
-                else if (th.dataset.sort) {
+                // 기존 방식: data-sort가 있는 th 클릭
+                if (th.dataset.sort) {
                     th.addEventListener('click', () => {
                         const column = th.dataset.sort;
                         if (sortColumn === column) {
@@ -5454,47 +5009,20 @@
                     bVal = parseInt(bVal) || 0;
                 }
 
-                // 유효조회수 처리 (서버에서 계산된 값 사용)
-                if (sortColumn === 'valid_view_count') {
-                    aVal = parseInt(a.valid_view_count) || 0;
-                    bVal = parseInt(b.valid_view_count) || 0;
-                }
-
-                // 유효조회수 백분률 처리 (서버에서 계산된 값 사용)
-                if (sortColumn === 'valid_view_rate') {
-                    aVal = parseFloat(a.valid_view_percentage) || 0;
-                    bVal = parseFloat(b.valid_view_percentage) || 0;
-                }
-
                 // 동영상 시간 처리
                 if (sortColumn === 'duration') {
                     aVal = parseInt(a.duration_seconds) || 0;
                     bVal = parseInt(b.duration_seconds) || 0;
                 }
 
-                // duration-time 정렬 처리 (4단계 토글용)
-                if (sortColumn === 'duration_time') {
-                    aVal = parseInt(a.duration_seconds) || 0;
-                    bVal = parseInt(b.duration_seconds) || 0;
-                }
-
-                // duration-percentage 정렬 처리 (4단계 토글용)
-                if (sortColumn === 'duration_percentage') {
-                    // 서버에서 계산된 평균시청률 백분율 사용
-                    aVal = parseFloat(a.avg_watch_rate_percentage) || 0;
-                    bVal = parseFloat(b.avg_watch_rate_percentage) || 0;
-                }
-
-                // 좋아요개수 처리 (서버에서 계산된 값 사용)
-                if (sortColumn === 'like_count') {
-                    aVal = parseInt(a.like_count) || 0;
-                    bVal = parseInt(b.like_count) || 0;
-                }
-
-                // 좋아요백분율 처리 (서버에서 계산된 값 사용)
-                if (sortColumn === 'like_percentage') {
-                    aVal = parseFloat(a.like_percentage) || 0;
-                    bVal = parseFloat(b.like_percentage) || 0;
+                // 좋아요 수 처리 (유효 조회수에 대한 백분율 기준)
+                if (sortColumn === 'likes') {
+                    const aLikes = getLikeCount(a).count;
+                    const bLikes = getLikeCount(b).count;
+                    const aValidViews = Math.round(a.daily_view_count * 0.85);
+                    const bValidViews = Math.round(b.daily_view_count * 0.85);
+                    aVal = aValidViews > 0 ? (aLikes / aValidViews) * 100 : 0;
+                    bVal = bValidViews > 0 ? (bLikes / bValidViews) * 100 : 0;
                 }
 
                 // 날짜 값 처리
@@ -5515,18 +5043,6 @@
                     bVal = detectVideoCountry(b);
                 }
 
-                // 국가이름 정렬 처리 (4단계 토글용)
-                if (sortColumn === 'country_name') {
-                    aVal = detectVideoCountry(a);
-                    bVal = detectVideoCountry(b);
-                }
-
-                // channel_total_rpm 정렬 처리 (4단계 토글용)
-                if (sortColumn === 'channel_total_rpm') {
-                    aVal = parseFloat(a.channel_total_rpm) || 0;
-                    bVal = parseFloat(b.channel_total_rpm) || 0;
-                }
-
                 // 채널 개설일 정렬 처리
                 if (sortColumn === 'channel_created_date') {
                     aVal = a.channel_created_date ? new Date(a.channel_created_date) : new Date(0);
@@ -5535,20 +5051,6 @@
 
                 // RPM 정렬 처리 (재생+광고 RPM 합산값 기준)
                 if (sortColumn === 'estimated_rpm') {
-                    const aRpm = parseFloat(a.estimated_rpm) || 0;
-                    const bRpm = parseFloat(b.estimated_rpm) || 0;
-                    aVal = aRpm + (aRpm * 0.85);
-                    bVal = bRpm + (bRpm * 0.85);
-                }
-
-                // rpm-estimate 정렬 처리 (4단계 토글용)
-                if (sortColumn === 'rpm_estimate') {
-                    aVal = parseFloat(a.estimated_rpm) || 0;
-                    bVal = parseFloat(b.estimated_rpm) || 0;
-                }
-
-                // rpm-total-value 정렬 처리 (4단계 토글용)
-                if (sortColumn === 'rpm_total_value') {
                     const aRpm = parseFloat(a.estimated_rpm) || 0;
                     const bRpm = parseFloat(b.estimated_rpm) || 0;
                     aVal = aRpm + (aRpm * 0.85);
@@ -5639,21 +5141,20 @@
                     <td>
                         <div class="country-name">${countryName}</div>
                         <div class="country-rpm-info">
-                                                            <span class="rpm-estimate">$${result.channel_total_rpm || '0.00'}</span>
+                            <span class="rpm-estimate">$${Math.round(((result.channel_playback_rpm || 0) + (result.channel_ad_rpm || 0)) * 100) / 100}</span>
                         </div>
                     </td>
                     ${uploadDateCell}
                     ${koreaTimeCell}
                     <td>
                         ${(() => {
-                            // 서버에서 계산된 좋아요 데이터 사용
-                            const likeCount = result.like_count || 0;
-                            const isEstimated = result.is_like_estimated || false;
-                            const colorClass = isEstimated ? 'like-count-estimated' : 'like-count-actual';
-                            const percentage = result.like_percentage || 0;
+                            const likeData = getLikeCount(result);
+                            const colorClass = likeData.isEstimated ? 'like-count-estimated' : 'like-count-actual';
+                            const validViewCount = Math.round(result.daily_view_count * 0.85);
+                            const percentage = validViewCount > 0 ? Math.round((likeData.count / validViewCount) * 100 * 100) / 100 : 0;
                             return `
                                 <div class="like-count-container">
-                                    <div class="like-count ${colorClass} like-count-bold">${likeCount.toLocaleString()}</div>
+                                    <div class="like-count ${colorClass} like-count-bold">${likeData.count.toLocaleString()}</div>
                                     <div class="like-percentage">
                                         <span class="percentage-value">${percentage}%</span>
                                     </div>
@@ -5664,18 +5165,17 @@
                     <td>
                         <div class="view-count">${viewCount}</div>
                         <div class="valid-view-count">
-                            <span class="valid-view-value">${(result.valid_view_count || 0).toLocaleString()}</span>
+                            <span class="valid-view-value">${Math.round(result.daily_view_count * 0.85).toLocaleString()}</span>
                         </div>
                     </td>
                     <td>
                         <span class="subscriber-count">${subscriberCount}</span>
-                        <div class="subscriber-view-rate">${result.valid_view_percentage || 0}%</div>
                     </td>
                     <td>
                         <div class="rpm-container">
-                            <div class="rpm-estimate" title="재생기반 RPM: $${result.estimated_rpm || '0.00'} | 광고 RPM: $${result.ad_rpm || '0.00'}">$${result.estimated_rpm || '0.00'} | $${result.ad_rpm || '0.00'}</div>
+                            <div class="rpm-estimate" title="재생기반 RPM: $${result.estimated_rpm || '0.00'} | 광고 RPM: $${Math.round((result.estimated_rpm || 0) * 0.85 * 100) / 100}">$${result.estimated_rpm || '0.00'} | $${Math.round((result.estimated_rpm || 0) * 0.85 * 100) / 100}</div>
                             <div class="rpm-total">
-                                <span class="rpm-total-value">$${result.total_rpm || '0.00'}</span>
+                                <span class="rpm-total-value">$${Math.round(((result.estimated_rpm || 0) + (result.estimated_rpm || 0) * 0.85) * 100) / 100}</span>
                             </div>
                         </div>
                     </td>
@@ -5687,8 +5187,9 @@
                     <td>
                         <span class="duration-time" title="${result.duration_seconds}초">${formattedDuration}</span>
                         ${(() => {
-                            // 서버에서 계산된 평균시청률 사용 (카테고리별 정교한 계산)
-                            const percentage = result.avg_watch_rate_percentage || 0;
+                            // 평균 시청시간 = 전체 재생시간의 45%로 추정
+                            const avgWatchTimeSeconds = Math.round((result.duration_seconds || 0) * 0.45);
+                            const percentage = result.duration_seconds > 0 ? Math.round((avgWatchTimeSeconds / result.duration_seconds) * 100) : 0;
                             return `<div class="duration-percentage">${percentage}%</div>`;
                         })()}
                     </td>
@@ -6578,6 +6079,7 @@
 
         // 전역 변수들
         let allSearchResults = []; // 원본 검색 결과 저장
+        let originalSearchResults = []; // 최초 검색 결과 (필터 적용 전)
         let filteredResults = []; // 필터링된 결과
         let currentTimezoneFilter = {}; // 현재 적용된 시간대 필터
         
@@ -6627,6 +6129,7 @@
             });
             
             allSearchResults = analyzedResults;
+            originalSearchResults = [...analyzedResults]; // 최초 검색 결과 백업
             filteredResults = [...analyzedResults];
             
             updateTimezoneStats(analyzedResults);
@@ -6855,22 +6358,17 @@
             const searchKeywordInfo = document.getElementById('searchKeywordInfo');
             const searchKeyword = document.getElementById('searchKeyword');
             
-            if (filteredResults.length !== allSearchResults.length) {
-                document.getElementById('resultsCount').textContent = filteredResults.length;
-                totalCount.textContent = allSearchResults.length;
-                totalResultsInfo.style.display = 'inline';
-                
-                // 검색어 표시
-                const currentKeyword = document.getElementById('keyword').value || '';
-                if (currentKeyword.trim()) {
-                    searchKeyword.textContent = currentKeyword;
-                    searchKeywordInfo.style.display = 'inline';
-                } else {
-                    searchKeywordInfo.style.display = 'none';
-                }
+            // 필터 적용 후에는 항상 "13/20" 형태로 표시 (원본 검색 결과 수 유지)
+            document.getElementById('resultsCount').textContent = filteredResults.length;
+            totalCount.textContent = originalSearchResults.length;
+            totalResultsInfo.style.display = 'inline';
+            
+            // 검색어 표시
+            const currentKeyword = document.getElementById('keyword').value || '';
+            if (currentKeyword.trim()) {
+                searchKeyword.textContent = currentKeyword;
+                searchKeywordInfo.style.display = 'inline';
             } else {
-                document.getElementById('resultsCount').textContent = allSearchResults.length;
-                totalResultsInfo.style.display = 'none';
                 searchKeywordInfo.style.display = 'none';
             }
             
@@ -7093,35 +6591,181 @@
             }
         }
 
+        // 인기 검색어 관련 JavaScript
+        let selectedKeywords = new Set();
+
+        // 모달창 제어 함수들
+        function showTrendingModal() {
+            document.getElementById('trendingKeywordsModal').style.display = 'block';
+        }
+
+        function hideTrendingModal() {
+            document.getElementById('trendingKeywordsModal').style.display = 'none';
+        }
+
+        // 🔍 버튼 클릭 이벤트 (DOM 준비 후 실행)
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBtn = document.getElementById('searchTrendingBtn');
+            if (searchBtn) {
+                searchBtn.addEventListener('click', async () => {
+                    const count = document.getElementById('trendingCount').value;
+                    console.log(`🔥 인기 검색어 분석 시작 (${count}개 동영상)`);
+                    
+                    showTrendingModal();
+                    showTrendingLoading();
+                    
+                    try {
+                        await fetchTrendingKeywords(count);
+                    } catch (error) {
+                        console.error('인기 검색어 분석 실패:', error);
+                        alert('인기 검색어 분석에 실패했습니다. 다시 시도해주세요.');
+                        hideTrendingModal();
+                    }
+                });
+            }
+        });
+
+        // 모달창 닫기 이벤트 (DOM 준비 후 실행)
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalClose = document.querySelector('.trending-modal-close');
+            const modal = document.getElementById('trendingKeywordsModal');
+            
+            if (modalClose) {
+                modalClose.addEventListener('click', hideTrendingModal);
+            }
+            
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target.id === 'trendingKeywordsModal') {
+                        hideTrendingModal();
+                    }
+                });
+            }
+        });
+
+        // 로딩 표시 함수들
+        function showTrendingLoading() {
+            document.getElementById('trendingLoading').style.display = 'block';
+            document.getElementById('trendingResults').style.display = 'none';
+        }
+
+        function hideTrendingLoading() {
+            document.getElementById('trendingLoading').style.display = 'none';
+            document.getElementById('trendingResults').style.display = 'block';
+        }
+
+        // 인기 검색어 API 호출
+        async function fetchTrendingKeywords(count) {
+            const response = await fetch('/api/trending-keywords', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ count: parseInt(count) })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            displayTrendingKeywords(data.keywords);
+        }
+
+        // 키워드 표시 함수
+        function displayTrendingKeywords(keywords) {
+            const container = document.querySelector('.trending-keywords-container');
+            container.innerHTML = '';
+            selectedKeywords.clear();
+
+            keywords.forEach((keyword, index) => {
+                const keywordTag = document.createElement('div');
+                keywordTag.className = 'keyword-tag';
+                keywordTag.innerHTML = `
+                    <span class="keyword-rank">${index + 1}</span>
+                    ${keyword.word}
+                `;
+                
+                keywordTag.addEventListener('click', () => {
+                    toggleKeywordSelection(keywordTag, keyword.word);
+                });
+
+                container.appendChild(keywordTag);
+            });
+
+            hideTrendingLoading();
+        }
+
+        // 키워드 선택/해제 토글
+        function toggleKeywordSelection(element, keyword) {
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedKeywords.delete(keyword);
+            } else {
+                element.classList.add('selected');
+                selectedKeywords.add(keyword);
+            }
+            
+            console.log('선택된 키워드:', Array.from(selectedKeywords));
+        }
+
+        // 키워드 관련 이벤트 리스너들 (DOM 준비 후 실행)
+        document.addEventListener('DOMContentLoaded', function() {
+            // 선택한 키워드 적용
+            const applyBtn = document.getElementById('applySelectedKeywords');
+            if (applyBtn) {
+                applyBtn.addEventListener('click', () => {
+                    if (selectedKeywords.size === 0) {
+                        alert('키워드를 선택해주세요.');
+                        return;
+                    }
+
+                    const keywordInput = document.getElementById('keyword');
+                    const keywordsArray = Array.from(selectedKeywords);
+                    keywordInput.value = keywordsArray.join(' ');
+                    
+                    console.log(`✅ 선택한 키워드가 검색창에 적용됨: ${keywordsArray.join(' ')}`);
+                    hideTrendingModal();
+                });
+            }
+
+            // 선택 초기화
+            const clearBtn = document.getElementById('clearSelectedKeywords');
+            if (clearBtn) {
+                clearBtn.addEventListener('click', () => {
+                    selectedKeywords.clear();
+                    document.querySelectorAll('.keyword-tag.selected').forEach(tag => {
+                        tag.classList.remove('selected');
+                    });
+                    console.log('키워드 선택 초기화됨');
+                });
+            }
+        });
+
         // 초기화는 initializeApp에서 처리됨
     </script>
     
-    <!-- 인기검색어 모달창 -->
+    <!-- 인기 검색어 모달창 -->
     <div id="trendingKeywordsModal" class="trending-modal">
         <div class="trending-modal-content">
             <div class="trending-modal-header">
-                <h3>🔥 실시간 인기 검색어</h3>
-                <button class="trending-modal-close" onclick="hideTrendingModal()">&times;</button>
+                <h3>🔥 유튜브 인기 검색어</h3>
+                <span class="trending-modal-close">&times;</span>
             </div>
             <div class="trending-modal-body">
-                <div class="trending-info">
-                    <p><strong>📊 분석 정보:</strong> <span id="trendingAnalysisInfo">분석 중...</span></p>
-                    <p><strong>💡 사용법:</strong> 원하는 키워드를 클릭하여 선택하고, 하단의 "선택된 키워드 적용" 버튼을 눌러주세요.</p>
+                <div id="trendingLoading" style="display: none; text-align: center; padding: 20px;">
+                    <div class="loading-spinner"></div>
+                    <p>인기 동영상을 분석하고 있습니다...</p>
                 </div>
-                
-                <div id="trendingLoadingContainer" class="trending-loading">
-                    <div class="spinner"></div>
-                    <p>YouTube에서 인기 동영상을 분석하고 있습니다...</p>
-                    <p id="trendingProgress">진행률: 0%</p>
+                <div id="trendingResults" style="display: none;">
+                    <div class="trending-keywords-container">
+                        <!-- 키워드들이 여기에 동적으로 추가됩니다 -->
+                    </div>
+                    <div class="trending-actions">
+                        <button type="button" id="applySelectedKeywords" class="apply-keywords-btn">선택한 키워드 적용</button>
+                        <button type="button" id="clearSelectedKeywords" class="clear-selection-btn">선택 초기화</button>
+                    </div>
                 </div>
-                
-                <div id="trendingKeywordsContainer" class="trending-keywords-container" style="display: none;">
-                    <!-- 키워드들이 동적으로 추가됩니다 -->
-                </div>
-                
-                <button id="trendingApplyBtn" class="trending-apply-btn" onclick="applySelectedKeywords()" disabled>
-                    선택된 키워드 적용 (<span id="selectedCount">0</span>개)
-                </button>
             </div>
         </div>
     </div>
