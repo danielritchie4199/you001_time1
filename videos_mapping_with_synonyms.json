@@ -1,0 +1,140 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "analysis": {
+      "normalizer": {
+        "lowercase_norm": {
+          "type": "custom",
+          "char_filter": [],
+          "filter": ["lowercase"]
+        }
+      },
+      "analyzer": {
+        "korean_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": ["lowercase", "korean_stop", "korean_stemmer"]
+        },
+        "korean_synonym_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": ["lowercase", "korean_stop", "korean_synonyms", "korean_stemmer"]
+        },
+        "search_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": ["lowercase", "korean_stop", "korean_synonyms", "korean_stemmer"]
+        }
+      },
+      "filter": {
+        "korean_stop": {
+          "type": "stop",
+          "stopwords": ["은", "는", "이", "가", "을", "를", "의", "에", "와", "과", "도", "로", "으로", "에서", "에게", "한테", "께", "부터", "까지", "만", "도", "조차", "마저", "뿐", "밖에"]
+        },
+        "korean_stemmer": {
+          "type": "stemmer",
+          "language": "korean"
+        },
+        "korean_synonyms": {
+          "type": "synonym",
+          "synonyms": [
+            "음악,뮤직,music,노래,song,곡",
+            "요리,쿠킹,cooking,레시피,recipe",
+            "게임,게이밍,gaming,플레이",
+            "뷰티,미용,beauty,화장,메이크업,makeup",
+            "운동,스포츠,sports,헬스,fitness,workout",
+            "여행,트래블,travel,여행기",
+            "리뷰,후기,review,평가",
+            "먹방,eating,food,음식",
+            "댄스,춤,dance,안무",
+            "코미디,개그,comedy,웃긴",
+            "드라마,시리즌,series,연속극",
+            "영화,movie,film,시네마,cinema",
+            "애니메이션,애니,anime,만화",
+            "교육,학습,education,강의,lecture",
+            "뉴스,소식,news,정보",
+            "패션,스타일,fashion,style,옷",
+            "자동차,카,car,automotive",
+            "IT,기술,tech,테크,컴퓨터",
+            "DIY,만들기,handmade,수제",
+            "ASMR,팅글,tingles,힐링",
+            "아이폰,iphone,애플폰",
+            "갤럭시,galaxy,삼성폰",
+            "맥북,macbook,애플노트북",
+            "윈도우,windows,마이크로소프트",
+            "발라드,ballad,감성",
+            "힙합,hiphop,rap,랩",
+            "트로트,뽕짝,한국가요",
+            "재즈,jazz,블루스,blues",
+            "클래식,classical,오케스트라",
+            "먹방,mukbang,이팅쇼",
+            "케이팝,kpop,한국음악",
+            "한류,hallyu,korean wave",
+            "웹툰,webtoon,만화",
+            "치킨,chicken,닭",
+            "라면,ramen,noodle",
+            "한국어,korean,한글"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "video_id": {"type": "keyword"},
+      "title": {
+        "type": "text",
+        "analyzer": "korean_synonym_analyzer",
+        "search_analyzer": "search_analyzer",
+        "fields": {
+          "raw": {"type": "keyword"},
+          "suggest": {"type": "completion"},
+          "exact": {
+            "type": "text",
+            "analyzer": "korean_analyzer"
+          }
+        }
+      },
+      "youtube_channel_name": {
+        "type": "text",
+        "analyzer": "korean_synonym_analyzer",
+        "search_analyzer": "search_analyzer",
+        "fields": {
+          "raw": {"type": "keyword"},
+          "suggest": {"type": "completion"},
+          "exact": {
+            "type": "text",
+            "analyzer": "korean_analyzer"
+          }
+        }
+      },
+      "youtube_channel_id": {"type": "keyword"},
+      "country": {"type": "keyword"},
+      "status_date": {"type": "date"},
+      "daily_view_count": {"type": "long"},
+      "subscriber_count": {"type": "long"},
+      "duration_seconds": {"type": "integer"},
+      "video_length_category": {"type": "keyword"},
+      "primary_category": {"type": "keyword"},
+      "vod_url": {"type": "keyword"},
+      "keyword_normalized": {"type": "keyword", "normalizer": "lowercase_norm"},
+      "description": {
+        "type": "text",
+        "analyzer": "korean_synonym_analyzer",
+        "search_analyzer": "search_analyzer",
+        "fields": {
+          "raw": {"type": "keyword"},
+          "exact": {
+            "type": "text",
+            "analyzer": "korean_analyzer"
+          }
+        }
+      },
+      "tags": {"type": "keyword"},
+      "trending_score": {"type": "float"},
+      "engagement_rate": {"type": "float"},
+      "indexed_at": {"type": "date"}
+    }
+  }
+}
