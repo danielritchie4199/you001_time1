@@ -102,6 +102,36 @@ body {
 }
 
 .form-group.keyword-group { grid-column: 2; } /* 검색 키워드 - 검색 결과 수와 같은 컬럼 */
+
+/* 검색 키워드와 검색 결과 수 width 동일화 - 반응형 지원 */
+.form-group.keyword-group input,
+.form-group.second-row:nth-child(7) select {
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 200px;
+}
+
+.form-group.keyword-group .autocomplete-container {
+    width: 100%;
+}
+
+/* 반응형 width 조정 */
+@media (max-width: 768px) {
+    .form-group.keyword-group input,
+    .form-group.second-row:nth-child(7) select {
+        min-width: 150px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-group.keyword-group input,
+    .form-group.second-row:nth-child(7) select {
+        min-width: 120px;
+        font-size: 0.8em;
+        padding: 8px 12px;
+    }
+}
 .form-group.second-row:nth-child(6) { grid-column: 1; } /* 카테고리 */
 .form-group.second-row:nth-child(7) { grid-column: 2; } /* 검색 결과 수 */
 .form-group.second-row:nth-child(8) { grid-column: 3; } /* 업로드 기간 */
