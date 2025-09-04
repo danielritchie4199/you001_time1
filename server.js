@@ -354,7 +354,52 @@ class ElasticsearchHelper {
       }
       
       if (keyword && keyword.trim()) {
-        mustQueries.push({ term: { keyword_normalized: keyword.toLowerCase() } });
+        // 개선된 검색 쿼리: 한국어 분석기 + 퍼지 매칭 + 동의어 확장
+        const searchKeyword = keyword.trim();
+        
+        mustQueries.push({
+          bool: {
+            should: [
+              // 1. 한국어 분석기를 사용한 정확한 매칭 (가장 높은 점수)
+              {
+                match: {
+                  title: {
+                    query: searchKeyword,
+                    analyzer: "korean_analyzer",
+                    boost: 3
+                  }
+                }
+              },
+              // 2. 채널명 매칭
+              {
+                match: {
+                  youtube_channel_name: {
+                    query: searchKeyword,
+                    analyzer: "korean_analyzer",
+                    boost: 2
+                  }
+                }
+              },
+              // 3. 퍼지 매칭 (오타 허용)
+              {
+                fuzzy: {
+                  title: {
+                    value: searchKeyword,
+                    fuzziness: "AUTO",
+                    boost: 1
+                  }
+                }
+              },
+              // 4. 기존 키워드 정규화 매칭 (호환성 유지)
+              {
+                term: { 
+                  keyword_normalized: searchKeyword.toLowerCase()
+                }
+              }
+            ],
+            minimum_should_match: 1
+          }
+        });
       }
       
       if (minViews) {
@@ -447,7 +492,52 @@ class ElasticsearchHelper {
       }
       
       if (keyword && keyword.trim()) {
-        mustQueries.push({ term: { keyword_normalized: keyword.toLowerCase() } });
+        // 개선된 검색 쿼리: 한국어 분석기 + 퍼지 매칭 + 동의어 확장
+        const searchKeyword = keyword.trim();
+        
+        mustQueries.push({
+          bool: {
+            should: [
+              // 1. 한국어 분석기를 사용한 정확한 매칭 (가장 높은 점수)
+              {
+                match: {
+                  title: {
+                    query: searchKeyword,
+                    analyzer: "korean_analyzer",
+                    boost: 3
+                  }
+                }
+              },
+              // 2. 채널명 매칭
+              {
+                match: {
+                  youtube_channel_name: {
+                    query: searchKeyword,
+                    analyzer: "korean_analyzer",
+                    boost: 2
+                  }
+                }
+              },
+              // 3. 퍼지 매칭 (오타 허용)
+              {
+                fuzzy: {
+                  title: {
+                    value: searchKeyword,
+                    fuzziness: "AUTO",
+                    boost: 1
+                  }
+                }
+              },
+              // 4. 기존 키워드 정규화 매칭 (호환성 유지)
+              {
+                term: { 
+                  keyword_normalized: searchKeyword.toLowerCase()
+                }
+              }
+            ],
+            minimum_should_match: 1
+          }
+        });
       }
       
       if (minViews) {
@@ -2984,8 +3074,273 @@ function seededRandom(seed) {
   return x - Math.floor(x);
 }
 
+// 자동완성 API 엔드포인트
+app.get('/api/suggest', async (req, res) => {
+  try {
+    const { query } = req.query;
+    
+    if (!query || query.length < 2) {
+      return res.json({
+        success: true,
+        suggestions: []
+      });
+    }
+    
+    // Elasticsearch completion suggester 사용
+    const suggestions = await esClient.search({
+      index: 'videos',
+      body: {
+        suggest: {
+          keyword_suggest: {
+            prefix: query,
+            completion: {
+              field: 'title.suggest',
+              size: 10,
+              skip_duplicates: true
+            }
+          },
+          channel_suggest: {
+            prefix: query,
+            completion: {
+              field: 'youtube_channel_name.suggest',
+              size: 5,
+              skip_duplicates: true
+            }
+          }
+        }
+      }
+    });
+    
+    // 제안 결과 합치기
+    const keywordSuggestions = suggestions.body.suggest.keyword_suggest[0].options || [];
+    const channelSuggestions = suggestions.body.suggest.channel_suggest[0].options || [];
+    
+    const allSuggestions = [
+      ...keywordSuggestions.map(item => ({
+        text: item.text,
+        type: 'title',
+        score: item._score
+      })),
+      ...channelSuggestions.map(item => ({
+        text: item.text,
+        type: 'channel',
+        score: item._score
+      }))
+    ].sort((a, b) => b.score - a.score).slice(0, 10);
+    
+    res.json({
+      success: true,
+      suggestions: allSuggestions
+    });
+    
+  } catch (error) {
+    console.error('자동완성 오류:', error);
+    res.json({
+      success: false,
+      suggestions: [],
+      error: error.message
+    });
+  }
+});
+
+// 인기 검색어 API 엔드포인트
+app.get('/api/trending-keywords', async (req, res) => {
+  try {
+    const { limit = 10 } = req.query;
+    
+    // 최근 24시간 인기 검색어 조회
+    const recent24h = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    
+    const trendQuery = {
+      "size": 0,
+      "query": {
+        "range": {
+          "indexed_at": {
+            "gte": recent24h.toISOString()
+          }
+        }
+      },
+      "aggs": {
+        "trending_keywords": {
+          "terms": {
+            "field": "keyword_normalized",
+            "size": parseInt(limit)
+          }
+        }
+      }
+    };
+    
+    const results = await esClient.search({
+      index: 'videos',
+      body: trendQuery
+    });
+    
+    const trendingKeywords = results.body.aggregations.trending_keywords.buckets.map(bucket => ({
+      keyword: bucket.key,
+      count: bucket.doc_count
+    }));
+    
+    res.json({
+      success: true,
+      trending_keywords: trendingKeywords
+    });
+    
+  } catch (error) {
+    console.error('인기 검색어 조회 오류:', error);
+    res.json({
+      success: false,
+      trending_keywords: [],
+      error: error.message
+    });
+  }
+});
+
+// 백그라운드 캐시 워밍 기능
+class BackgroundCacheWarmer {
+  constructor(esHelper) {
+    this.esHelper = esHelper;
+    this.isRunning = false;
+    this.popularKeywords = [
+      '음악', '요리', '게임', 'ASMR', '브이로그', '뷰티', '운동', '여행',
+      '코딩', '리뷰', '먹방', '일상', '공부', '영화', '드라마', '애니메이션'
+    ];
+    this.countries = ['korea', 'usa', 'japan', 'uk', 'germany', 'france'];
+  }
+
+  // 백그라운드 캐시 워밍 시작
+  async startWarming() {
+    if (this.isRunning) return;
+    
+    this.isRunning = true;
+    console.log('🔥 백그라운드 캐시 워밍 시작...');
+    
+    try {
+      await this.warmPopularKeywords();
+      console.log('✅ 인기 키워드 캐시 워밍 완료');
+    } catch (error) {
+      console.error('❌ 캐시 워밍 오류:', error.message);
+    }
+    
+    this.isRunning = false;
+  }
+
+  // 인기 키워드 캐시 워밍
+  async warmPopularKeywords() {
+    const warmingPromises = [];
+    
+    for (const keyword of this.popularKeywords) {
+      for (const country of this.countries) {
+        const searchParams = {
+          country: country,
+          keyword: keyword,
+          maxResults: 20,
+          publishedAfter: null,
+          publishedBefore: null
+        };
+        
+        // 비동기로 캐시 워밍 (병렬 처리)
+        warmingPromises.push(this.warmSingleSearch(searchParams));
+      }
+    }
+    
+    // 모든 캐시 워밍을 병렬로 실행
+    await Promise.allSettled(warmingPromises);
+  }
+
+  // 단일 검색 캐시 워밍
+  async warmSingleSearch(searchParams) {
+    try {
+      // 캐시 히트 확인
+      const cacheResult = await this.esHelper.checkCacheHit(searchParams);
+      
+      if (!cacheResult.hit) {
+        console.log(`🔄 캐시 워밍: ${searchParams.country}/${searchParams.keyword}`);
+        
+        // YouTube API 호출하여 데이터 수집
+        const youtubeInstance = await apiKeyManager.getYouTubeInstanceSafely();
+        if (!youtubeInstance) {
+          console.warn('⚠️ API 키 없음, 캐시 워밍 건너뛰기');
+          return;
+        }
+        
+        const searchParams_youtube = {
+          part: 'snippet',
+          type: 'video',
+          maxResults: 20,
+          order: 'viewCount',
+          q: searchParams.keyword
+        };
+        
+        // 국가별 설정
+        if (searchParams.country !== 'worldwide') {
+          const regionCode = getCountryCode(searchParams.country);
+          if (regionCode) {
+            searchParams_youtube.regionCode = regionCode;
+          }
+          
+          const languageCode = getLanguageCode(searchParams.country);
+          if (languageCode) {
+            searchParams_youtube.relevanceLanguage = languageCode;
+          }
+        }
+        
+        // YouTube API 호출
+        const response = await youtubeInstance.youtube.search.list(searchParams_youtube);
+        
+        if (response.data.items && response.data.items.length > 0) {
+          // 비디오 상세 정보 가져오기
+          const videoIds = response.data.items.map(item => item.id.videoId);
+          const videoDetails = await youtubeInstance.youtube.videos.list({
+            part: 'snippet,statistics,contentDetails',
+            id: videoIds.join(',')
+          });
+          
+          // 결과를 Elasticsearch에 저장
+          const videos = videoDetails.data.items.map(video => ({
+            video_id: video.id,
+            title: video.snippet.title,
+            description: video.snippet.description || '',
+            youtube_channel_name: video.snippet.channelTitle,
+            youtube_channel_id: video.snippet.channelId,
+            daily_view_count: parseInt(video.statistics.viewCount) || 0,
+            subscriber_count: parseInt(video.statistics.subscriberCount) || 0,
+            duration: video.contentDetails.duration,
+            duration_seconds: parseDuration(video.contentDetails.duration),
+            primary_category: video.snippet.categoryId,
+            country: searchParams.country,
+            keyword_normalized: searchParams.keyword.toLowerCase(),
+            indexed_at: new Date().toISOString()
+          }));
+          
+          // Elasticsearch에 벌크 업서트
+          await this.esHelper.bulkUpsertVideos(videos, searchParams);
+          
+          console.log(`✅ 캐시 워밍 완료: ${searchParams.country}/${searchParams.keyword} (${videos.length}개)`);
+        }
+      } else {
+        console.log(`⚡ 이미 캐시됨: ${searchParams.country}/${searchParams.keyword}`);
+      }
+    } catch (error) {
+      console.error(`❌ 캐시 워밍 실패: ${searchParams.country}/${searchParams.keyword}`, error.message);
+    }
+  }
+}
+
+// 백그라운드 캐시 워밍 인스턴스 생성
+const cacheWarmer = new BackgroundCacheWarmer(esHelper);
+
 // 서버 시작
 app.listen(PORT, () => {
   console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
   console.log(`브라우저에서 http://localhost:${PORT} 를 열어주세요.`);
+  
+  // 서버 시작 후 5초 뒤에 캐시 워밍 시작
+  setTimeout(() => {
+    cacheWarmer.startWarming();
+  }, 5000);
+  
+  // 1시간마다 캐시 워밍 실행
+  setInterval(() => {
+    cacheWarmer.startWarming();
+  }, 3600000); // 1시간 = 3600000ms
 });

@@ -9,14 +9,45 @@
           "char_filter": [],
           "filter": ["lowercase"]
         }
+      },
+      "analyzer": {
+        "korean_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": ["lowercase", "korean_stop", "korean_stemmer"]
+        }
+      },
+      "filter": {
+        "korean_stop": {
+          "type": "stop",
+          "stopwords": ["은", "는", "이", "가", "을", "를", "의", "에", "와", "과", "도", "로", "으로", "에서", "에게", "한테", "께", "부터", "까지", "만", "도", "조차", "마저", "뿐", "밖에"]
+        },
+        "korean_stemmer": {
+          "type": "stemmer",
+          "language": "korean"
+        }
       }
     }
   },
   "mappings": {
     "properties": {
       "video_id": {"type": "keyword"},
-      "title": {"type": "text", "fields": {"raw": {"type": "keyword"}}},
-      "youtube_channel_name": {"type": "text", "fields": {"raw": {"type": "keyword"}}},
+      "title": {
+        "type": "text",
+        "analyzer": "korean_analyzer",
+        "fields": {
+          "raw": {"type": "keyword"},
+          "suggest": {"type": "completion"}
+        }
+      },
+      "youtube_channel_name": {
+        "type": "text",
+        "analyzer": "korean_analyzer",
+        "fields": {
+          "raw": {"type": "keyword"},
+          "suggest": {"type": "completion"}
+        }
+      },
       "youtube_channel_id": {"type": "keyword"},
       "country": {"type": "keyword"},
       "status_date": {"type": "date"},
@@ -27,6 +58,16 @@
       "primary_category": {"type": "keyword"},
       "vod_url": {"type": "keyword"},
       "keyword_normalized": {"type": "keyword", "normalizer": "lowercase_norm"},
+      "description": {
+        "type": "text",
+        "analyzer": "korean_analyzer",
+        "fields": {
+          "raw": {"type": "keyword"}
+        }
+      },
+      "tags": {"type": "keyword"},
+      "trending_score": {"type": "float"},
+      "engagement_rate": {"type": "float"},
       "indexed_at": {"type": "date"}
     }
   }

@@ -1,0 +1,3678 @@
+
+H:\workspace\you001_time1>node server.js
+[dotenv@17.2.1] injecting env (23) from .env -- tip: 📡 version env with Radar: https://dotenvx.com/radar
+Elasticsearch 클라이언트 초기화 완료
+🔑 최대 API 키 개수: 18개 (병렬 처리 모드)
+✅ 18개의 YouTube API 키가 병렬 처리용으로 설정되었습니다.
+   1. API_KEY_1 (***uNbg)
+   2. API_KEY_2 (***Dr9I)
+   3. API_KEY_3 (***-22s)
+   4. API_KEY_4 (***aGV4)
+   5. API_KEY_5 (***ZVKk)
+   6. API_KEY_6 (***iy5Q)
+   7. API_KEY_7 (***bxpo)
+   8. API_KEY_8 (***phe4)
+   9. API_KEY_9 (***5aIo)
+   10. API_KEY_10 (***idl4)
+   11. API_KEY_11 (***jD4c)
+   12. API_KEY_12 (***ES0c)
+   13. API_KEY_13 (***R1vY)
+   14. API_KEY_14 (***Q_ts)
+   15. API_KEY_15 (***BeQM)
+   16. API_KEY_16 (***8Se0)
+   17. API_KEY_17 (***Naqc)
+   18. API_KEY_18 (***DBQA)
+🔄 저장된 API 키 상태 로드 (Thu Sep 04 2025)
+📊 상태 복원 완료: 18/18 키 사용 가능
+서버가 포트 3000에서 실행 중입니다.
+브라우저에서 http://localhost:3000 를 열어주세요.
+🔥 백그라운드 캐시 워밍 시작...
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 0)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/음악
+🔄 라운드 로빈 선택: API_KEY_1 (인덱스: 0/18)
+🔑 사용 중인 API 키: API_KEY_1 (사용횟수: 210)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 1)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/음악
+🔄 라운드 로빈 선택: API_KEY_2 (인덱스: 1/18)
+🔑 사용 중인 API 키: API_KEY_2 (사용횟수: 216)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 2)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/음악
+🔄 라운드 로빈 선택: API_KEY_3 (인덱스: 2/18)
+🔑 사용 중인 API 키: API_KEY_3 (사용횟수: 231)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 3)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/음악
+🔄 라운드 로빈 선택: API_KEY_4 (인덱스: 3/18)
+🔑 사용 중인 API 키: API_KEY_4 (사용횟수: 229)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 5)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/음악
+🔄 라운드 로빈 선택: API_KEY_5 (인덱스: 4/18)
+🔑 사용 중인 API 키: API_KEY_5 (사용횟수: 215)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 4)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/음악
+🔄 라운드 로빈 선택: API_KEY_6 (인덱스: 5/18)
+🔑 사용 중인 API 키: API_KEY_6 (사용횟수: 231)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 6)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/요리
+🔄 라운드 로빈 선택: API_KEY_7 (인덱스: 6/18)
+🔑 사용 중인 API 키: API_KEY_7 (사용횟수: 229)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 8)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/요리
+🔄 라운드 로빈 선택: API_KEY_8 (인덱스: 7/18)
+🔑 사용 중인 API 키: API_KEY_8 (사용횟수: 211)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 7)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/요리
+🔄 라운드 로빈 선택: API_KEY_9 (인덱스: 8/18)
+🔑 사용 중인 API 키: API_KEY_9 (사용횟수: 223)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 9)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/요리
+🔄 라운드 로빈 선택: API_KEY_10 (인덱스: 9/18)
+🔑 사용 중인 API 키: API_KEY_10 (사용횟수: 223)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 10)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/요리
+🔄 라운드 로빈 선택: API_KEY_11 (인덱스: 10/18)
+🔑 사용 중인 API 키: API_KEY_11 (사용횟수: 213)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 11)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/요리
+🔄 라운드 로빈 선택: API_KEY_12 (인덱스: 11/18)
+🔑 사용 중인 API 키: API_KEY_12 (사용횟수: 212)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 12)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/게임
+🔄 라운드 로빈 선택: API_KEY_13 (인덱스: 12/18)
+🔑 사용 중인 API 키: API_KEY_13 (사용횟수: 218)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 13)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/게임
+🔄 라운드 로빈 선택: API_KEY_14 (인덱스: 13/18)
+🔑 사용 중인 API 키: API_KEY_14 (사용횟수: 201)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 14)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/게임
+🔄 라운드 로빈 선택: API_KEY_15 (인덱스: 14/18)
+🔑 사용 중인 API 키: API_KEY_15 (사용횟수: 209)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 15)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/게임
+🔄 라운드 로빈 선택: API_KEY_16 (인덱스: 15/18)
+🔑 사용 중인 API 키: API_KEY_16 (사용횟수: 212)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 16)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/게임
+🔄 라운드 로빈 선택: API_KEY_17 (인덱스: 16/18)
+🔑 사용 중인 API 키: API_KEY_17 (사용횟수: 198)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 17)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/게임
+🔄 라운드 로빈 선택: API_KEY_18 (인덱스: 17/18)
+🔑 사용 중인 API 키: API_KEY_18 (사용횟수: 212)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 18)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/ASMR
+🔄 라운드 로빈 선택: API_KEY_1 (인덱스: 0/18)
+🔑 사용 중인 API 키: API_KEY_1 (사용횟수: 211)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 19)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/ASMR
+🔄 라운드 로빈 선택: API_KEY_2 (인덱스: 1/18)
+🔑 사용 중인 API 키: API_KEY_2 (사용횟수: 217)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 20)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/ASMR
+🔄 라운드 로빈 선택: API_KEY_3 (인덱스: 2/18)
+🔑 사용 중인 API 키: API_KEY_3 (사용횟수: 232)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 21)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/ASMR
+🔄 라운드 로빈 선택: API_KEY_4 (인덱스: 3/18)
+🔑 사용 중인 API 키: API_KEY_4 (사용횟수: 230)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 22)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/ASMR
+🔄 라운드 로빈 선택: API_KEY_5 (인덱스: 4/18)
+🔑 사용 중인 API 키: API_KEY_5 (사용횟수: 216)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 23)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/ASMR
+🔄 라운드 로빈 선택: API_KEY_6 (인덱스: 5/18)
+🔑 사용 중인 API 키: API_KEY_6 (사용횟수: 232)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 24)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/브이로그
+🔄 라운드 로빈 선택: API_KEY_7 (인덱스: 6/18)
+🔑 사용 중인 API 키: API_KEY_7 (사용횟수: 230)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 25)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/브이로그
+🔄 라운드 로빈 선택: API_KEY_8 (인덱스: 7/18)
+🔑 사용 중인 API 키: API_KEY_8 (사용횟수: 212)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 26)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/브이로그
+🔄 라운드 로빈 선택: API_KEY_9 (인덱스: 8/18)
+🔑 사용 중인 API 키: API_KEY_9 (사용횟수: 224)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 27)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/브이로그
+🔄 라운드 로빈 선택: API_KEY_10 (인덱스: 9/18)
+🔑 사용 중인 API 키: API_KEY_10 (사용횟수: 224)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 28)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/브이로그
+🔄 라운드 로빈 선택: API_KEY_11 (인덱스: 10/18)
+🔑 사용 중인 API 키: API_KEY_11 (사용횟수: 214)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 29)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/브이로그
+🔄 라운드 로빈 선택: API_KEY_12 (인덱스: 11/18)
+🔑 사용 중인 API 키: API_KEY_12 (사용횟수: 213)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 31)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/뷰티
+🔄 라운드 로빈 선택: API_KEY_13 (인덱스: 12/18)
+🔑 사용 중인 API 키: API_KEY_13 (사용횟수: 219)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 30)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/뷰티
+🔄 라운드 로빈 선택: API_KEY_14 (인덱스: 13/18)
+🔑 사용 중인 API 키: API_KEY_14 (사용횟수: 202)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 32)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/뷰티
+🔄 라운드 로빈 선택: API_KEY_15 (인덱스: 14/18)
+🔑 사용 중인 API 키: API_KEY_15 (사용횟수: 210)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 33)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/뷰티
+🔄 라운드 로빈 선택: API_KEY_16 (인덱스: 15/18)
+🔑 사용 중인 API 키: API_KEY_16 (사용횟수: 213)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 34)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/뷰티
+🔄 라운드 로빈 선택: API_KEY_17 (인덱스: 16/18)
+🔑 사용 중인 API 키: API_KEY_17 (사용횟수: 199)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 35)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/뷰티
+🔄 라운드 로빈 선택: API_KEY_18 (인덱스: 17/18)
+🔑 사용 중인 API 키: API_KEY_18 (사용횟수: 213)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 36)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/운동
+🔄 라운드 로빈 선택: API_KEY_1 (인덱스: 0/18)
+🔑 사용 중인 API 키: API_KEY_1 (사용횟수: 212)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 37)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/운동
+🔄 라운드 로빈 선택: API_KEY_2 (인덱스: 1/18)
+🔑 사용 중인 API 키: API_KEY_2 (사용횟수: 218)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 39)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/운동
+🔄 라운드 로빈 선택: API_KEY_3 (인덱스: 2/18)
+🔑 사용 중인 API 키: API_KEY_3 (사용횟수: 233)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 38)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/운동
+🔄 라운드 로빈 선택: API_KEY_4 (인덱스: 3/18)
+🔑 사용 중인 API 키: API_KEY_4 (사용횟수: 231)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 40)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/운동
+🔄 라운드 로빈 선택: API_KEY_5 (인덱스: 4/18)
+🔑 사용 중인 API 키: API_KEY_5 (사용횟수: 217)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 41)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/운동
+🔄 라운드 로빈 선택: API_KEY_6 (인덱스: 5/18)
+🔑 사용 중인 API 키: API_KEY_6 (사용횟수: 233)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 42)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/여행
+🔄 라운드 로빈 선택: API_KEY_7 (인덱스: 6/18)
+🔑 사용 중인 API 키: API_KEY_7 (사용횟수: 231)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 43)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/여행
+🔄 라운드 로빈 선택: API_KEY_8 (인덱스: 7/18)
+🔑 사용 중인 API 키: API_KEY_8 (사용횟수: 213)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 44)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/여행
+🔄 라운드 로빈 선택: API_KEY_9 (인덱스: 8/18)
+🔑 사용 중인 API 키: API_KEY_9 (사용횟수: 225)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 45)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/여행
+🔄 라운드 로빈 선택: API_KEY_10 (인덱스: 9/18)
+🔑 사용 중인 API 키: API_KEY_10 (사용횟수: 225)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 46)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/여행
+🔄 라운드 로빈 선택: API_KEY_11 (인덱스: 10/18)
+🔑 사용 중인 API 키: API_KEY_11 (사용횟수: 215)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 48)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/코딩
+🔄 라운드 로빈 선택: API_KEY_12 (인덱스: 11/18)
+🔑 사용 중인 API 키: API_KEY_12 (사용횟수: 214)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 47)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/여행
+🔄 라운드 로빈 선택: API_KEY_13 (인덱스: 12/18)
+🔑 사용 중인 API 키: API_KEY_13 (사용횟수: 220)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 49)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/코딩
+🔄 라운드 로빈 선택: API_KEY_14 (인덱스: 13/18)
+🔑 사용 중인 API 키: API_KEY_14 (사용횟수: 203)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 50)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/코딩
+🔄 라운드 로빈 선택: API_KEY_15 (인덱스: 14/18)
+🔑 사용 중인 API 키: API_KEY_15 (사용횟수: 211)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 52)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/코딩
+🔄 라운드 로빈 선택: API_KEY_16 (인덱스: 15/18)
+🔑 사용 중인 API 키: API_KEY_16 (사용횟수: 214)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 51)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/코딩
+🔄 라운드 로빈 선택: API_KEY_17 (인덱스: 16/18)
+🔑 사용 중인 API 키: API_KEY_17 (사용횟수: 200)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 53)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/코딩
+🔄 라운드 로빈 선택: API_KEY_18 (인덱스: 17/18)
+🔑 사용 중인 API 키: API_KEY_18 (사용횟수: 214)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 54)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/리뷰
+🔄 라운드 로빈 선택: API_KEY_1 (인덱스: 0/18)
+🔑 사용 중인 API 키: API_KEY_1 (사용횟수: 213)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 56)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/리뷰
+🔄 라운드 로빈 선택: API_KEY_2 (인덱스: 1/18)
+🔑 사용 중인 API 키: API_KEY_2 (사용횟수: 219)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 55)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/리뷰
+🔄 라운드 로빈 선택: API_KEY_3 (인덱스: 2/18)
+🔑 사용 중인 API 키: API_KEY_3 (사용횟수: 234)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 57)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/리뷰
+🔄 라운드 로빈 선택: API_KEY_4 (인덱스: 3/18)
+🔑 사용 중인 API 키: API_KEY_4 (사용횟수: 232)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 58)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/리뷰
+🔄 라운드 로빈 선택: API_KEY_5 (인덱스: 4/18)
+🔑 사용 중인 API 키: API_KEY_5 (사용횟수: 218)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 59)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/리뷰
+🔄 라운드 로빈 선택: API_KEY_6 (인덱스: 5/18)
+🔑 사용 중인 API 키: API_KEY_6 (사용횟수: 234)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 60)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/먹방
+🔄 라운드 로빈 선택: API_KEY_7 (인덱스: 6/18)
+🔑 사용 중인 API 키: API_KEY_7 (사용횟수: 232)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 61)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/먹방
+🔄 라운드 로빈 선택: API_KEY_8 (인덱스: 7/18)
+🔑 사용 중인 API 키: API_KEY_8 (사용횟수: 214)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 62)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/먹방
+🔄 라운드 로빈 선택: API_KEY_9 (인덱스: 8/18)
+🔑 사용 중인 API 키: API_KEY_9 (사용횟수: 226)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 63)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/먹방
+🔄 라운드 로빈 선택: API_KEY_10 (인덱스: 9/18)
+🔑 사용 중인 API 키: API_KEY_10 (사용횟수: 226)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 64)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/먹방
+🔄 라운드 로빈 선택: API_KEY_11 (인덱스: 10/18)
+🔑 사용 중인 API 키: API_KEY_11 (사용횟수: 216)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 65)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/먹방
+🔄 라운드 로빈 선택: API_KEY_12 (인덱스: 11/18)
+🔑 사용 중인 API 키: API_KEY_12 (사용횟수: 215)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 66)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/일상
+🔄 라운드 로빈 선택: API_KEY_13 (인덱스: 12/18)
+🔑 사용 중인 API 키: API_KEY_13 (사용횟수: 221)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 67)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/일상
+🔄 라운드 로빈 선택: API_KEY_14 (인덱스: 13/18)
+🔑 사용 중인 API 키: API_KEY_14 (사용횟수: 204)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 68)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/일상
+🔄 라운드 로빈 선택: API_KEY_15 (인덱스: 14/18)
+🔑 사용 중인 API 키: API_KEY_15 (사용횟수: 212)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 70)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/일상
+🔄 라운드 로빈 선택: API_KEY_16 (인덱스: 15/18)
+🔑 사용 중인 API 키: API_KEY_16 (사용횟수: 215)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 69)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/일상
+🔄 라운드 로빈 선택: API_KEY_17 (인덱스: 16/18)
+🔑 사용 중인 API 키: API_KEY_17 (사용횟수: 201)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 72)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/공부
+🔄 라운드 로빈 선택: API_KEY_18 (인덱스: 17/18)
+🔑 사용 중인 API 키: API_KEY_18 (사용횟수: 215)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 71)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/일상
+🔄 라운드 로빈 선택: API_KEY_1 (인덱스: 0/18)
+🔑 사용 중인 API 키: API_KEY_1 (사용횟수: 214)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 73)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/공부
+🔄 라운드 로빈 선택: API_KEY_2 (인덱스: 1/18)
+🔑 사용 중인 API 키: API_KEY_2 (사용횟수: 220)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 74)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/공부
+🔄 라운드 로빈 선택: API_KEY_3 (인덱스: 2/18)
+🔑 사용 중인 API 키: API_KEY_3 (사용횟수: 235)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 75)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/공부
+🔄 라운드 로빈 선택: API_KEY_4 (인덱스: 3/18)
+🔑 사용 중인 API 키: API_KEY_4 (사용횟수: 233)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 76)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/공부
+🔄 라운드 로빈 선택: API_KEY_5 (인덱스: 4/18)
+🔑 사용 중인 API 키: API_KEY_5 (사용횟수: 219)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 77)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/공부
+🔄 라운드 로빈 선택: API_KEY_6 (인덱스: 5/18)
+🔑 사용 중인 API 키: API_KEY_6 (사용횟수: 235)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 78)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/영화
+🔄 라운드 로빈 선택: API_KEY_7 (인덱스: 6/18)
+🔑 사용 중인 API 키: API_KEY_7 (사용횟수: 233)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 81)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/영화
+🔄 라운드 로빈 선택: API_KEY_8 (인덱스: 7/18)
+🔑 사용 중인 API 키: API_KEY_8 (사용횟수: 215)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 80)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/영화
+🔄 라운드 로빈 선택: API_KEY_9 (인덱스: 8/18)
+🔑 사용 중인 API 키: API_KEY_9 (사용횟수: 227)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 82)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/영화
+🔄 라운드 로빈 선택: API_KEY_10 (인덱스: 9/18)
+🔑 사용 중인 API 키: API_KEY_10 (사용횟수: 227)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 83)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/영화
+🔄 라운드 로빈 선택: API_KEY_11 (인덱스: 10/18)
+🔑 사용 중인 API 키: API_KEY_11 (사용횟수: 217)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 84)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/드라마
+🔄 라운드 로빈 선택: API_KEY_12 (인덱스: 11/18)
+🔑 사용 중인 API 키: API_KEY_12 (사용횟수: 216)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 79)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/영화
+🔄 라운드 로빈 선택: API_KEY_13 (인덱스: 12/18)
+🔑 사용 중인 API 키: API_KEY_13 (사용횟수: 222)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 85)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/드라마
+🔄 라운드 로빈 선택: API_KEY_14 (인덱스: 13/18)
+🔑 사용 중인 API 키: API_KEY_14 (사용횟수: 205)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 86)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/드라마
+🔄 라운드 로빈 선택: API_KEY_15 (인덱스: 14/18)
+🔑 사용 중인 API 키: API_KEY_15 (사용횟수: 213)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 87)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/드라마
+🔄 라운드 로빈 선택: API_KEY_16 (인덱스: 15/18)
+🔑 사용 중인 API 키: API_KEY_16 (사용횟수: 216)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 88)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/드라마
+🔄 라운드 로빈 선택: API_KEY_17 (인덱스: 16/18)
+🔑 사용 중인 API 키: API_KEY_17 (사용횟수: 202)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 91)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: usa/애니메이션
+🔄 라운드 로빈 선택: API_KEY_18 (인덱스: 17/18)
+🔑 사용 중인 API 키: API_KEY_18 (사용횟수: 216)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 89)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/드라마
+🔄 라운드 로빈 선택: API_KEY_1 (인덱스: 0/18)
+🔑 사용 중인 API 키: API_KEY_1 (사용횟수: 215)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 90)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: korea/애니메이션
+🔄 라운드 로빈 선택: API_KEY_2 (인덱스: 1/18)
+🔑 사용 중인 API 키: API_KEY_2 (사용횟수: 221)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 92)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: japan/애니메이션
+🔄 라운드 로빈 선택: API_KEY_3 (인덱스: 2/18)
+🔑 사용 중인 API 키: API_KEY_3 (사용횟수: 236)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 93)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: uk/애니메이션
+🔄 라운드 로빈 선택: API_KEY_4 (인덱스: 3/18)
+🔑 사용 중인 API 키: API_KEY_4 (사용횟수: 234)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 94)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: germany/애니메이션
+🔄 라운드 로빈 선택: API_KEY_5 (인덱스: 4/18)
+🔑 사용 중인 API 키: API_KEY_5 (사용횟수: 220)
+Cache hit check error: ResponseError: search_phase_execution_exception
+        Root causes:
+                query_shard_exception: [match] analyzer [korean_analyzer] not found
+    at SniffingTransport._request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:544:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:670:32
+    at async SniffingTransport.request (H:\workspace\you001_time1\node_modules\@elastic\transport\lib\Transport.js:666:20)
+    at async Client.CountApi [as count] (H:\workspace\you001_time1\node_modules\@elastic\elasticsearch\lib\api\api\count.js:65:12)
+    at async ElasticsearchHelper.checkCacheHit (H:\workspace\you001_time1\server.js:433:29)
+    at async BackgroundCacheWarmer.warmSingleSearch (H:\workspace\you001_time1\server.js:3254:27)
+    at async Promise.allSettled (index 95)
+    at async BackgroundCacheWarmer.warmPopularKeywords (H:\workspace\you001_time1\server.js:3247:5)
+    at async BackgroundCacheWarmer.startWarming (H:\workspace\you001_time1\server.js:3218:7) {
+  options: { redaction: { type: 'replace', additionalKeys: [] } },
+  meta: {
+    body: { error: [Object], status: 400 },
+    statusCode: 400,
+    headers: {
+      'x-elastic-product': 'Elasticsearch',
+      'content-type': 'application/vnd.elasticsearch+json;compatible-with=8',
+      'content-length': '517'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'elasticsearch-js',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: null
+  }
+}
+🔄 캐시 워밍: france/애니메이션
+🔄 라운드 로빈 선택: API_KEY_6 (인덱스: 5/18)
+🔑 사용 중인 API 키: API_KEY_6 (사용횟수: 236)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/일상 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/요리 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/ASMR (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/게임 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/브이로그 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/리뷰 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/브이로그 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/요리 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/ASMR (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/먹방 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/영화 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/음악 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/ASMR (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/먹방 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/요리 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/뷰티 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/음악 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/뷰티 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/게임 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/요리 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/음악 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/일상 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/음악 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/일상 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/게임 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/리뷰 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/ASMR (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/먹방 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/게임 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/ASMR (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/일상 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/드라마 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/요리 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/여행 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/드라마 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/음악 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/여행 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/먹방 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/뷰티 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/ASMR (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/요리 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/리뷰 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/게임 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/브이로그 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/브이로그 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/여행 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/뷰티 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/리뷰 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/뷰티 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/영화 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/공부 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/영화 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/뷰티 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/게임 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/애니메이션 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/여행 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/먹방 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/애니메이션 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/여행 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/일상 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/운동 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/여행 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/리뷰 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/코딩 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/드라마 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/애니메이션 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/브이로그 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/영화 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/애니메이션 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/영화 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/공부 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/드라마 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/애니메이션 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/영화 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/음악 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/브이로그 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/운동 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/공부 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/리뷰 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/코딩 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/애니메이션 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/일상 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/먹방 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/드라마 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/운동 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/공부 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/코딩 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/공부 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: uk/코딩 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: usa/드라마 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: france/운동 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/운동 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: korea/코딩 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/운동 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: germany/코딩 (20개)
+ES bulk upsert 성공: 20개 비디오 인덱싱
+✅ 캐시 워밍 완료: japan/공부 (20개)
+✅ 인기 키워드 캐시 워밍 완료
