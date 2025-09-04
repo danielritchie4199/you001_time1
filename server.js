@@ -354,46 +354,35 @@ class ElasticsearchHelper {
       }
       
       if (keyword && keyword.trim()) {
-        // 개선된 검색 쿼리: 한국어 분석기 + 퍼지 매칭 + 동의어 확장
+        // Elasticsearch 동의어 분석기 사용으로 서버 로직 단순화
         const searchKeyword = keyword.trim();
         
         mustQueries.push({
           bool: {
             should: [
-              // 1. 한국어 분석기를 사용한 정확한 매칭 (가장 높은 점수)
+              // 1. 기본 검색 (Elasticsearch 동의어 분석기 사용)
               {
                 match: {
                   title: {
                     query: searchKeyword,
-                    analyzer: "korean_analyzer",
                     boost: 3
                   }
                 }
               },
-              // 2. 채널명 매칭
+              // 2. 채널명 검색
               {
                 match: {
                   youtube_channel_name: {
                     query: searchKeyword,
-                    analyzer: "korean_analyzer",
                     boost: 2
                   }
                 }
               },
-              // 3. 퍼지 매칭 (오타 허용)
-              {
-                fuzzy: {
-                  title: {
-                    value: searchKeyword,
-                    fuzziness: "AUTO",
-                    boost: 1
-                  }
-                }
-              },
-              // 4. 기존 키워드 정규화 매칭 (호환성 유지)
+              // 3. 기존 키워드 정규화 매칭 (호환성 유지)
               {
                 term: { 
-                  keyword_normalized: searchKeyword.toLowerCase()
+                  keyword_normalized: searchKeyword.toLowerCase(),
+                  boost: 1
                 }
               }
             ],
@@ -492,46 +481,35 @@ class ElasticsearchHelper {
       }
       
       if (keyword && keyword.trim()) {
-        // 개선된 검색 쿼리: 한국어 분석기 + 퍼지 매칭 + 동의어 확장
+        // Elasticsearch 동의어 분석기 사용으로 서버 로직 단순화
         const searchKeyword = keyword.trim();
         
         mustQueries.push({
           bool: {
             should: [
-              // 1. 한국어 분석기를 사용한 정확한 매칭 (가장 높은 점수)
+              // 1. 기본 검색 (Elasticsearch 동의어 분석기 사용)
               {
                 match: {
                   title: {
                     query: searchKeyword,
-                    analyzer: "korean_analyzer",
                     boost: 3
                   }
                 }
               },
-              // 2. 채널명 매칭
+              // 2. 채널명 검색
               {
                 match: {
                   youtube_channel_name: {
                     query: searchKeyword,
-                    analyzer: "korean_analyzer",
                     boost: 2
                   }
                 }
               },
-              // 3. 퍼지 매칭 (오타 허용)
-              {
-                fuzzy: {
-                  title: {
-                    value: searchKeyword,
-                    fuzziness: "AUTO",
-                    boost: 1
-                  }
-                }
-              },
-              // 4. 기존 키워드 정규화 매칭 (호환성 유지)
+              // 3. 기존 키워드 정규화 매칭 (호환성 유지)
               {
                 term: { 
-                  keyword_normalized: searchKeyword.toLowerCase()
+                  keyword_normalized: searchKeyword.toLowerCase(),
+                  boost: 1
                 }
               }
             ],

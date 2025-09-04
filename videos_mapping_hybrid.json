@@ -1,0 +1,169 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "analysis": {
+      "normalizer": {
+        "lowercase_norm": {
+          "type": "custom",
+          "char_filter": [],
+          "filter": ["lowercase"]
+        }
+      },
+      "tokenizer": {
+        "nori_tokenizer": {
+          "type": "nori_tokenizer",
+          "decompound_mode": "mixed",
+          "discard_punctuation": true
+        }
+      },
+      "filter": {
+        "nori_part_of_speech": {
+          "type": "nori_part_of_speech",
+          "stoptags": [
+            "E","IC","J","MAG","MAJ","MM","SP","SSC","SSO","SC","SE",
+            "XPN","XSA","XSN","XSV","UNA","NA","VSV"
+          ]
+        },
+        "nori_number": {"type": "nori_number"},
+        "nori_readingform": {"type": "nori_readingform"},
+        "korean_synonyms": {
+          "type": "synonym",
+          "synonyms": [
+            "음악,뮤직,music,노래,song,곡",
+            "요리,쿠킹,cooking,레시피,recipe",
+            "게임,게이밍,gaming,플레이,game",
+            "뷰티,미용,beauty,화장,메이크업,makeup",
+            "운동,스포츠,sports,헬스,fitness,workout",
+            "여행,트래블,travel,여행기,trip",
+            "리뷰,후기,review,평가,평점",
+            "먹방,eating,food,음식,mukbang",
+            "댄스,춤,dance,안무,choreography",
+            "코미디,개그,comedy,웃긴,funny"
+          ]
+        },
+        "korean_synonym_graph": {
+          "type": "synonym_graph",
+          "synonyms": [
+            "음악,뮤직,music,노래,song,곡",
+            "요리,쿠킹,cooking,레시피,recipe",
+            "게임,게이밍,gaming,플레이,game",
+            "뷰티,미용,beauty,화장,메이크업,makeup",
+            "운동,스포츠,sports,헬스,fitness,workout",
+            "여행,트래블,travel,여행기,trip",
+            "리뷰,후기,review,평가,평점",
+            "먹방,eating,food,음식,mukbang",
+            "댄스,춤,dance,안무,choreography",
+            "코미디,개그,comedy,웃긴,funny"
+          ]
+        },
+        "english_synonyms": {
+          "type": "synonym",
+          "synonyms": [
+            "phone,smartphone,mobile",
+            "pc,computer,desktop",
+            "laptop,notebook",
+            "tablet,pad",
+            "headphone,earphone,earbuds",
+            "tv,television",
+            "car,auto,vehicle",
+            "bike,bicycle,cycle"
+          ]
+        }
+      },
+      "analyzer": {
+        "korean_nori_analyzer": {
+          "type": "custom",
+          "tokenizer": "nori_tokenizer",
+          "filter": [
+            "nori_part_of_speech",
+            "nori_number",
+            "nori_readingform",
+            "lowercase"
+          ]
+        },
+        "korean_synonym_keyword_analyzer": {
+          "type": "custom",
+          "tokenizer": "keyword",
+          "filter": ["lowercase", "korean_synonyms"]
+        },
+        "korean_hybrid_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "cjk_width",
+            "korean_synonym_graph"
+          ]
+        },
+        "english_standard_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": ["lowercase", "stop", "porter_stem"]
+        },
+        "english_synonym_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": ["lowercase", "stop", "english_synonyms", "porter_stem"]
+        },
+        "search_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": ["lowercase", "cjk_width", "korean_synonym_graph", "english_synonyms"]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "video_id": {"type": "keyword"},
+      "title": {
+        "type": "text",
+        "analyzer": "korean_hybrid_analyzer",
+        "search_analyzer": "search_analyzer",
+        "fields": {
+          "raw": {"type": "keyword"},
+          "suggest": {"type": "completion"},
+          "korean_exact": {"type": "text","analyzer": "korean_synonym_keyword_analyzer"},
+          "english": {"type": "text","analyzer": "english_synonym_analyzer"},
+          "exact": {"type": "text","analyzer": "standard"}
+        }
+      },
+      "youtube_channel_name": {
+        "type": "text",
+        "analyzer": "korean_hybrid_analyzer",
+        "search_analyzer": "search_analyzer",
+        "fields": {
+          "raw": {"type": "keyword"},
+          "suggest": {"type": "completion"},
+          "korean_exact": {"type": "text","analyzer": "korean_synonym_keyword_analyzer"},
+          "english": {"type": "text","analyzer": "english_synonym_analyzer"}
+        }
+      },
+      "youtube_channel_id": {"type": "keyword"},
+      "country": {"type": "keyword"},
+      "status_date": {"type": "date"},
+      "daily_view_count": {"type": "long"},
+      "subscriber_count": {"type": "long"},
+      "duration_seconds": {"type": "integer"},
+      "video_length_category": {"type": "keyword"},
+      "primary_category": {"type": "keyword"},
+      "vod_url": {"type": "keyword"},
+      "keyword_normalized": {"type": "keyword","normalizer": "lowercase_norm"},
+      "description": {
+        "type": "text",
+        "analyzer": "korean_hybrid_analyzer",
+        "search_analyzer": "search_analyzer",
+        "fields": {
+          "raw": {"type": "keyword"},
+          "korean_exact": {"type": "text","analyzer": "korean_synonym_keyword_analyzer"},
+          "english": {"type": "text","analyzer": "english_synonym_analyzer"}
+        }
+      },
+      "tags": {"type": "keyword"},
+      "trending_score": {"type": "float"},
+      "engagement_rate": {"type": "float"},
+      "indexed_at": {"type": "date"}
+    }
+  }
+}

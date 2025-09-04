@@ -17,6 +17,8 @@
             <p>전세계 유튜브 채널에서 원하는 동영상을 찾아봅니다</p>
             <div class="header-search">
                 <input type="number" id="headerKeyword" placeholder="인기 검색어 개수" min="10" max="1000">
+                <input type="number" id="synonymLimit" placeholder="동의어 제한" min="0" max="10" value="3">
+                <span class="tooltip" title="0: 동의어 사용 안함, 1-10: 동의어 개수 제한">💡</span>
                 <button type="button" onclick="performHeaderSearch()">🔍</button>
             </div>
         </div>
