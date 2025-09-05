@@ -17,7 +17,7 @@
             <p>전세계 유튜브 채널에서 원하는 동영상을 찾아봅니다</p>
             <div class="header-search">
                 <input type="number" id="headerKeyword" placeholder="인기 검색어 개수" min="10" max="1000">
-                <input type="number" id="synonymLimit" placeholder="동의어 제한" min="0" max="10" value="3">
+                <input type="number" id="synonymLimit" placeholder="동의어 개수" min="0" max="10">
                 <span class="tooltip" title="0: 동의어 사용 안함, 1-10: 동의어 개수 제한">💡</span>
                 <button type="button" onclick="performHeaderSearch()">🔍</button>
             </div>
@@ -304,7 +304,6 @@
                         <input type="text" id="keyword" name="keyword" placeholder="키워드 입력 (비워두면 인기 동영상 검색)" autocomplete="off">
                         <div id="suggestions" class="suggestions-dropdown"></div>
                     </div>
-                    <div class="trending-keywords"></div>
                 </div>
 
                 <div class="form-group">
@@ -552,7 +551,11 @@
                 </div>
             </div>
 
-
+            <!-- 인기 검색어 섹션 -->
+            <div class="trending-section">
+                <label class="section-label">🔥 인기 검색어</label>
+                <div class="trending-keywords"></div>
+            </div>
 
             <button type="submit" class="search-btn">
                 🔍 검색하기

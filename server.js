@@ -6,6 +6,7 @@ const { google } = require('googleapis');
 const axios = require('axios');
 const XLSX = require('xlsx');
 const { Client } = require('@elastic/elasticsearch');
+const redis = require('redis');
 require('dotenv').config();
 
 // Elasticsearch 클라이언트 설정
@@ -16,6 +17,32 @@ try {
 } catch (error) {
   console.warn('Elasticsearch 연결 실패, YouTube API만 사용:', error.message);
   esClient = null;
+}
+
+// Redis 클라이언트 설정
+let redisClient = null;
+try {
+  redisClient = redis.createClient({
+    url: process.env.REDIS_URL || 'redis://localhost:6379'
+  });
+  
+  redisClient.on('error', (err) => {
+    console.warn('Redis 연결 오류:', err.message);
+    redisClient = null;
+  });
+  
+  redisClient.on('connect', () => {
+    console.log('✅ Redis 연결 성공');
+  });
+  
+  redisClient.connect().catch((err) => {
+    console.warn('Redis 연결 실패, 캐싱 없이 진행:', err.message);
+    redisClient = null;
+  });
+  
+} catch (error) {
+  console.warn('Redis 초기화 실패, 캐싱 없이 진행:', error.message);
+  redisClient = null;
 }
 
 // Elasticsearch 연결 상태 확인 함수
@@ -330,6 +357,86 @@ class ApiKeyManager {
 // API 키 매니저 인스턴스 생성
 const apiKeyManager = new ApiKeyManager();
 
+// Redis 캐시 헬퍼 클래스
+class RedisCacheHelper {
+  constructor(client) {
+    this.client = client;
+    this.defaultTTL = parseInt(process.env.REDIS_TTL_SECONDS) || 1800; // 30분 기본
+  }
+  
+  // 캐시 키 생성
+  generateCacheKey(searchParams) {
+    const { country, keyword, minViews, maxViews, maxResults, synonymLimit, publishedAfter, publishedBefore } = searchParams;
+    
+    const keyParts = [
+      'search',
+      country || 'worldwide',
+      keyword ? keyword.toLowerCase().replace(/\s+/g, '_') : 'no_keyword',
+      minViews || '0',
+      maxViews || 'unlimited',
+      maxResults || '60',
+      synonymLimit || '0',
+      publishedAfter || 'no_start',
+      publishedBefore || 'no_end'
+    ];
+    
+    return keyParts.join(':');
+  }
+  
+  // 캐시에서 데이터 조회
+  async get(searchParams) {
+    if (!this.client) return null;
+    
+    try {
+      const cacheKey = this.generateCacheKey(searchParams);
+      const cached = await this.client.get(cacheKey);
+      
+      if (cached) {
+        console.log(`🎯 Redis 캐시 HIT: ${cacheKey}`);
+        return JSON.parse(cached);
+      } else {
+        console.log(`❌ Redis 캐시 MISS: ${cacheKey}`);
+        return null;
+      }
+    } catch (error) {
+      console.warn('Redis GET 오류:', error.message);
+      return null;
+    }
+  }
+  
+  // 캐시에 데이터 저장
+  async set(searchParams, data, customTTL = null) {
+    if (!this.client) return false;
+    
+    try {
+      const cacheKey = this.generateCacheKey(searchParams);
+      const ttl = customTTL || this.defaultTTL;
+      
+      await this.client.setEx(cacheKey, ttl, JSON.stringify(data));
+      console.log(`💾 Redis 캐시 저장: ${cacheKey} (TTL: ${ttl}초)`);
+      return true;
+    } catch (error) {
+      console.warn('Redis SET 오류:', error.message);
+      return false;
+    }
+  }
+  
+  // 캐시 삭제 (필요시)
+  async delete(searchParams) {
+    if (!this.client) return false;
+    
+    try {
+      const cacheKey = this.generateCacheKey(searchParams);
+      const result = await this.client.del(cacheKey);
+      console.log(`🗑️ Redis 캐시 삭제: ${cacheKey}`);
+      return result > 0;
+    } catch (error) {
+      console.warn('Redis DELETE 오류:', error.message);
+      return false;
+    }
+  }
+}
+
 // Elasticsearch 헬퍼 함수들
 class ElasticsearchHelper {
   constructor(client) {
@@ -338,12 +445,37 @@ class ElasticsearchHelper {
     this.ttlHours = parseInt(process.env.ES_TTL_HOURS) || 48;
   }
 
+  // 동의어 제한 로직
+  applySynonymLimit(keyword, limit) {
+    const synonymMap = {
+      '음악': ['뮤직', 'music', '노래', 'song', '곡'],
+      '요리': ['쿠킹', 'cooking', '레시피', 'recipe'],
+      '게임': ['게이밍', 'gaming', '플레이', 'game'],
+      '뷰티': ['미용', 'beauty', '화장', '메이크업', 'makeup'],
+      '운동': ['스포츠', 'sports', '헬스', 'fitness', 'workout'],
+      '여행': ['트래블', 'travel', '여행기', 'trip'],
+      '리뷰': ['후기', 'review', '평가', '평점'],
+      '먹방': ['eating', 'food', '음식', 'mukbang'],
+      '댄스': ['춤', 'dance', '안무', 'choreography'],
+      '코미디': ['개그', 'comedy', '웃긴', 'funny']
+    };
+    
+    if (limit === 0) {
+      return [keyword];
+    }
+    
+    const synonyms = synonymMap[keyword.toLowerCase()] || [];
+    const limitedSynonyms = synonyms.slice(0, Math.max(0, limit - 1));
+    
+    return [keyword, ...limitedSynonyms];
+  }
+
   // 캐시 히트 판단
   async checkCacheHit(searchParams) {
     if (!this.client || !(await checkESConnection())) return { hit: false, reason: 'ES client not available' };
     
     try {
-      const { country, keyword, minViews, maxViews, maxResults, publishedAfter, publishedBefore } = searchParams;
+      const { country, keyword, minViews, maxViews, maxResults, publishedAfter, publishedBefore, synonymLimit } = searchParams;
       
       // 검색 조건 구성
       const mustQueries = [];
@@ -354,41 +486,82 @@ class ElasticsearchHelper {
       }
       
       if (keyword && keyword.trim()) {
-        // Elasticsearch 동의어 분석기 사용으로 서버 로직 단순화
         const searchKeyword = keyword.trim();
+        const limit = parseInt(synonymLimit) || 0;
         
-        mustQueries.push({
-          bool: {
-            should: [
-              // 1. 기본 검색 (Elasticsearch 동의어 분석기 사용)
-              {
-                match: {
-                  title: {
-                    query: searchKeyword,
-                    boost: 3
+        if (limit === 0) {
+          // 동의어 사용 안함 (기본 검색만)
+          mustQueries.push({
+            bool: {
+              should: [
+                {
+                  match: {
+                    title: {
+                      query: searchKeyword,
+                      boost: 3
+                    }
+                  }
+                },
+                {
+                  match: {
+                    youtube_channel_name: {
+                      query: searchKeyword,
+                      boost: 2
+                    }
+                  }
+                },
+                {
+                  term: { 
+                    keyword_normalized: searchKeyword.toLowerCase(),
+                    boost: 1
                   }
                 }
-              },
-              // 2. 채널명 검색
-              {
-                match: {
-                  youtube_channel_name: {
-                    query: searchKeyword,
-                    boost: 2
+              ],
+              minimum_should_match: 1
+            }
+          });
+        } else {
+          // 동의어 제한 검색
+          const expandedKeywords = this.applySynonymLimit(searchKeyword, limit);
+          const keywordQueries = expandedKeywords.map(kw => ({
+            bool: {
+              should: [
+                {
+                  match: {
+                    title: {
+                      query: kw,
+                      boost: kw === searchKeyword ? 4 : 3
+                    }
+                  }
+                },
+                {
+                  match: {
+                    youtube_channel_name: {
+                      query: kw,
+                      boost: kw === searchKeyword ? 3 : 2
+                    }
                   }
                 }
-              },
-              // 3. 기존 키워드 정규화 매칭 (호환성 유지)
-              {
-                term: { 
-                  keyword_normalized: searchKeyword.toLowerCase(),
-                  boost: 1
+              ],
+              minimum_should_match: 1
+            }
+          }));
+          
+          mustQueries.push({
+            bool: {
+              should: [
+                ...keywordQueries,
+                {
+                  term: { 
+                    keyword_normalized: searchKeyword.toLowerCase(),
+                    boost: 1
+                  }
                 }
-              }
-            ],
-            minimum_should_match: 1
-          }
-        });
+              ],
+              minimum_should_match: 1
+            }
+          });
+        }
       }
       
       if (minViews) {
@@ -470,7 +643,7 @@ class ElasticsearchHelper {
     if (!this.client || !(await checkESConnection())) return null;
     
     try {
-      const { country, keyword, minViews, maxViews, maxResults, publishedAfter, publishedBefore } = searchParams;
+      const { country, keyword, minViews, maxViews, maxResults, publishedAfter, publishedBefore, synonymLimit } = searchParams;
       
       // 검색 조건 구성
       const mustQueries = [];
@@ -481,41 +654,82 @@ class ElasticsearchHelper {
       }
       
       if (keyword && keyword.trim()) {
-        // Elasticsearch 동의어 분석기 사용으로 서버 로직 단순화
         const searchKeyword = keyword.trim();
+        const limit = parseInt(synonymLimit) || 0;
         
-        mustQueries.push({
-          bool: {
-            should: [
-              // 1. 기본 검색 (Elasticsearch 동의어 분석기 사용)
-              {
-                match: {
-                  title: {
-                    query: searchKeyword,
-                    boost: 3
+        if (limit === 0) {
+          // 동의어 사용 안함 (기본 검색만)
+          mustQueries.push({
+            bool: {
+              should: [
+                {
+                  match: {
+                    title: {
+                      query: searchKeyword,
+                      boost: 3
+                    }
+                  }
+                },
+                {
+                  match: {
+                    youtube_channel_name: {
+                      query: searchKeyword,
+                      boost: 2
+                    }
+                  }
+                },
+                {
+                  term: { 
+                    keyword_normalized: searchKeyword.toLowerCase(),
+                    boost: 1
                   }
                 }
-              },
-              // 2. 채널명 검색
-              {
-                match: {
-                  youtube_channel_name: {
-                    query: searchKeyword,
-                    boost: 2
+              ],
+              minimum_should_match: 1
+            }
+          });
+        } else {
+          // 동의어 제한 검색
+          const expandedKeywords = this.applySynonymLimit(searchKeyword, limit);
+          const keywordQueries = expandedKeywords.map(kw => ({
+            bool: {
+              should: [
+                {
+                  match: {
+                    title: {
+                      query: kw,
+                      boost: kw === searchKeyword ? 4 : 3
+                    }
+                  }
+                },
+                {
+                  match: {
+                    youtube_channel_name: {
+                      query: kw,
+                      boost: kw === searchKeyword ? 3 : 2
+                    }
                   }
                 }
-              },
-              // 3. 기존 키워드 정규화 매칭 (호환성 유지)
-              {
-                term: { 
-                  keyword_normalized: searchKeyword.toLowerCase(),
-                  boost: 1
+              ],
+              minimum_should_match: 1
+            }
+          }));
+          
+          mustQueries.push({
+            bool: {
+              should: [
+                ...keywordQueries,
+                {
+                  term: { 
+                    keyword_normalized: searchKeyword.toLowerCase(),
+                    boost: 1
+                  }
                 }
-              }
-            ],
-            minimum_should_match: 1
-          }
-        });
+              ],
+              minimum_should_match: 1
+            }
+          });
+        }
       }
       
       if (minViews) {
@@ -641,6 +855,9 @@ class ElasticsearchHelper {
 
 // ES 헬퍼 인스턴스 생성
 const esHelper = new ElasticsearchHelper(esClient);
+
+// Redis 캐시 헬퍼 인스턴스 생성
+const redisCache = new RedisCacheHelper(redisClient);
 
 // 간단한 Rate Limiting 구현
 const requestTracker = new Map();
@@ -773,7 +990,8 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
     console.log(`검색 결과 수: ${finalMaxResults}건 (요청: ${maxResults})`);
 
     // 동영상 길이 파라미터 파싱
-    const selectedVideoLengths = videoLength && videoLength.trim() ? videoLength.split(',').filter(v => v.trim()) : [];
+    const selectedVideoLengths = videoLength && (typeof videoLength === 'string' ? videoLength.trim() : Array.isArray(videoLength) ? videoLength.join(',') : videoLength.toString()) ? 
+      (typeof videoLength === 'string' ? videoLength : Array.isArray(videoLength) ? videoLength.join(',') : videoLength.toString()).split(',').filter(v => v.trim()) : [];
     console.log('선택된 동영상 길이:', selectedVideoLengths.length > 0 ? selectedVideoLengths : '모든 길이 허용 (필터 없음)');
 
     // 다중 국가 처리: 첫 번째 국가를 기준으로 설정 (향후 확장 가능)
@@ -821,6 +1039,23 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
           console.warn('종료일 파싱 오류:', e.message);
         }
       }
+    }
+    
+    // 0단계: Redis 캐시 우선 확인
+    console.log('🔍 Redis 캐시 확인 중...');
+    const cachedResult = await redisCache.get(searchParameters);
+    
+    if (cachedResult) {
+      // 캐시 히트 - 즉시 반환
+      const cacheTime = Date.now() - searchStartTime;
+      console.log(`⚡ Redis 캐시 히트! 응답 시간: ${cacheTime}ms`);
+      
+      // 캐시된 데이터에 실행 시간 정보 추가
+      cachedResult.executionTime = cacheTime;
+      cachedResult.source = 'Redis Cache';
+      cachedResult.cached = true;
+      
+      return res.json(cachedResult);
     }
     
     // 1단계: 캐시 히트 확인
@@ -1526,20 +1761,7 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
      // API 키 사용 통계 출력
      apiKeyManager.printUsageStats();
 
-     // ========== YouTube API 결과를 Elasticsearch에 인덱싱 ==========
-     if (searchResults.length > 0) {
-     console.log('📝 YouTube API 결과를 Elasticsearch에 인덱싱 중...');
-     try {
-     await esHelper.bulkUpsertVideos(searchResults, searchParameters);
-     console.log('✅ Elasticsearch 인덱싱 완료');
-     } catch (esError) {
-     console.error('⚠️ Elasticsearch 인덱싱 실패:', esError.message);
-     console.log('💡 YouTube API 결과는 정상 반환하지만 캐시 저장은 실패했습니다.');
-     }
-     }
-     // ========== Elasticsearch 인덱싱 끝 ==========
-
-     // 검색 소요시간 계산 및 출력
+     // 검색 결과 완료 시점에서 시간 측정 (사용자에게 결과 전달 시점)
      const searchEndTime = Date.now();
      const searchDuration = searchEndTime - searchStartTime;
      const durationSeconds = (searchDuration / 1000).toFixed(2);
@@ -1548,13 +1770,36 @@ app.get('/api/search', rateLimitMiddleware, async (req, res) => {
     console.log(`🔍 검색 조건: ${country}/${keyword || '키워드 없음'}/${finalMaxResults}건`);
     console.log('='.repeat(52));
 
-    res.json({
+    // 검색 결과 준비
+    const responseData = {
       success: true,
       data: searchResults,
       total: searchResults.length,
       source: 'youtube_api_with_es_cache',
       searchDuration: `${durationSeconds}초`
+    };
+
+    // Redis 캐시에 저장 (비동기로 실행하여 응답 속도에 영향 없음)
+    redisCache.set(searchParameters, responseData).catch(err => {
+      console.warn('Redis 캐시 저장 실패:', err.message);
     });
+
+    // 사용자에게 검색 결과 즉시 전달
+    res.json(responseData);
+
+     // ========== 백그라운드 Elasticsearch 인덱싱 ==========
+     // 사용자 응답 후 백그라운드에서 실행 (응답 속도와 시간 측정에 영향 없음)
+     if (searchResults.length > 0) {
+       setImmediate(async () => {
+         try {
+           console.log('📝 백그라운드에서 Elasticsearch 인덱싱 시작...');
+           await esHelper.bulkUpsertVideos(searchResults, searchParameters);
+           console.log('✅ 백그라운드 Elasticsearch 인덱싱 완료');
+         } catch (esError) {
+           console.error('⚠️ 백그라운드 인덱싱 실패:', esError.message);
+         }
+       });
+     }
 
   } catch (error) {
     console.error('검색 오류:', error);
@@ -3089,9 +3334,15 @@ app.get('/api/suggest', async (req, res) => {
       }
     });
     
-    // 제안 결과 합치기
-    const keywordSuggestions = suggestions.body.suggest.keyword_suggest[0].options || [];
-    const channelSuggestions = suggestions.body.suggest.channel_suggest[0].options || [];
+    // 제안 결과 합치기 (안전한 접근)
+    const suggestData = suggestions.body?.suggest || suggestions.suggest;
+    if (!suggestData) {
+      console.warn('Elasticsearch suggest 응답이 없음:', JSON.stringify(suggestions.body || suggestions, null, 2));
+      return res.json({ suggestions: [] });
+    }
+    
+    const keywordSuggestions = suggestData.keyword_suggest?.[0]?.options || [];
+    const channelSuggestions = suggestData.channel_suggest?.[0]?.options || [];
     
     const allSuggestions = [
       ...keywordSuggestions.map(item => ({
@@ -3153,7 +3404,17 @@ app.get('/api/trending-keywords', async (req, res) => {
       body: trendQuery
     });
     
-    const trendingKeywords = results.body.aggregations.trending_keywords.buckets.map(bucket => ({
+    // 안전한 접근으로 aggregations 확인
+    const aggregations = results.body?.aggregations || results.aggregations;
+    if (!aggregations || !aggregations.trending_keywords) {
+      console.warn('Elasticsearch aggregations 응답이 없음:', JSON.stringify(results.body || results, null, 2));
+      return res.json({
+        success: true,
+        trending_keywords: []
+      });
+    }
+    
+    const trendingKeywords = aggregations.trending_keywords.buckets.map(bucket => ({
       keyword: bucket.key,
       count: bucket.doc_count
     }));

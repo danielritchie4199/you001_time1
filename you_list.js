@@ -2587,6 +2587,12 @@ let searchResults = [];
                 }
             }
 
+            // 동의어 제한값 추가
+            const synonymLimit = document.getElementById('synonymLimit').value;
+            if (synonymLimit !== '') {
+                searchParams.append('synonymLimit', synonymLimit);
+            }
+
             // 날짜 범위 처리
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
@@ -4660,7 +4666,7 @@ let searchResults = [];
         // 인기 검색어 로드
         async function loadTrendingKeywords() {
             try {
-                const response = await fetch('/api/trending-keywords?limit=8');
+                const response = await fetch('/api/trending-keywords?limit=20');
                 const data = await response.json();
                 
                 if (data.success && data.trending_keywords.length > 0) {
